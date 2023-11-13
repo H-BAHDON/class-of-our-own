@@ -3,5 +3,35 @@
 	"editor.codeActionsOnSave": {
 		"source.fixAll.eslint": true
 	},
-	"files.eol": "\n"
+	"files.eol": "\n",
+	"sqltools.connections": [
+		{
+			"mysqlOptions": {
+				"authProtocol": "default",
+				"enableSsl": "Disabled"
+			},
+			"previewLimit": 50,
+			"server": "localhost",
+			"port": 3306,
+			"driver": "MySQL",
+			"name": "localhost",
+			"database": "user",
+			"username": "hussein",
+			"password": ""
+		},
+		{
+			"mysqlOptions": {
+				"authProtocol": "default",
+				"enableSsl": "Disabled"
+			},
+			"previewLimit": 50,
+			"server": "localhost",
+			"port": 3306,
+			"driver": "MySQL",
+			"name": "firstMySqlConnection",
+			"username": "admin",
+			"database": "class-of-our-own",
+			"password": ""
+		}
+	]
 }

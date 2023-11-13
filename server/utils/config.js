@@ -45,8 +45,8 @@ function getDbForEnv(env) {
 	if (env == "test") {
 		return dbUrlTest;
 	}
+	return process.env.DATABASE_URL || "";
 }
-
 function getLogLevelForEnv(env) {
 	if (env == "development") {
 		return process.env.LOG_LEVEL;

@@ -3,13 +3,21 @@ import { Pool } from "pg";
 import config from "./utils/config";
 import logger from "./utils/logger";
 
+const connectString = "postgres://hitqxlam:FB6ehdUSea57ORwwx8hkNB_Rda1uRw0h@flora.db.elephantsql.com/hitqxlam"
+
+const pool = new Pool({
+	connectionString: connectString,
+	connectionTimeoutMillis: 5000,
+    ssl: false,
+});
+
+/* 
 const pool = new Pool({
 	connectionString: config.dbUrl,
 	connectionTimeoutMillis: 5000,
-	ssl: config.dbUrl.includes("localhost")
-		? false
-		: { rejectUnauthorized: false },
+    ssl: false,
 });
+*/
 
 export const connectDb = async () => {
 	let client;
