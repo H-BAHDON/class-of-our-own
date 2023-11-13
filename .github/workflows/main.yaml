@@ -1,0 +1,44 @@
+on:
+  push:
+name: example
+jobs:
+  lint:
+    name: run lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: install dependencies
+        run: npm install
+      - name: run lint command
+        run: npm run lint
+  test:
+    name: run test
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:10.10
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: db_test
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    env:
+      TEST_DB_USERNAME: postgres
+      TEST_DB_PASSWORD: postgres
+      TEST_DB_DATABASE: db_test
+      TEST_DB_HOST: localhost
+      TEST_DB_PORT: 5432
+      NODE_ENV: test
+    steps:
+      - uses: actions/checkout@v4
+      - name: install dependencies
+        run: npm install
+      - name: migrate db
+        run: NODE_ENV=test npx sequelize-cli db:migrate
+        working-directory: ./server
+      - name: run test command
+        run: npm run test
+#https://docs:github:com/en/actions/using-containerized-services/creating-postgresql-service-containers
