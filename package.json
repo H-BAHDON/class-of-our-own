@@ -1,7 +1,7 @@
 {
-	"name": "starter-kit",
+	"name": "Class-Of-Our-Own",
 	"version": "0.0.1",
-	"description": "Starter kit for full-stack JavaScript projects",
+	"description": "At Code Your Future, trainee progress is tracked on a trainee tracker against milestones set by the Director of Education. But each trainee at CYF is on their own personal journey towards employment, and should really set their own milestones on their own roadmap.",
 	"private": true,
 	"scripts": {
 		"prebuild": "npm run cleanup",
@@ -27,8 +27,13 @@
 		"type": "git",
 		"url": "git+https://github.com/textbook/starter-kit.git"
 	},
-	"author": "Jonathan Sharpe <mail@jonrshar.pe>",
-	"contributors": [],
+	"author": "Cyf trainees",
+	"contributors": [
+		"Mpanasetckiy",
+		"seyyednavid",
+		"PaulinaWywrot",
+		"H-BAHDON"
+		],
 	"license": "ISC",
 	"bugs": {
 		"url": "https://github.com/textbook/starter-kit/issues"
