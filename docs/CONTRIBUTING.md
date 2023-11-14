@@ -41,6 +41,6 @@ Anyone asked to stop unwanted behavior must stop immediately. If a community mem
 
 ## License
 
-This project is licensed under the [LICENSE_NAME] - see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the [LICENSE] - see the [LICENSE](../LICENSE) file for details.
 
 Thank you for your contributions!
