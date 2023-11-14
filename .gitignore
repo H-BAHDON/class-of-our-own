@@ -1,6 +1,1 @@
-.idea/
-dist/
-node_modules/
-.DS_Store
-server/.env
-.env
+node_modules
