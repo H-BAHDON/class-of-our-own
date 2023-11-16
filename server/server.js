@@ -1,12 +1,18 @@
 const express = require("express");
 const app = express();
-const port = process.env.PORT || 3008;
+const port = 3001;
 const cors = require("cors");
+const dotenv = require("dotenv");
+const { Pool } = require("pg");
+
+
 app.use(express.json());
 app.use(cors());
-const dotenv = require("dotenv");
 dotenv.config();
-const { Pool } = require("pg");
+
+app.get('/', (req,res) => {
+  res.send("testing")
+})
 const db = new Pool({
   connectionString: process.env.DB_URL,
   ssl: { rejectUnauthorized: false },
