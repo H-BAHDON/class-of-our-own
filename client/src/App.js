@@ -1,6 +1,7 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes } from 'react-router-dom';
-import { Container, Typography } from '@mui/material';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Container, Typography } from "@mui/material";
+import TraineeDashboard from "./pages/TraineeDashboard";
 
 function App() {
   return (
@@ -8,7 +9,7 @@ function App() {
       <Container>
         <Typography variant="h6">test: its working </Typography>
         <Routes>
-        {/* Your routes go here */}
+          <Route path="/trainee/" element={<TraineeDashboard />} />
         </Routes>
       </Container>
     </Router>
