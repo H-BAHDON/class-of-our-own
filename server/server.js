@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(cors());
 dotenv.config();
 
-app.get('/', (req,res) => {
+app.get('/', (req, res) => {
   res.send("testing")
 })
 const db = new Pool({
