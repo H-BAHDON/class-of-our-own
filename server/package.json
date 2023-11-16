@@ -2,17 +2,19 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
+    "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "passport-github2": "^0.1.12",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "nodemon": "^3.0.1",
+    "passport-github2": "^0.1.12",
     "pg": "^8.11.3"
   }
 }
