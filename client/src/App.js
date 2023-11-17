@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import NavBar from "./components/NavBar"
 import { Container, Typography } from "@mui/material";
 import NavBar from "./components/NavBar";
 import TraineeDashboard from "./pages/TraineeDashboard";
@@ -12,7 +11,6 @@ function App() {
     <Router>
       <NavBar />
       <Container>
-        <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/trainee/" element={<TraineeDashboard />} />
