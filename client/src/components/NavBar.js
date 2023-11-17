@@ -11,11 +11,7 @@ import {
 import Logo from "./Logo";
 
 const NavBar = () => {
-  const handleLogin = async () => {
-    const response = await fetch("http://localhost:3002/auth/github");
-    const data = await response.json();
-    console.log(data);
-  };
+  const apiUrl = "http://localhost:3001";
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -31,15 +27,14 @@ const NavBar = () => {
             aria-label="menu"
             sx={{ mr: 2 }}
           >
-            <div style={{ height: "5rem" }}>
+            <div style={{ height: "2rem" }}>
               <Logo />
             </div>
           </IconButton>
-          
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Welcome to 'A Class of Our Own'
+            Dashboard
           </Typography>
-          <Button color="inherit" onClick={handleLogin}>
+          <Button color="inherit" href={`${apiUrl}/auth/github`}>
             Login with GitHub
           </Button>
         </Toolbar>
