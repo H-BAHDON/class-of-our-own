@@ -9,19 +9,13 @@ const Home = () => {
   return (
     <Container
      sx={{
-      backgroundImage: `url(${CYFImage})`,
-      backgroundSize: "cover",
-
         textAlign: "center",
         padding: "2rem",
         maxWidth: "100%",
         height: "100vh",
-        '@media (min-width:1200px)': {
-          maxWidth: 'none',
-        },
       }}
     >
-      <Box marginTop="2rem" sx={{height: "80vh", margin:"0",}}>
+      <Box marginTop="2rem" sx={{height: "50vh", margin:"0",}}>
         <Grid container spacing={4}>
           <Grid item xs={12} md={6} textAlign={"left"}>
             <Typography variant="h4" component="h1" marginBottom="1rem">
@@ -35,7 +29,14 @@ const Home = () => {
             </Typography>
           </Grid>
 
-        
+          <Grid item xs={12} md={6}>
+            <img
+              src={CYFImage}
+              alt="A illustration of CYF"
+              width="100%"
+              height={400}
+            />
+          </Grid>
         </Grid>
       </Box>
 

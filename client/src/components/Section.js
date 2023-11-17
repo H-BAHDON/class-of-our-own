@@ -47,7 +47,6 @@ const Section = () => {
           sx={{
             textAlign: 'center',
             padding: '30px',
-            width: '200px',
             borderRadius: '10px',
             margin: '10px !important',
             fontFamily: "system-ui",
