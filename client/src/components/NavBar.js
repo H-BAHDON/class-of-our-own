@@ -25,12 +25,13 @@ const NavBar = () => {
             aria-label="menu"
             sx={{ mr: 2 }}
           >
-            <div style={{ height: "2rem" }}>
+            <div style={{ height: "5rem" }}>
               <Logo />
             </div>
           </IconButton>
+          
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Dashboard
+          Welcome to 'A Class of Our Own'
           </Typography>
           <Button color="inherit">Login</Button>
         </Toolbar>
