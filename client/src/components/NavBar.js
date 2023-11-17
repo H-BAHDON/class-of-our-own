@@ -11,6 +11,12 @@ import {
 import Logo from "./Logo";
 
 const NavBar = () => {
+  const handleLogin = async () => {
+    const response = await fetch("http://localhost:3002/auth/github");
+    const data = await response.json();
+    console.log(data);
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -32,7 +38,9 @@ const NavBar = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Dashboard
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button color="inherit" onClick={handleLogin}>
+            Login with GitHub
+          </Button>
         </Toolbar>
       </AppBar>
     </Box>
