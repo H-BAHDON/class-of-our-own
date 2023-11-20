@@ -20,6 +20,14 @@ app.get(
   passport.authenticate("github", { scope: ["user:email"] })
 );
 
+app.get(
+  "/auth/github/callback",
+  passport.authenticate("github", { failureRedirect: "/" }),
+  function (req, res) {
+    res.redirect("/trainee");
+  }
+);
+
 const db = new Pool({
   connectionString: process.env.DB_URL,
   ssl: { rejectUnauthorized: false },
