@@ -7,11 +7,14 @@ import {
   Button,
   IconButton,
 } from "@mui/material";
-
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 import Logo from "./Logo";
 
 const NavBar = () => {
-  const apiUrl = "http://localhost:3001";
+  const navigate = useNavigate();
+  const { login } = useAuth();
+
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -34,7 +37,9 @@ const NavBar = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Dashboard
           </Typography>
-          <Button color="inherit" href={`${apiUrl}/auth/github`}>
+          <Button color="inherit" onClick={()=>{
+            login()
+          }}>
             Login with GitHub
           </Button>
         </Toolbar>
