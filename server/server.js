@@ -16,11 +16,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use(session({
-  secret: "your-secret-key",
-  resave: false,
-  saveUninitialized: false,
-}));
+app.use(
+  session({
+    secret: "your-secret-key",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
 passwordSetup(passport);
 
@@ -32,21 +34,29 @@ const secretKey = "test";
 
 app.get(
   "/auth/github",
-  passport.authenticate("github", { scope: ["user:email"] })
+  passport.authenticate("github", {
+    scope: ["user:email", "repo", "repo:status", "user", "project"],
+  })
 );
 
 app.get(
   "/auth/github/callback",
   passport.authenticate("github", { failureRedirect: "/" }),
   function (req, res) {
-    const user = req.user;
-    const token = jwt.sign({ user }, secretKey, { expiresIn: "1hr" });
-    res.cookie("token", token, {
-      httpOnly: true,
-      sameSite: "none",
-      maxAge: 25 * 60 * 60 * 100,
-    });
-    res.redirect(`http://localhost:3000/trainee?token=${token}`);
+    try {
+      const user = req.user;
+      const token = jwt.sign({ user }, secretKey, { expiresIn: "1hr" });
+      res.cookie("token", token, {
+        httpOnly: true,
+        sameSite: "none",
+        maxAge: 25 * 60 * 60 * 1000,
+        secure: true,
+      });
+      res.redirect(`http://localhost:3000/trainee?token=${token}`);
+    } catch (err) {
+      console.error("error saving the token", err);
+      res.redirect("/");
+    }
   }
 );
 
