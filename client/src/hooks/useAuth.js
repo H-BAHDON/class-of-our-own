@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { createContext, useContext, useState, useEffect } from "react";
 import axiosConfig from "../config/configAxios";
 
@@ -11,19 +10,28 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   const axiosInstance = configAxios();
-
   useEffect(() => {
-    axiosInstance
-      .get("/user")
-      .then((response) => {
-        setUser(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axiosInstance.get("/user", { withCredentials: true });
+  
+        if (response.status === 200) {
+          setUser(response.data);
+        } else {
+          console.error("Unexpected response:", response);
+        }
+      } catch (error) {
         console.error("Error fetching user data:", error);
+      } finally {
         setLoading(false);
-      });
-  }, [axiosInstance]);
+      }
+    };
+      if (loading) {
+      fetchUserData();
+    }
+  }, [axiosInstance, setUser, setLoading, loading]);
+  
+  
 
   const login = () => {
     window.location.href = `${apiUrl}/auth/github`;
