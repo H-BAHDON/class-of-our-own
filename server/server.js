@@ -8,7 +8,7 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const passwordSetup = require("./passport");
-const { sequelize } = require("./models");
+const { sequelize, User } = require("./models");
 
 dotenv.config();
 
@@ -36,13 +36,7 @@ const secretKey = "test";
 app.get(
   "/auth/github",
   passport.authenticate("github", {
-    scope: [
-      "user:email",
-      "repo",
-      "repo:status",
-      "user",
-      "project",
-    ],
+    scope: ["user:email", "repo", "repo:status", "user", "project"],
   })
 );
 
@@ -63,6 +57,43 @@ app.get(
     } catch (err) {
       console.error("error saving the token", err);
       res.redirect("/");
+    }
+  }
+);
+
+app.post(
+  "/signpost",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    try {
+      if (!req.isAuthenticated()) {
+        return res
+          .status(401)
+          .json({ error: "Unauthorized - User not authenticated." });
+      }
+
+      const { codeWarsUsername, codilityUsername } = req.body;
+      if (!codeWarsUsername || !codilityUsername) {
+        return res.status(400).json({
+          error: "Both CodeWars and Codility usernames are required.",
+        });
+      }
+
+      const user = await User.findOne({ where: { email: req.user.email } });
+      if (!user) {
+        return res
+          .status(404)
+          .json({ error: "User not found for the authenticated user." });
+      }
+
+      user.codeWarsUsername = codeWarsUsername;
+      user.codilityUsername = codilityUsername;
+      await user.save();
+
+      return res.status(200).json({ message: "Usernames saved successfully." });
+    } catch (err) {
+      console.error("Error saving usernames:", err);
+      return res.status(500).json({ error: "Internal server error." });
     }
   }
 );
