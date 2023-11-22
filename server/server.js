@@ -8,7 +8,7 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const passwordSetup = require("./passport");
-const {sequelize}= require("./models")
+const { sequelize } = require("./models");
 
 dotenv.config();
 
@@ -36,7 +36,14 @@ const secretKey = "test";
 app.get(
   "/auth/github",
   passport.authenticate("github", {
-    scope: ["user:email", "repo", "repo:status", "user", "project"],
+    scope: [
+      "user:email",
+      "repo",
+      "repo:status",
+      "user",
+      "project",
+      "user:email",
+    ],
   })
 );
 
@@ -62,7 +69,7 @@ app.get(
 );
 
 const port = 3001;
-app.listen(port, async() =>{
+app.listen(port, async () => {
   await sequelize.authenticate();
-  console.log(`Listening on port ${port}`)
+  console.log(`Listening on port ${port}`);
 });

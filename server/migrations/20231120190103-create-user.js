@@ -20,15 +20,12 @@ module.exports = {
       },
       traineeGithubAccount: {
         type: DataTypes.STRING,
-        field: "T-github_account",
       },
       traineeCodwarsUsername: {
         type: DataTypes.STRING,
-        field: "T-codewars_username",
       },
       traineeCodilityUsername: {
         type: DataTypes.STRING,
-        field: "T-codility_username",
       },
       accessToken: {
         type: DataTypes.STRING,

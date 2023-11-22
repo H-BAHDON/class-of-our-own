@@ -24,15 +24,12 @@ module.exports = (sequelize, DataTypes) => {
       },
       traineeGithubAccount: {
         type: DataTypes.STRING,
-        field: "T-github",
       },
       traineeCodwarsUsername: {
         type: DataTypes.STRING,
-        field: "T-codewars_username",
       },
       traineeCodilityUsername: {
         type: DataTypes.STRING,
-        field: "T-codility_username",
       },
       accessToken: {
         type: DataTypes.STRING,

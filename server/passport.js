@@ -1,9 +1,9 @@
-
 require("dotenv").config();
 const passport = require("passport");
 const GitHubStrategy = require("passport-github2").Strategy;
+const { User } = require("./models");
 
-module.exports = function(passport) {
+module.exports = function (passport) {
   passport.use(
     new GitHubStrategy(
       {
@@ -11,10 +11,23 @@ module.exports = function(passport) {
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
         callbackURL: "http://localhost:3001/auth/github/callback",
       },
-      function (accessToken, refreshToken, profile, done) {
+      async function (accessToken, refreshToken, profile, done) {
         try {
+          const { profileUrl } = profile;
+          const user = await User.findOne({
+            where: { traineeGithubAccount: profileUrl },
+          });
 
-          console.log("-------------------",profile.emails[0].value);
+          if (!user) {
+            const user = await User.create({
+              name: profile.displayName,
+              email: "",
+              role: "",
+              traineeGithubAccount: profileUrl,
+              accessToken,
+              refreshToken,
+            });
+          }
           return done(null, profile);
         } catch (error) {
           console.error("GitHub Authentication Error:", error);
