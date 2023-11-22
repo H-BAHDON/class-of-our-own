@@ -13,8 +13,10 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axiosInstance.get("/user", { withCredentials: true });
-  
+        const response = await axiosInstance.get("/user", {
+          withCredentials: true,
+        });
+
         if (response.status === 200) {
           setUser(response.data);
         } else {
@@ -26,12 +28,10 @@ export const AuthProvider = ({ children }) => {
         setLoading(false);
       }
     };
-      if (loading) {
+    if (loading) {
       fetchUserData();
     }
   }, [axiosInstance, setUser, setLoading, loading]);
-  
-  
 
   const login = () => {
     window.location.href = `${apiUrl}/auth/github`;

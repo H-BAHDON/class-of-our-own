@@ -14,7 +14,6 @@ import Logo from "./Logo";
 const NavBar = () => {
   const navigate = useNavigate();
   const { user, login, loading } = useAuth();
-
   const handleLoginClick = () => {
     login();
   };
@@ -45,7 +44,9 @@ const NavBar = () => {
               color="inherit"
               onClick={user ? undefined : handleLoginClick}
             >
-              {user ? `Welcome, ${user.displayName}!` : "Login with GitHub"}
+              {user
+                ? `Welcome, ${user.userInfo.username}!`
+                : "Login with GitHub"}
             </Button>
           )}
         </Toolbar>

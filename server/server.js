@@ -13,11 +13,13 @@ dotenv.config();
 
 const app = express();
 app.use(cookieParser());
-app.use(cors({
-  origin: ["http://localhost:3000"],
-  methods: ['GET', 'POST'],
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    methods: ["GET", "POST"],
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 
@@ -54,7 +56,8 @@ app.get(
   passport.authenticate("github", { failureRedirect: "/login" }),
   function (req, res) {
     try {
-      const user = "Paulina";
+      const { login } = req.user._json;
+      const user = { login };
       const token = jwt.sign({ user }, secretKey, { expiresIn: "1hr" });
       res.cookie("token", token, {
         httpOnly: true,
@@ -73,20 +76,20 @@ app.get(
 app.get("/user", (req, res) => {
   const token = req.cookies.token;
 
-  console.log("Token from cookies:", token);
-
   if (!token) {
     return res.status(401).json({ message: "Unauthorized" });
   }
 
   try {
-    const verify = jwt.verify(token, secretKey);
+    const decoded = jwt.verify(token, secretKey);
+    const { login } = decoded.user;
     const userInfo = {
-      username: verify.user.username,
+      username: login,
     };
     res.json({ userInfo });
   } catch (error) {
-    console.error("message", error);
+    console.error("Error decoding token:", error);
+    res.status(401).json({ message: "Unauthorized" });
   }
 });
 
