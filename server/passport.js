@@ -13,9 +13,8 @@ module.exports = function(passport) {
       },
       function (accessToken, refreshToken, profile, done) {
         try {
-          console.log("GitHub Authentication Successful");
-          console.log("Profile:", profile);
 
+          console.log("-------------------",profile.emails[0].value);
           return done(null, profile);
         } catch (error) {
           console.error("GitHub Authentication Error:", error);

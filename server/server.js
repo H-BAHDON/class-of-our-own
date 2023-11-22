@@ -8,6 +8,7 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const passwordSetup = require("./passport");
+const {sequelize}= require("./models")
 
 dotenv.config();
 
@@ -61,4 +62,7 @@ app.get(
 );
 
 const port = 3001;
-app.listen(port, () => console.log(`Listening on port ${port}`));
+app.listen(port, async() =>{
+  await sequelize.authenticate();
+  console.log(`Listening on port ${port}`)
+});
