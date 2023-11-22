@@ -4,9 +4,23 @@
 
 1. **Progress Tracker:** The system used to monitor trainee progress against predefined milestones set by the Director of Education.
 
-2. **Milestones:** Predefined achievements and goals set by the Director of Education for trainees on their educational and career journey.
+2. **Platform APIs:** External interfaces (e.g., Codewars, Github) providing data on trainee activities and achievements.
 
-3. **Platform APIs:** External interfaces (e.g., Codewars, Github) providing data on trainee activities and achievements.
+3. **Milestone Assessment Criteria:**
+   - **Milestone Name:** A part of the syllabus identified by name (e.g., HTML / CSS).
+   - **Milestone Date:** The final date of the milestone.
+   - **Factors:** Codewars, Pull requests, Attendance, Codility.
+   - **Factor Expectations:** Minimum required score/quantity achieved on the Milestone date, split into:
+     - Pull request rounded up value/week.
+     - Codewars rank.
+     - Codility score.
+     - Performance.
+   - **Factor Achievement:** Trainee achievement in each of the factors.
+   - **Factor Value:** Whether the trainee is
+     - Behind milestone
+     - At milestone
+     - Beyond milestone
+   - For each factor, compared with the milestone date.
 
 ## Functionality Terms
 
