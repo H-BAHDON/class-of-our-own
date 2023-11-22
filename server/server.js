@@ -42,7 +42,6 @@ app.get(
       "repo:status",
       "user",
       "project",
-      "user:email",
     ],
   })
 );

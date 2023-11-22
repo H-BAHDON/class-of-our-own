@@ -10,6 +10,7 @@ module.exports = function (passport) {
         clientID: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
         callbackURL: "http://localhost:3001/auth/github/callback",
+        scope: ["user:email"],
       },
       async function (accessToken, refreshToken, profile, done) {
         try {
@@ -21,7 +22,7 @@ module.exports = function (passport) {
           if (!user) {
             const user = await User.create({
               name: profile.displayName,
-              email: "",
+              email: profile.emails[0].value,
               role: "",
               traineeGithubAccount: profileUrl,
               accessToken,
