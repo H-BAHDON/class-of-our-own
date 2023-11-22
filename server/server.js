@@ -12,7 +12,7 @@ const passwordSetup = require("./passport");
 dotenv.config();
 
 const app = express();
-
+app.use(cookieParser());
 app.use(cors());
 app.use(express.json());
 
@@ -44,7 +44,7 @@ app.get(
   passport.authenticate("github", { failureRedirect: "/login" }),
   function (req, res) {
     try {
-      const user = req.user;
+      const user = "Paulina";
       const token = jwt.sign({ user }, secretKey, { expiresIn: "1hr" });
       res.cookie("token", token, {
         httpOnly: true,
@@ -59,6 +59,26 @@ app.get(
     }
   }
 );
+
+app.get("/user", (req, res) => {
+  const token = req.cookies.token;
+
+  console.log("Token from cookies:", token);
+
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  try {
+    const verify = jwt.verify(token, secretKey);
+    const userInfo = {
+      username: verify.user.username,
+    };
+    res.json({ userInfo });
+  } catch (error) {
+    console.error("message", error);
+  }
+});
 
 const port = 3001;
 app.listen(port, () => console.log(`Listening on port ${port}`));

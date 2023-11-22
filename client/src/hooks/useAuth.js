@@ -4,7 +4,7 @@ import axiosConfig from "../config/configAxios";
 
 const { configAxios, apiUrl } = axiosConfig;
 
-const AuthContext = createContext(); 
+const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -13,28 +13,30 @@ export const AuthProvider = ({ children }) => {
   const axiosInstance = configAxios();
 
   useEffect(() => {
-    axiosInstance.get("/user")
-      .then(response => {
+    axiosInstance
+      .get("/user")
+      .then((response) => {
         setUser(response.data);
-        setLoading(false); 
+        setLoading(false);
       })
-      .catch(error => {
-        console.error('Error fetching user data:', error);
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
         setLoading(false);
       });
-  }, [axiosInstance]); 
+  }, [axiosInstance]);
 
   const login = () => {
     window.location.href = `${apiUrl}/auth/github`;
   };
 
   const logout = () => {
-    axiosInstance.get("/logout")
+    axiosInstance
+      .get("/logout")
       .then(() => {
         setUser(null);
       })
-      .catch(error => {
-        console.error('Error logging out:', error);
+      .catch((error) => {
+        console.error("Error logging out:", error);
         throw error;
       });
   };
@@ -49,7 +51,7 @@ export const AuthProvider = ({ children }) => {
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };
