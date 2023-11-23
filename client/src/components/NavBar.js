@@ -7,14 +7,16 @@ import {
   Button,
   IconButton,
 } from "@mui/material";
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 import Logo from "./Logo";
 
 const NavBar = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
-
+  const { user, login, loading } = useAuth();
+  const handleLoginClick = () => {
+    login();
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -37,11 +39,16 @@ const NavBar = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Dashboard
           </Typography>
-          <Button color="inherit" onClick={()=>{
-            login()
-          }}>
-            Login with GitHub
-          </Button>
+          {!loading && (
+            <Button
+              color="inherit"
+              onClick={user ? undefined : handleLoginClick}
+            >
+              {user
+                ? `Welcome, ${user.userInfo.username}!`
+                : "Login with GitHub"}
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
     </Box>
