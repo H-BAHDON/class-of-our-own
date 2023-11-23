@@ -34,6 +34,7 @@ export default function PostSignup() {
           codeWarsUsername,
           codilityUsername,
         }),
+        credentials: 'include',
       });
       if (!response.ok) {
         console.error("Error:", response.statusText);
@@ -41,6 +42,8 @@ export default function PostSignup() {
       }
       const responseData = await response.json();
       console.log(responseData);
+      window.location.href = 'http://localhost:3000/trainee';
+
     } catch (error) {
       console.error("Error sending data to the backend:", error);
     }
