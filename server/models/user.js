@@ -7,8 +7,8 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-      // define association here
+    static associate({ Cohort }) {
+      this.belongsTo(Cohort, { foreignKey: "cohortId" });
     }
   }
   User.init(
@@ -36,6 +36,13 @@ module.exports = (sequelize, DataTypes) => {
       },
       refreshToken: {
         type: DataTypes.STRING,
+      },
+      cohortId: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: "cohorts",
+          key: "id",
+        },
       },
     },
     {
