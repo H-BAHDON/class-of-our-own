@@ -2,6 +2,7 @@
 
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
+const { User } = require("../../models");
 
 secretKey = "melly"
 function GitHubAuthentication(req, res, next) {
@@ -10,11 +11,15 @@ function GitHubAuthentication(req, res, next) {
     })(req, res, next);
   }
 
-  function handleGitHubCallback(req, res) {
+  async function handleGitHubCallback(req, res) {
     try {
       const { id, name, email, traineeGithubAccount } = req.user.dataValues;
       const user = { id, name, email, traineeGithubAccount };
-   
+  
+      const findUser = await User.findOne({ where: { email } });
+      
+
+  
       const token = jwt.sign({ user }, secretKey, { expiresIn: '1hr' });
       res.cookie('token', token, {
         httpOnly: true,
@@ -22,9 +27,12 @@ function GitHubAuthentication(req, res, next) {
         maxAge: 25 * 60 * 60 * 1000,
         secure: true,
       });
-      res.redirect(`http://localhost:3000/trainee?token=${token}`);
+      if (findUser && (findUser.traineeCodwarsUsername !== null || findUser.traineeCodilityUsername !== null)) {
+        return res.redirect(`http://localhost:3000/trainee`);
+      }
+      res.redirect(`http://localhost:3000/PostSignup`);
     } catch (err) {
-      console.error('Error saving the token', err);
+      console.error('Error handling GitHub callback:', err);
       res.redirect('/');
     }
   }
