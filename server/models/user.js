@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      this.belongsTo(models.Cohort, { foreignKey: "cohortId" });
     }
   }
   User.init(
@@ -36,6 +36,13 @@ module.exports = (sequelize, DataTypes) => {
       },
       refreshToken: {
         type: DataTypes.STRING,
+      },
+      cohortId: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: "cohorts",
+          key: "id",
+        },
       },
     },
     {
