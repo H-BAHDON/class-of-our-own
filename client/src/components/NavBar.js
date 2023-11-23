@@ -44,8 +44,8 @@ const NavBar = () => {
               color="inherit"
               onClick={user ? undefined : handleLoginClick}
             >
-              {user
-                ? `Welcome, ${user.userInfo.username}!`
+              {user && user.userInfo
+                ? `Welcome, ${user.userInfo.name}!`
                 : "Login with GitHub"}
             </Button>
           )}
