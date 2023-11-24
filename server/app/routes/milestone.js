@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { authenticateUser } = require("../middleware/authMiddleware");
-const { HandleCurrentMilestone } = require("../controllers/milestoneController")
+const { HandleCurrentMilestone, HandleGetAllMillestones } = require("../controllers/milestoneController")
 
 
 router.get("/", authenticateUser, HandleCurrentMilestone);
