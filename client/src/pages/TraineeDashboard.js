@@ -1,9 +1,10 @@
 import React from "react";
+import CurrentMilestone from "../components/CurrentMilestone";
 
 const TraineeDashboard = () => {
   return (
     <div>
-      <p>Trainee Dashboard</p>
+      <CurrentMilestone />
     </div>
   );
 };
