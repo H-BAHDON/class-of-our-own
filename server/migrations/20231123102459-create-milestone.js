@@ -12,6 +12,10 @@ module.exports = {
       cohortId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+          model: 'cohorts',
+          key: 'id',
+        },
       },
       name: {
         type: DataTypes.STRING,

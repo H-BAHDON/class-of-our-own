@@ -14,6 +14,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   Milestone.init(
     {
+      cohortId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
       name: {
         type: DataTypes.STRING,
       },
@@ -26,8 +30,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      tableName: "Milestones",
-      modelName: "Milestones",
+      tableName: "milestones",
+      modelName: "Milestone",
+      underscored: true,
     }
   );
   return Milestone;
