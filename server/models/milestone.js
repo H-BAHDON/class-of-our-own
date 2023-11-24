@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({ Cohort }) {
       // define association here
-      this.belongsTo(Cohort, { foreignKey: "cohrtId" });
+      this.belongsTo(Cohort, { foreignKey: "cohortId" });
     }
   }
   Milestone.init(
@@ -26,8 +26,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      tableName: "milestons",
-      modelName: "Milestone",
+      tableName: "Milestones",
+      modelName: "Milestones",
     }
   );
   return Milestone;
