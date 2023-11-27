@@ -15,10 +15,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Factor.init({
-    name: DataTypes.STRING
+    name: {
+      Type: DataTypes.STRING
+    }
   }, {
     sequelize,
-    tableName: "factors",
+    tableName: "",
     modelName: 'Factor',
   });
   return Factor;

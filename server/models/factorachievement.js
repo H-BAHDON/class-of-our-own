@@ -15,9 +15,15 @@ module.exports = (sequelize, DataTypes) => {
   }
   FactorAchievement.init(
     {
-      userId: DataTypes.INTEGER,
-      factorExpectationId: DataTypes.INTEGER,
-      value: DataTypes.INTEGER,
+      userId: {
+        type: DataTypes.INTEGER,
+      },
+      factorExpectationId: {
+        type: DataTypes.INTEGER,
+      },
+      value: {
+        type: DataTypes.INTEGER,
+      },
     },
     {
       sequelize,

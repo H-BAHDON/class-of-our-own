@@ -1,30 +1,30 @@
 "use strict";
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface, DataYypes) {
+  async up(queryInterface, DataTypes) {
     await queryInterface.createTable("factorExpectations", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: DataYypes.INTEGER,
+        type: DataTypes.INTEGER,
       },
       milestoneId: {
-        type: DataYypes.INTEGER,
+        type: DataTypes.INTEGER,
       },
       factorId: {
-        type: DataYypes.INTEGER,
+        type: DataTypes.INTEGER,
       },
       value: {
-        type: DataYypes.INTEGER,
+        type: DataTypes.INTEGER,
       },
       createdAt: {
         allowNull: false,
-        type: DataYypes.DATE,
+        type: DataTypes.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: DataYypes.DATE,
+        type: DataTypes.DATE,
       },
     });
   },

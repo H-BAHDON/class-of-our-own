@@ -16,9 +16,15 @@ module.exports = (sequelize, DataTypes) => {
   }
   FactorExpectation.init(
     {
-      milestoneId: DataTypes.INTEGER,
-      factorId: DataTypes.INTEGER,
-      value: DataTypes.INTEGER,
+      milestoneId: {
+        type: DataTypes.INTEGER,
+      },
+      factorId: {
+        type: DataTypes.INTEGER,
+      },
+      value: {
+        type: DataTypes.INTEGER,
+      },
     },
     {
       sequelize,
