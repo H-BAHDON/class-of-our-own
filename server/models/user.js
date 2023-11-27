@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({ Cohort, FactorAchievement }) {
       this.belongsTo(Cohort, { foreignKey: "cohortId" });
-      this.hasMany(FactorAchievement, { foreignKey: 'userId' });
+      this.hasMany(FactorAchievement, { foreignKey: "userId" });
     }
   }
   User.init(
@@ -40,10 +40,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       cohortId: {
         type: DataTypes.INTEGER,
-        references: {
-          model: "cohorts",
-          key: "id",
-        },
       },
     },
     {
