@@ -24,7 +24,11 @@ const NavBar = () => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
         position="static"
-        sx={{ backgroundColor: "#FAF9F6", color: "#1c1e21" }}
+        sx={{
+          backgroundColor: "#f0f0f0",
+          padding: "2px",
+          backgroundImage: "linear-gradient(to bottom, #f6f4f4, #e3e2e0)",
+        }}
       >
         <Toolbar>
           <IconButton
@@ -32,7 +36,7 @@ const NavBar = () => {
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 5 }}
+            sx={{ mr: 2 }}
           >
             <div style={{ height: "3.5rem" }}>
               <Logo />
@@ -46,6 +50,14 @@ const NavBar = () => {
           {!loading && (
             <Button
               color="inherit"
+              sx={{
+                color: "#333",
+                textDecoration: "none",
+                margin: "0 10px",
+                "&:hover": {
+                  color: "#555",
+                },
+              }}
               onClick={user ? undefined : handleLoginClick}
             >
               {user && user.userInfo ? (
