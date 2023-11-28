@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Factor.init({
     name: {
-      Type: DataTypes.STRING
+      type: DataTypes.STRING
     }
   }, {
     sequelize,
