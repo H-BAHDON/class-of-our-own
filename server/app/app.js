@@ -6,9 +6,7 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const passwordSetup = require("./middleware/passport");
-const { sequelize, User } = require("../models");
-
-dotenv.config();
+const { sequelize, User, Cohort, Milestone } = require("../models");
 
 const app = express();
 
@@ -45,11 +43,12 @@ app.get("/", (req, res) => {
 const authRoutes = require("./routes/authRoutes");
 const signpostRoute = require("./routes/signpostRoute");
 const userRoutes = require("./routes/userRoute");
+const milestoneRoute = require("./routes/milestone");
 
 app.use("/auth", authRoutes);
 app.use("/signpost", signpostRoute);
 app.use("/user", userRoutes);
-
+app.use("/current-milestone", milestoneRoute);
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
