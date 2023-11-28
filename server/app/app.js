@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const passwordSetup = require("./middleware/passport");
 const { sequelize, User } = require("../models");
+const CodewarsService = require("./CodewarsService");
 
 dotenv.config();
 
@@ -39,6 +40,26 @@ passwordSetup(passport);
 
 app.get("/", (req, res) => {
   res.send("testing");
+});
+
+app.get("/getRank/:traineeCodewarsUsername", async (req, res) => {
+  const traineeCodewarsUsername = req.params.traineeCodewarsUsername;
+
+  try {
+    const user = await User.findOne({
+      where: { traineeCodwarsUsername: traineeCodewarsUsername },
+    });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    const rank = await CodewarsService.getRank(traineeCodewarsUsername);
+
+    res.status(200).json({ rank });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ error: "Failed to fetch Codewars rank." });
+  }
 });
 
 // routes paths
