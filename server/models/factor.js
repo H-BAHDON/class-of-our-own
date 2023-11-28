@@ -22,9 +22,6 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       tableName: "",
       modelName: "Factor",
-  Factor.init({
-    name: {
-      type: DataTypes.STRING
     }
   );
   return Factor;
