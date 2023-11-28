@@ -52,9 +52,23 @@ export default function PostSignup() {
   return (
     <>
       <NavBar />
-      <Box sx={{ maxWidth: 400, margin: "auto", mt: 4 }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "70vh",
+        }}
+      >
         <Paper elevation={3} sx={{ padding: 2 }}>
-          <Tabs value={activeTab} onChange={handleChangeTab} centered>
+          <Tabs
+            value={activeTab}
+            onChange={handleChangeTab}
+            centered
+            textColor="black"
+            TabIndicatorProps={{ style: { background: "red", color: "red" } }}
+          >
             <Tab label="Trainee" />
             <Tab label="Volunteer" />
           </Tabs>
@@ -88,7 +102,8 @@ export default function PostSignup() {
                   type="submit"
                   variant="contained"
                   fullWidth
-                  style={{backgroundColor:"rgb(237,67,67)", color: "white"}}
+                  style={{ backgroundColor: "#ED4343", color: "white" }}
+                  sx={{ mt: 2 }}
                 >
                   Get Started
                 </Button>
