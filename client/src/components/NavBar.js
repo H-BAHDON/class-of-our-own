@@ -1,4 +1,5 @@
 import * as React from "react";
+import GitHubIcon from "@mui/icons-material/GitHub";
 import {
   AppBar,
   Box,
@@ -10,6 +11,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import Logo from "./Logo";
+import GitHubLoginButton from "./GitHubLoginButton";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -22,7 +24,11 @@ const NavBar = () => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
         position="static"
-        sx={{ backgroundColor: "#f8f2ed", color: "#1c1e21" }}
+        sx={{
+          backgroundColor: "#f0f0f0",
+          padding: "2px",
+          backgroundImage: "linear-gradient(to bottom, #f6f4f4, #e3e2e0)",
+        }}
       >
         <Toolbar>
           <IconButton
@@ -32,21 +38,33 @@ const NavBar = () => {
             aria-label="menu"
             sx={{ mr: 2 }}
           >
-            <div style={{ height: "2rem" }}>
+            <div style={{ height: "3.5rem" }}>
               <Logo />
             </div>
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Dashboard
-          </Typography>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1 }}
+          ></Typography>
           {!loading && (
             <Button
               color="inherit"
+              sx={{
+                color: "#333",
+                textDecoration: "none",
+                margin: "0 10px",
+                "&:hover": {
+                  color: "#555",
+                },
+              }}
               onClick={user ? undefined : handleLoginClick}
             >
-              {user && user.userInfo
-                ? `Welcome, ${user.userInfo.name}!`
-                : "Login with GitHub"}
+              {user && user.userInfo ? (
+                `Welcome, ${user.userInfo.name}!`
+              ) : (
+                <GitHubLoginButton />
+              )}
             </Button>
           )}
         </Toolbar>
