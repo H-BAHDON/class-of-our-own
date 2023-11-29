@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box, Typography, Container, SvgIcon} from '@mui/material';
-import "../style.css"
 
 const MainContent = ({ selectedTab }) => {
   console.log('Selected Tab in MainContent:', selectedTab);
