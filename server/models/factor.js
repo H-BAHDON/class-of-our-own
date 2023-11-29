@@ -12,6 +12,11 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(FactorExpectation, { foreignKey: "factorId" });
     }
   }
+
+  Factor.init({
+    name: {
+      type: DataTypes.STRING
+
   Factor.init(
     {
       name: {
@@ -22,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       tableName: "factors",
       modelName: "Factor",
+
     }
   );
   return Factor;

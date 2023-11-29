@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import { Container } from "@mui/material";
 import NavBar from "./components/NavBar";
-import TraineeDashboard from "./pages/TraineeDashboard";
+import TraineeDashboard from "./pages/Trainee_Dashboard/TraineeDashboard.js";
 import Home from "./pages/Home.js";
 import Footer from "./components/Footer.js";
 import { AuthProvider } from './hooks/useAuth.js';
@@ -26,8 +26,9 @@ function App() {
             <Route path="/PostSignup" element={<PostSignup />} />
             <Route path="/trainee/" element={<TraineeDashboard />} />
           </Routes>
-          <Footer />
         </Container>
+        <Footer />
+
       </AuthProvider>
     </Router>
   );
