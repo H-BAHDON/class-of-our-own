@@ -20,11 +20,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      tableName: "",
+      tableName: "factors",
       modelName: "Factor",
-  Factor.init({
-    name: {
-      type: DataTypes.STRING
     }
   );
   return Factor;
