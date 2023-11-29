@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Typography, Container, SvgIcon} from '@mui/material';
+import CurrentMilestone from "../../../components/CurrentMilestone"
 
 const MainContent = ({ selectedTab }) => {
   console.log('Selected Tab in MainContent:', selectedTab);
@@ -23,9 +24,7 @@ const MainContent = ({ selectedTab }) => {
         >
           {selectedTab === 'overview' && (
             <Box>
-              <Typography variant="body1" sx={{ marginBottom: '1.5rem' }}>
-                Hello asdJone Doe, welcome to your awesome dashboard!
-              </Typography>
+            <CurrentMilestone />
             </Box>
           )}
 
