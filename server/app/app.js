@@ -7,7 +7,6 @@ const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const passwordSetup = require("./middleware/passport");
 const CodewarsService = require("./helpers/CodewarsService");
-const PullRequestService = require("./PullRequestService");
 
 dotenv.config();
 const { Op } = require("sequelize");
@@ -57,17 +56,17 @@ const authRoutes = require("./routes/authRoutes");
 const signpostRoute = require("./routes/signpostRoute");
 const userRoutes = require("./routes/userRoute");
 const milestoneRoute = require("./routes/milestone");
-const CodewarsRoutes = require("./routes/codewarsRoutes")
-const PullRequestRoutes = require("./routes/pullRequestRoutes")
+const CodewarsRoutes = require("./routes/codewarsRoutes");
+const PullRequestService = require("./helpers/PullrequestService");
 
 app.use("/auth", authRoutes);
 app.use("/signpost", signpostRoute);
 app.use("/user", userRoutes);
 app.use("/current-milestone", milestoneRoute);
-app.use("/codewars", CodewarsRoutes )
+app.use("/codewars", CodewarsRoutes);
 
 app.get("/getAllPullRequest/:GithubAccount", async (req, res) => {
-  const traineeGithubAccount = req.params.GithubAccount;
+  const traineeGithubAccount = req.params.GithubAccount.toString();
 
   try {
     const user = await User.findOne({
@@ -77,12 +76,15 @@ app.get("/getAllPullRequest/:GithubAccount", async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
-    const getAllPullReques = await PullRequestService.getAllPullRequest(traineeGithubAccount);
+
+    const getAllPullReques = await PullRequestService.getAllPullRequest(
+      traineeGithubAccount
+    );
 
     res.status(200).json({ getAllPullReques });
   } catch (error) {
     console.error(error.message);
-    res.status(500).json({ error: "Failed to fetch Codewars rank." });
+    res.status(500).json({ error: "Failed to fetch pull requests" });
   }
 });
 
