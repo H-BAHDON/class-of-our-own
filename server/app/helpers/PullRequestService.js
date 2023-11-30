@@ -30,9 +30,20 @@ class PullRequestService {
         }));
       return filteredData;
     } catch (error) {
-      throw new Error(`Error fetching All pull Requests: ${error.message}`);
+      throw new Error(`Error fetching All cloned pull Requests: ${error.message}`);
     }
   }
+
+  static async getAllPullRequestForCYF(getAllClonePRs) {
+    try {
+      const getAllPullRequest = getAllClonePRs;
+      
+    } catch (error) {
+      throw new Error(`Error fetching All pull Requests for CYF: ${error.message}`);
+    }
+  }
+
+
 }
 
 module.exports = PullRequestService;

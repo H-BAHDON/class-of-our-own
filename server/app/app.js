@@ -83,7 +83,7 @@ app.get("/getAllPullRequest/:GithubAccount", async (req, res) => {
 
     const getAllPullRequestwithClone = await PullRequestService.getAllPullRequestWithClone(getAllPullReques);
 
-    
+    const getAllPullRequestForCYF = await PullRequestService.getAllPullRequestForCYF(getAllPullRequestwithClone)
     res.status(200).json( getAllPullRequestwithClone );
   } catch (error) {
     console.error(error.message);
