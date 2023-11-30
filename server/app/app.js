@@ -80,7 +80,11 @@ app.get("/getAllPullRequest/:GithubAccount", async (req, res) => {
     const getAllPullReques = await PullRequestService.getAllPullRequest(
       traineeGithubAccount
     );
-    res.status(200).json({ getAllPullReques });
+
+    const getAllPullRequestwithClone = await PullRequestService.getAllPullRequestWithClone(getAllPullReques);
+
+    
+    res.status(200).json( getAllPullRequestwithClone );
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ error: "Failed to fetch pull requests" });
