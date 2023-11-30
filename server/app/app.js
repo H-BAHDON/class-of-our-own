@@ -80,7 +80,6 @@ app.get("/getAllPullRequest/:GithubAccount", async (req, res) => {
     const getAllPullReques = await PullRequestService.getAllPullRequest(
       traineeGithubAccount
     );
-
     res.status(200).json({ getAllPullReques });
   } catch (error) {
     console.error(error.message);
