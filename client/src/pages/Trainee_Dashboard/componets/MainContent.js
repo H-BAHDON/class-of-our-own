@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Typography, Container, SvgIcon} from '@mui/material';
 import CurrentMilestone from "../../../components/CurrentMilestone"
-
+import CodewarsFactor from "../../../components/CodewarsFactor"
 const MainContent = ({ selectedTab }) => {
   console.log('Selected Tab in MainContent:', selectedTab);
 
@@ -24,7 +24,13 @@ const MainContent = ({ selectedTab }) => {
         >
           {selectedTab === 'overview' && (
             <Box>
-            <CurrentMilestone />
+              <CurrentMilestone />
+            </Box>
+          )}
+
+          {selectedTab === 'overview' && (
+            <Box>
+            <CodewarsFactor />
             </Box>
           )}
 
@@ -40,6 +46,6 @@ const MainContent = ({ selectedTab }) => {
       </Box>
     </Container>
   );
-};
+}; 
 
 export default MainContent;
