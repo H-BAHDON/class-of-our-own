@@ -7,9 +7,16 @@ import {
   ListItemText,
   Divider,
   Box,
+  Button,
 } from "@mui/material";
 
+import {useAuth} from "../../../hooks/useAuth"
+
 const Sidebar = ({ selectedTab, onTabClick }) => {
+
+  const { user } = useAuth();
+  const userInfo = user?.userInfo;
+
   const handleTabClick = (tab) => {
     onTabClick(tab);
   };
@@ -54,9 +61,9 @@ const Sidebar = ({ selectedTab, onTabClick }) => {
       <Box sx={{ position: "absolute", bottom: 0, left: 0, right: 0, p: 3, display: "flex", justifyContent: "center", alignItems: "flex-end", flexDirection: "column" }}>
         <Box sx={{ mb: 2, borderBottom: "1px solid #2a2b3c", margin: "2px" }}>
           <Typography variant="subtitle1" >
-            Name Goes here
+          {userInfo.name}
           </Typography>
-          <Typography variant="body2">Lorem ipsum dolor siasdasdasdas</Typography>
+          <Button variant="body2">logout</Button>
         </Box>
       </Box>
     </Paper>
