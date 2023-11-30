@@ -11,3 +11,14 @@ body{
   background-color: #fefbfb;
   font-family: "Roboto";
 }
+@media (max-width: 599px) {
+  .left-side {
+    text-align: center;
+    margin-left: 0;
+  }
+
+  .centered {
+    text-align: center;
+    margin: 0 auto;
+  }
+}

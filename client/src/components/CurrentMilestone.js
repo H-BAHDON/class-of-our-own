@@ -12,14 +12,11 @@ const CurrentMilestone = () => {
     instant
       .get("/current-milestone")
       .then((data) => {
-        console.log(data);
         setIsLoading(false);
         setCurrentMilestoneData(data);
-        console.log(currentMilestoneData);
       })
       .catch((error) => {
         setIsLoading(false);
-        console.log(error);
       });
   }, []);
 
