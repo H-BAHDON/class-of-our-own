@@ -1,41 +1,55 @@
 import React, { useState, useEffect } from "react";
+import { CircularProgress, Typography, Paper, LinearProgress } from "@mui/material";
 import axios from "../config/configAxios";
 import { useAuth } from "../hooks/useAuth";
 
 const CodewarsFactor = () => {
   const [codewarsFactor, setCodewarsFactor] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const { user, login, loading } = useAuth();
+  const { user, loading } = useAuth();
 
-  // const email = user.userInfo.email
-  const email = "seyyednavidhejazijouybari@gmail.com";
+  const userInfo = user?.userInfo;
+
+
 
   useEffect(() => {
-    setIsLoading(true);
-    const instant = axios.configAxios();
-    instant
-      .get(`/getRankAndFactorExpectation/${email}`)
-      .then((data) => {
-        setCodewarsFactor(data.data);
+    const fetchData = async () => {
+      setIsLoading(true);
+
+      try {
+        // Use user.traineeCodwarsUsername in the API request
+        const response = await axios.configAxios().get(`/codewars/${userInfo.traineeCodwarsUsername}`);
+        setCodewarsFactor(response.data);
         setIsLoading(false);
-      })
-      .catch((error) => {
+      } catch (error) {
+        console.error("Error fetching data:", error.response?.data || error.message);
         setIsLoading(false);
-      });
-  }, []);
+      }
+    };
+
+    if (!loading) {
+      fetchData();
+    }
+  }, [user, loading]);
 
   return (
     <>
       {isLoading ? (
-        <p>Loading...</p>
+        <CircularProgress />
       ) : (
-        <div style={{ textAlign: "center" }}>
-          <p>Rank: {codewarsFactor.rank}</p>
-          <p>Factor Name: {codewarsFactor.factorName}</p>
-          <p>
-            Factor Expectation Value: {codewarsFactor.factorExpectationValue}
-          </p>
-        </div>
+        <Paper style={{ textAlign: "center", padding: "16px" }}>
+          <Typography variant="h6">Rank: {codewarsFactor?.rank}</Typography>
+          <Typography variant="body1">Factor Name: {codewarsFactor?.factorName}</Typography>
+          <Typography variant="body1">
+            Factor Expectation Value: {codewarsFactor?.factorExpectationValue}
+          </Typography>
+
+          <LinearProgress
+            variant="determinate"
+            value={codewarsFactor?.factorExpectationValue}
+            sx={{ marginTop: 2 }}
+          />
+        </Paper>
       )}
     </>
   );
