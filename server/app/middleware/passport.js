@@ -14,7 +14,9 @@ module.exports = function () {
       },
       async function (accessToken, refreshToken, profile, done) {
         try {
-          const login = profile.login || profile.id.toString(); 
+          const login = profile._json.login;
+
+          console.log("jshdfsjfj", login)
 
           if (!login) {
             console.error('GitHub profile does not contain a login:', profile);
@@ -47,7 +49,7 @@ module.exports = function () {
   );
 
   passport.serializeUser(function (user, done) {
-    done(null, user.id); 
+    done(null, user.id);
   });
 
   passport.deserializeUser(function (id, done) {
