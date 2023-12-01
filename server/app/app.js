@@ -57,7 +57,7 @@ const signpostRoute = require("./routes/signpostRoute");
 const userRoutes = require("./routes/userRoute");
 const milestoneRoute = require("./routes/milestone");
 const CodewarsRoutes = require("./routes/codewarsRoutes");
-const PullRequestService = require("./helpers/PullrequestService");
+const ReposService = require("./helpers/ReposService");
 
 app.use("/auth", authRoutes);
 app.use("/signpost", signpostRoute);
@@ -65,7 +65,7 @@ app.use("/user", userRoutes);
 app.use("/current-milestone", milestoneRoute);
 app.use("/codewars", CodewarsRoutes);
 
-app.get("/getAllPullRequest/:GithubAccount", async (req, res) => {
+app.get("/getAllRepos/:GithubAccount", async (req, res) => {
   const traineeGithubAccount = req.params.GithubAccount;
 
   try {
@@ -76,23 +76,18 @@ app.get("/getAllPullRequest/:GithubAccount", async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
-
-    const getAllPullReques = await PullRequestService.getAllPullRequest(
-      traineeGithubAccount
+    const getAllRepos = await ReposService.getAllRepos(traineeGithubAccount);
+    const getAllReposwithClone = await ReposService.getAllReposWithClone(
+      getAllRepos
     );
-    const getAllPullRequestwithClone =
-      await PullRequestService.getAllPullRequestWithClone(getAllPullReques);
-
-    const getAllPullRequestForCYF =
-      await PullRequestService.getAllPullRequestForCYF(
-        getAllPullRequestwithClone
-      );
-
-    const getTrainnePullRequestNumber =
-      await PullRequestService.getTrainnePullRequestNumber(
-        getAllPullRequestForCYF
-      );
-    res.status(200).json(getTrainnePullRequestNumber);
+    const getAllReposForCYF = await ReposService.getAllReposForCYF(
+      getAllReposwithClone
+    );
+    res.status(200).json(getAllReposForCYF);
+    const getTrainneReposNumber = await ReposService.getTrainneReposNumber(
+      getAllReposForCYF
+    );
+    // res.status(200).json(getTrainneReposNumber);
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ error: "Failed to fetch pull requests" });

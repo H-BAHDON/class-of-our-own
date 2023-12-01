@@ -1,5 +1,5 @@
-class PullRequestService {
-  static async getAllPullRequest(githubAccount) {
+class ReposService {
+  static async getAllRepos(githubAccount) {
     try {
       const apiUrl = `https://api.github.com/users/${githubAccount}/repos`;
       const response = await fetch(apiUrl);
@@ -7,19 +7,18 @@ class PullRequestService {
         const data = await response.json();
         return data;
       } else {
-        throw new Error("Failed to fetch pull requests.");
+        throw new Error("Failed to fetch repos.");
       }
     } catch (error) {
       throw new Error(
-        `Error fetching for getting All pull Requests: ${error.message}`
+        `Error fetching for getting All repos: ${error.message}`
       );
     }
   }
 
-  static async getAllPullRequestWithClone(getAllPRs) {
+  static async getAllReposWithClone(getAllRepos) {
     try {
-      const getAllPullRequest = getAllPRs;
-      const filteredData = getAllPullRequest
+      const filteredData = getAllRepos
         //Check fork = true for repos
         .filter((repo) => repo.fork)
         // Get necessary properties
@@ -33,15 +32,15 @@ class PullRequestService {
       return filteredData;
     } catch (error) {
       throw new Error(
-        `Error for getting All cloned pull Requests: ${error.message}`
+        `Error for getting All cloned repos: ${error.message}`
       );
     }
   }
 
-  static async getAllPullRequestForCYF(getAllClonePRs) {
+  static async getAllReposForCYF(getAllCloneRepos) {
     let CYFRepos;
     try {
-      const getAllPullRequest = getAllClonePRs;
+      const getAllPullRequest = getAllCloneRepos;
       CYFRepos = getAllPullRequest.filter(async (repo) => {
         const apiUrl = `https://api.github.com/repos/${repo.full_name}`;
         const response = await fetch(apiUrl);
@@ -54,28 +53,28 @@ class PullRequestService {
           return null;
         } else {
           throw new Error(
-            "Failed to fetch pull requests for getting parent details"
+            "Failed to fetch repos for getting parent details"
           );
         }
       });
       return CYFRepos;
     } catch (error) {
       throw new Error(
-        `Error fetching for getting All pull Requests for CYF: ${error.message}`
+        `Error fetching for getting All repos for CYF: ${error.message}`
       );
     }
   }
 
-  static async getTrainnePullRequestNumber(getAllPRsForCYF) {
+  static async getTrainneReposNumber(getAllReposForCYF) {
     try {
-      const PRsNumber = getAllPRsForCYF.length;
-      return PRsNumber;
+      const ReposNumber = getAllReposForCYF.length;
+      return ReposNumber;
     } catch (error) {
       throw new Error(
-        `Error for getting numaber of CYF's pull request: ${error.message}`
+        `Error for getting numaber of CYF's repos: ${error.message}`
       );
     }
   }
 }
 
-module.exports = PullRequestService;
+module.exports = ReposService;
