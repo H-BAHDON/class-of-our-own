@@ -66,7 +66,7 @@ app.use("/current-milestone", milestoneRoute);
 app.use("/codewars", CodewarsRoutes);
 
 app.get("/getAllPullRequest/:GithubAccount", async (req, res) => {
-  const traineeGithubAccount = req.params.GithubAccount.toString();
+  const traineeGithubAccount = req.params.GithubAccount;
 
   try {
     const user = await User.findOne({
@@ -80,11 +80,14 @@ app.get("/getAllPullRequest/:GithubAccount", async (req, res) => {
     const getAllPullReques = await PullRequestService.getAllPullRequest(
       traineeGithubAccount
     );
+    const getAllPullRequestwithClone =
+      await PullRequestService.getAllPullRequestWithClone(getAllPullReques);
 
-    const getAllPullRequestwithClone = await PullRequestService.getAllPullRequestWithClone(getAllPullReques);
-
-    const getAllPullRequestForCYF = await PullRequestService.getAllPullRequestForCYF(getAllPullRequestwithClone)
-    res.status(200).json( getAllPullRequestwithClone );
+    const getAllPullRequestForCYF =
+      await PullRequestService.getAllPullRequestForCYF(
+        getAllPullRequestwithClone
+      );
+    res.status(200).json(getAllPullRequestForCYF);
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ error: "Failed to fetch pull requests" });
