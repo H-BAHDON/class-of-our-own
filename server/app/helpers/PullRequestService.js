@@ -1,7 +1,6 @@
 class PullRequestService {
   static async getAllPullRequest(githubAccount) {
     try {
-      
       const apiUrl = `https://api.github.com/users/${githubAccount}/repos`;
       const response = await fetch(apiUrl);
       if (response.ok) {
@@ -11,7 +10,9 @@ class PullRequestService {
         throw new Error("Failed to fetch pull requests.");
       }
     } catch (error) {
-      throw new Error(`Error fetching All pull Requests: ${error.message}`);
+      throw new Error(
+        `Error fetching for getting All pull Requests: ${error.message}`
+      );
     }
   }
 
@@ -32,7 +33,7 @@ class PullRequestService {
       return filteredData;
     } catch (error) {
       throw new Error(
-        `Error fetching All cloned pull Requests: ${error.message}`
+        `Error for getting All cloned pull Requests: ${error.message}`
       );
     }
   }
@@ -47,9 +48,10 @@ class PullRequestService {
         if (response.ok) {
           const data = await response.json();
           if (data.parent.full_name.includes("CodeYourFuture")) {
+            // repo.parent = data.parent.full_name;
             return repo;
           }
-          return data;
+          return null;
         } else {
           throw new Error(
             "Failed to fetch pull requests for getting parent details"
@@ -59,7 +61,18 @@ class PullRequestService {
       return CYFRepos;
     } catch (error) {
       throw new Error(
-        `Error fetching All pull Requests for CYF: ${error.message}`
+        `Error fetching for getting All pull Requests for CYF: ${error.message}`
+      );
+    }
+  }
+
+  static async getTrainnePullRequestNumber(getAllPRsForCYF) {
+    try {
+      const PRsNumber = getAllPRsForCYF.length;
+      return PRsNumber;
+    } catch (error) {
+      throw new Error(
+        `Error for getting numaber of CYF's pull request: ${error.message}`
       );
     }
   }

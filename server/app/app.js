@@ -87,7 +87,9 @@ app.get("/getAllPullRequest/:GithubAccount", async (req, res) => {
       await PullRequestService.getAllPullRequestForCYF(
         getAllPullRequestwithClone
       );
-    res.status(200).json(getAllPullRequestForCYF);
+    
+      const getTrainnePullRequestNumber = await PullRequestService.PullRequestService(getAllPullRequestForCYF)
+    res.status(200).json(getTrainnePullRequestNumber);
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ error: "Failed to fetch pull requests" });
