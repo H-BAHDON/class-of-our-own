@@ -17,7 +17,7 @@ module.exports = {
       [
         {
           id: 1,
-          name: "London-10",
+          name: "London10",
           createdAt: "2023-11-24 13:58:02.692175+00",
           updatedAt: "2023-11-24 13:58:02.692175+00",
         },
