@@ -56,12 +56,14 @@ const signpostRoute = require("./routes/signpostRoute");
 const userRoutes = require("./routes/userRoute");
 const milestoneRoute = require("./routes/milestone");
 const CodewarsRoutes = require("./routes/codewarsRoutes")
+const CohortsRoutes = require("./routes/cohortsRoutes")
 
 app.use("/auth", authRoutes);
 app.use("/signpost", signpostRoute);
 app.use("/user", userRoutes);
 app.use("/current-milestone", milestoneRoute);
-app.use("/codewars", CodewarsRoutes )
+app.use("/codewars", CodewarsRoutes)
+app.use("/cohorts", CohortsRoutes)
 
 
 // Error handling middleware
