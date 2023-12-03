@@ -82,7 +82,17 @@ export default function SideBar() {
   return (
     <Box sx={{ position: "relative", zIndex: 900 }}>
       <CssBaseline />
-      <Drawer variant="permanent" open={open}>
+      <Drawer
+        PaperProps={{
+          sx: {
+            height: "calc(100% - 70px)",
+
+            top: 70,
+          },
+        }}
+        variant="permanent"
+        open={open}
+      >
         <DrawerHeader>
           <IconButton onClick={open ? handleDrawerClose : handleDrawerOpen}>
             {open ? (

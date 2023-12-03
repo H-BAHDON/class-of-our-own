@@ -9,7 +9,15 @@ const NavBar = () => {
   const { user, loading } = useAuth();
 
   return (
-    <Box sx={{ position: "relative", zIndex: 1000 }}>
+    <Box
+      sx={{
+        position: "fixed",
+        zIndex: 1000,
+        top: 0,
+        width: "100vw",
+        maxHeight: "65px",
+      }}
+    >
       <AppBar
         position="static"
         sx={{
