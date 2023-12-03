@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { CircularProgress, Typography, Paper, LinearProgress } from "@mui/material";
+import {
+  CircularProgress,
+  Typography,
+  Paper,
+  LinearProgress,
+} from "@mui/material";
 import axios from "../config/configAxios";
 import { useAuth } from "../hooks/useAuth";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const CodewarsFactor = () => {
   const [codewarsFactor, setCodewarsFactor] = useState(null);
@@ -10,19 +16,22 @@ const CodewarsFactor = () => {
 
   const userInfo = user?.userInfo;
 
-
-
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
 
       try {
         // Use user.traineeCodwarsUsername in the API request
-        const response = await axios.configAxios().get(`/codewars/${userInfo.traineeCodwarsUsername}`);
+        const response = await axios
+          .configAxios()
+          .get(`/codewars/${userInfo.traineeCodwarsUsername}`);
         setCodewarsFactor(response.data);
         setIsLoading(false);
       } catch (error) {
-        console.error("Error fetching data:", error.response?.data || error.message);
+        console.error(
+          "Error fetching data:",
+          error.response?.data || error.message
+        );
         setIsLoading(false);
       }
     };
@@ -39,9 +48,15 @@ const CodewarsFactor = () => {
       ) : (
         <Paper style={{ textAlign: "center", padding: "16px" }}>
           <Typography variant="h6">Rank: {codewarsFactor?.rank}</Typography>
-          <Typography variant="body1">Factor Name: {codewarsFactor?.factorName}</Typography>
+          <Typography variant="body1">
+            Factor Name: {codewarsFactor?.factorName}
+          </Typography>
           <Typography variant="body1">
             Factor Expectation Value: {codewarsFactor?.factorExpectationValue}
+            <FontAwesomeIcon
+              icon="fa-solid fa-code-pull-request"
+              style={{ color: "#1c1e21" }}
+            />
           </Typography>
 
           <LinearProgress

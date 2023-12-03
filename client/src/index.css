@@ -11,9 +11,17 @@ body{
   background-color: #fefbfb;
   font-family: "Roboto";
 }
+
+/* dashboard */
+.content {
+  border: 1px solid;
+}
 .dashboard-titles {
   padding-bottom: 0.5rem;
 }
+
+/* table style */
+
 .table-container {
   width: 100%;
   background-color: #f5f5f5;
@@ -51,3 +59,14 @@ td {
   border: none;
 }
 
+@media (max-width: 599px) {
+  .left-side {
+    text-align: center;
+    margin-left: 0;
+  }
+
+  .centered {
+    text-align: center;
+    margin: 0 auto;
+  }
+}
