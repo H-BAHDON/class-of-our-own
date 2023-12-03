@@ -14,8 +14,12 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import SummarizeIcon from "@mui/icons-material/Summarize";
-import ChecklistIcon from "@mui/icons-material/Checklist";
 import MainContent from "./MainContent";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCodePullRequest,
+  faListCheck,
+} from "@fortawesome/free-solid-svg-icons";
 
 const drawerWidth = 240;
 
@@ -156,7 +160,14 @@ export default function SideBar({ selectedTab, onTabClick }) {
                   justifyContent: "center",
                 }}
               >
-                <ChecklistIcon />
+                <FontAwesomeIcon
+                  icon={faCodePullRequest}
+                  style={{
+                    color: "rgba(0, 0, 0, 0.54)",
+                    paddingLeft: "2px",
+                    paddingRight: "5px",
+                  }}
+                />
               </ListItemIcon>
               <ListItemText
                 primary="PR Details"
@@ -185,7 +196,14 @@ export default function SideBar({ selectedTab, onTabClick }) {
                   justifyContent: "center",
                 }}
               >
-                <SummarizeIcon />
+                <FontAwesomeIcon
+                  icon={faListCheck}
+                  style={{
+                    color: "rgba(0, 0, 0, 0.54)",
+                    paddingLeft: "2px",
+                    paddingRight: "5px",
+                  }}
+                />
               </ListItemIcon>
               <ListItemText
                 primary="Milestones"

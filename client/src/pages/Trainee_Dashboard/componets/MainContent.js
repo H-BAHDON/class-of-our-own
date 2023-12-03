@@ -12,7 +12,7 @@ const MainContent = ({ selectedTab }) => {
         className="content"
         sx={{
           padding: "1.5rem",
-          backgroundColor: "white",
+          backgroundColor: "#fffdfd",
           width: "100%",
           maxWidth: "100%",
         }}
@@ -34,7 +34,7 @@ const MainContent = ({ selectedTab }) => {
                 sx={{
                   flex: "1 1 calc(50% - 0.5rem)",
                   padding: "1.5rem",
-                  backgroundColor: "lightgrey",
+                  backgroundColor: "#f8f2ed",
                   marginBottom: "1rem",
                 }}
               >
@@ -46,7 +46,7 @@ const MainContent = ({ selectedTab }) => {
                 sx={{
                   flex: "1 1 calc(50% - 0.5rem)",
                   padding: "1.5rem",
-                  backgroundColor: "lightgrey",
+                  backgroundColor: "#f8f2ed",
                   marginBottom: "1rem",
                 }}
               ></Box>
@@ -56,7 +56,7 @@ const MainContent = ({ selectedTab }) => {
                 sx={{
                   flex: "1 1 calc(50% - 0.5rem)",
                   padding: "1.5rem",
-                  backgroundColor: "lightgrey",
+                  backgroundColor: "#f8f2ed",
                   marginBottom: "1rem",
                 }}
               ></Box>
@@ -66,7 +66,7 @@ const MainContent = ({ selectedTab }) => {
                 sx={{
                   flex: "1 1 calc(50% - 0.5rem)",
                   padding: "1.5rem",
-                  backgroundColor: "lightgrey",
+                  backgroundColor: "#f8f2ed",
                   marginBottom: "1rem",
                 }}
               ></Box>

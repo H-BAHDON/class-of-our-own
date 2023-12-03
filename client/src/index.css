@@ -8,14 +8,13 @@
 }
 
 body{
-  background-color: #fefbfb;
+  background-color: #fffdfd;
+ 
   font-family: "Roboto";
 }
 
 /* dashboard */
-.content {
-  border: 1px solid;
-}
+
 .dashboard-titles {
   padding-bottom: 0.5rem;
 }
@@ -24,7 +23,7 @@ body{
 
 .table-container {
   width: 100%;
-  background-color: #f5f5f5;
+  background-color: #f8f5f2;
   
   border-collapse: collapse;
   margin-bottom: 2rem;

@@ -7,7 +7,6 @@ import {
 } from "@mui/material";
 import axios from "../config/configAxios";
 import { useAuth } from "../hooks/useAuth";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const CodewarsFactor = () => {
   const [codewarsFactor, setCodewarsFactor] = useState(null);
@@ -47,17 +46,13 @@ const CodewarsFactor = () => {
         <CircularProgress />
       ) : (
         <Paper style={{ textAlign: "left", padding: "16px" }}>
-          <Typography variant="h6">{codewarsFactor?.factorName}</Typography>
+          <Typography variant="h6"> {codewarsFactor?.factorName}</Typography>
           <Typography variant="body1">
             Current Rank: {codewarsFactor?.rank}
           </Typography>
 
           <Typography variant="body1">
             Expected Rank: {codewarsFactor?.factorExpectationValue}
-            <FontAwesomeIcon
-              icon="fa-solid fa-code-pull-request"
-              style={{ color: "#1c1e21" }}
-            />
           </Typography>
 
           <LinearProgress

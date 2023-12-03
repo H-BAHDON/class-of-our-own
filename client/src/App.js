@@ -28,6 +28,7 @@ function App() {
           style={{
             paddingTop: 75,
             minHeight: "100vh",
+            backgroundColor: "#fffdfd",
           }}
         >
           <Routes>
