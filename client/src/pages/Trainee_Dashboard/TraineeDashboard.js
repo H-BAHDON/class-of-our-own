@@ -13,8 +13,6 @@ const TraineeDashboard = () => {
   return (
     <>
       <Sidebar selectedTab={selectedTab} onTabClick={handleTabClick} />
-
-      <MainContent selectedTab={selectedTab} />
     </>
   );
 };

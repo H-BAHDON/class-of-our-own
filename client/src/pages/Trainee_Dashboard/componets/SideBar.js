@@ -2,7 +2,6 @@ import * as React from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
-import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
 import IconButton from "@mui/material/IconButton";
@@ -13,12 +12,10 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import Divider from "@mui/material/Divider";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import SummarizeIcon from "@mui/icons-material/Summarize";
 import ChecklistIcon from "@mui/icons-material/Checklist";
+import MainContent from "./MainContent";
 
 const drawerWidth = 240;
 
@@ -72,7 +69,7 @@ const Drawer = styled(MuiDrawer, {
 
 export default function SideBar({ selectedTab, onTabClick }) {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -196,10 +193,22 @@ export default function SideBar({ selectedTab, onTabClick }) {
             </ListItemButton>
           </ListItem>
         </List>
-
-        <Divider />
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}></Box>
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          p: 3,
+          width: (theme) => ({
+            width: open
+              ? `calc(100% - ${theme.spacing(20)})`
+              : "calc(100% - 1px)",
+          }),
+          marginLeft: (theme) => (open ? theme.spacing(20) : 1),
+        }}
+      >
+        <MainContent selectedTab={selectedTab} />
+      </Box>
     </Box>
   );
 }
