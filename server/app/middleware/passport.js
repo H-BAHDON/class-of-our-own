@@ -1,7 +1,7 @@
-const passport = require('passport');
-const GitHubStrategy = require('passport-github2').Strategy;
-const { User } = require('../../models');
-require('dotenv').config();
+const passport = require("passport");
+const GitHubStrategy = require("passport-github2").Strategy;
+const { User } = require("../../models");
+require("dotenv").config();
 
 module.exports = function () {
   passport.use(
@@ -9,30 +9,34 @@ module.exports = function () {
       {
         clientID: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
-        callbackURL: 'http://localhost:3001/auth/github/callback',
-        scope: ['user:email'],
+        callbackURL: "http://localhost:3001/auth/github/callback",
+        scope: ["user:email"],
       },
       async function (accessToken, refreshToken, profile, done) {
         try {
           const login = profile._json.login;
 
-          console.log("jshdfsjfj", login)
+          console.log("jshdfsjfj", login);
 
           if (!login) {
-            console.error('GitHub profile does not contain a login:', profile);
-            return done(new Error('GitHub profile does not contain a login'), null);
+            console.error("GitHub profile does not contain a login:", profile);
+            return done(
+              new Error("GitHub profile does not contain a login"),
+              null
+            );
           }
 
           const user = await User.findOne({
             where: { traineeGithubAccount: login },
           });
-
+          
           if (!user) {
             const newUser = await User.create({
               name: profile.displayName,
               email: profile.emails[0].value,
-              role: '',
+              role: "",
               traineeGithubAccount: login,
+              avatar_url: profile.photos[0].value,
               accessToken,
               refreshToken,
             });
@@ -41,7 +45,7 @@ module.exports = function () {
 
           return done(null, user);
         } catch (error) {
-          console.error('GitHub Authentication Error:', error);
+          console.error("GitHub Authentication Error:", error);
           return done(error, null);
         }
       }
