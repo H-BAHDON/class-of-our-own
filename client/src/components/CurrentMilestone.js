@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "../config/configAxios";
 import { Paper, Typography, CircularProgress } from "@mui/material";
+import "../index.css";
 
 const CurrentMilestone = () => {
   const [currentMilestoneData, setCurrentMilestoneData] = useState(null);
@@ -26,22 +27,26 @@ const CurrentMilestone = () => {
   };
 
   return (
-    <div>
+    <div className="table-container">
       {isLoading ? (
         <CircularProgress />
       ) : (
-        <Paper elevation={3} style={{ padding: 20, margin: 20 }}>
-          <Typography variant="h6">
-            Current Milestone: {currentMilestoneData.data.name}
-          </Typography>
-          <Typography variant="body1">
-            Milestone Start Date:{" "}
-            {formatDate(currentMilestoneData.data.startDate)}
-          </Typography>
-          <Typography variant="body1">
-            Milestone End Date: {formatDate(currentMilestoneData.data.endDate)}
-          </Typography>
-        </Paper>
+        <table>
+          <thead>
+            <tr>
+              <th>Milestone</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{currentMilestoneData.data.name}</td>
+              <td>{formatDate(currentMilestoneData.data.startDate)}</td>
+              <td>{formatDate(currentMilestoneData.data.endDate)}</td>
+            </tr>
+          </tbody>
+        </table>
       )}
     </div>
   );

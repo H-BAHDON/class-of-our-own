@@ -8,10 +8,6 @@ const MainContent = ({ selectedTab }) => {
   return (
     <Container>
       <Box sx={{ maxWidth: "90%" }}>
-        <Typography variant="h3" sx={{ marginBottom: "1rem" }}>
-          Welcome to Dashboard
-        </Typography>
-
         <Box
           className="content"
           sx={{
