@@ -10,9 +10,7 @@ class ReposService {
         throw new Error("Failed to fetch repos.");
       }
     } catch (error) {
-      throw new Error(
-        `Error fetching for getting All repos: ${error.message}`
-      );
+      throw new Error(`Error fetching for getting All repos: ${error.message}`);
     }
   }
 
@@ -31,9 +29,7 @@ class ReposService {
         }));
       return filteredData;
     } catch (error) {
-      throw new Error(
-        `Error for getting All cloned repos: ${error.message}`
-      );
+      throw new Error(`Error for getting All cloned repos: ${error.message}`);
     }
   }
 
@@ -47,14 +43,11 @@ class ReposService {
         if (response.ok) {
           const data = await response.json();
           if (data.parent.full_name.includes("CodeYourFuture")) {
-            // repo.parent = data.parent.full_name;
             return repo;
           }
           return null;
         } else {
-          throw new Error(
-            "Failed to fetch repos for getting parent details"
-          );
+          throw new Error("Failed to fetch repos for getting parent details");
         }
       });
       return CYFRepos;
