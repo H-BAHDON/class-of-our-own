@@ -27,27 +27,30 @@ const CurrentMilestone = () => {
   };
 
   return (
-    <div className="table-container">
-      {isLoading ? (
-        <CircularProgress />
-      ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>Milestone</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{currentMilestoneData.data.name}</td>
-              <td>{formatDate(currentMilestoneData.data.startDate)}</td>
-              <td>{formatDate(currentMilestoneData.data.endDate)}</td>
-            </tr>
-          </tbody>
-        </table>
-      )}
+    <div>
+      <h3 className="dashboard-titles">Current Milestone</h3>
+      <div className="table-container">
+        {isLoading ? (
+          <CircularProgress />
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                <th>Milestone</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{currentMilestoneData.data.name}</td>
+                <td>{formatDate(currentMilestoneData.data.startDate)}</td>
+                <td>{formatDate(currentMilestoneData.data.endDate)}</td>
+              </tr>
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   );
 };
