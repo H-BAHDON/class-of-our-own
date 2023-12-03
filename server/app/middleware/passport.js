@@ -25,6 +25,7 @@ module.exports = function () {
               null
             );
           }
+          
 
           const user = await User.findOne({
             where: { traineeGithubAccount: login },
@@ -36,11 +37,11 @@ module.exports = function () {
               email: profile.emails[0].value,
               role: "",
               traineeGithubAccount: login,
-              avatar_url: profile.photos[0].value,
               accessToken,
               refreshToken,
             });
-            return done(null, newUser);
+            const avatar_url = profile.photos[0].value;
+            return done(null, newUser, { avatar_url });
           }
 
           return done(null, user);
