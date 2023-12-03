@@ -93,7 +93,7 @@ export default function SideBar({ selectedTab, onTabClick }) {
         PaperProps={{
           sx: {
             height: "calc(100% - 75px)",
-
+            backgroundColor: "#f8f5f2",
             top: 75,
           },
         }}

@@ -41,14 +41,17 @@ const CodewarsFactor = () => {
     }
   }, [user, loading]);
 
-  // Convert factorExpectationValue to a number
-  const factorValue = parseFloat(codewarsFactor?.factorExpectationValue) || 0;
+  Chart.register(ArcElement, Legend, Tooltip);
+
+  const achievedValue = parseFloat(codewarsFactor?.rank) || 0;
+  const targetValue = parseFloat(codewarsFactor?.factorExpectationValue) || 0;
+  const remainingValue = Math.max(targetValue - achievedValue, 0);
 
   const doughnutData = {
     labels: ["Achieved", "Remaining"],
     datasets: [
       {
-        data: [factorValue, 100 - factorValue],
+        data: [achievedValue, remainingValue],
         backgroundColor: ["#36A2EB", "#FFCE56"],
       },
     ],
@@ -68,14 +71,10 @@ const CodewarsFactor = () => {
             Expected Rank: {codewarsFactor?.factorExpectationValue}
           </Typography>
 
+          {/* Doughnut chart with modified data */}
           <Doughnut data={doughnutData} />
 
-          {/* Ensure the value prop is a number */}
-          <LinearProgress
-            variant="determinate"
-            value={factorValue}
-            sx={{ marginTop: 2 }}
-          />
+          {/* LinearProgress representing the achieved progress */}
         </Paper>
       )}
     </>
