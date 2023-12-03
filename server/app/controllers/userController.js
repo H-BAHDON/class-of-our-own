@@ -26,7 +26,6 @@ async function getUserInfo(req, res) {
       avatar_url,
       traineeCodwarsUsername: user.traineeCodwarsUsername,
     };
-    console.log("gggggggggggggggggg", userInfo);
 
     res.json({ userInfo });
   } catch (error) {

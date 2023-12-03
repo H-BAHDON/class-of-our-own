@@ -56,10 +56,11 @@ const NavBar = () => {
               }}
             >
               Welcome, {user.userInfo.name}!
-              <div style={{ marginLeft: "0.5rem" }}>
+              <div style={{ marginLeft: "0.75rem" }}>
                 <Avatar
                   alt="Trainne github pic"
                   src={user.userInfo.avatar_url}
+                  sx={{ width: 56, height: 56 }}
                 />
               </div>
             </Typography>

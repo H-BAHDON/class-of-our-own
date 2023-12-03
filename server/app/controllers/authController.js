@@ -13,15 +13,10 @@ function GitHubAuthentication(req, res, next) {
 
 async function handleGitHubCallback(req, res) {
   try {
-    console.log("----------------",req);
-    console.log("----------------",req.authInfo.avatar_url);
-    
     const { id, name, email, traineeGithubAccount } = req.user.dataValues;
 
     const avatar_url = req.authInfo.avatar_url;
-    const user = { id, name, email, traineeGithubAccount, avatar_url};
-    console.log("uuuuuuuu", user);
-    
+    const user = { id, name, email, traineeGithubAccount, avatar_url };
 
     const findUser = await User.findOne({ where: { email } });
 

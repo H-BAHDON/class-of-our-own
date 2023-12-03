@@ -25,12 +25,11 @@ module.exports = function () {
               null
             );
           }
-          
 
           const user = await User.findOne({
             where: { traineeGithubAccount: login },
           });
-          
+
           if (!user) {
             const newUser = await User.create({
               name: profile.displayName,
