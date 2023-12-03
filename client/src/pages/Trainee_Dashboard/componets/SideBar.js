@@ -16,6 +16,9 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import Divider from "@mui/material/Divider";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import SummarizeIcon from "@mui/icons-material/Summarize";
+import ChecklistIcon from "@mui/icons-material/Checklist";
 
 const drawerWidth = 240;
 
@@ -67,7 +70,7 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export default function SideBar() {
+export default function SideBar({ selectedTab, onTabClick }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -78,16 +81,18 @@ export default function SideBar() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
+  const handleTabClick = (tab) => {
+    onTabClick(tab);
+  };
   return (
     <Box sx={{ position: "relative", zIndex: 900 }}>
       <CssBaseline />
       <Drawer
         PaperProps={{
           sx: {
-            height: "calc(100% - 70px)",
+            height: "calc(100% - 75px)",
 
-            top: 70,
+            top: 75,
           },
         }}
         variant="permanent"
@@ -107,54 +112,92 @@ export default function SideBar() {
           </IconButton>
         </DrawerHeader>
         <List>
-          {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: "block" }}>
-              <ListItemButton
+          {/* Overview */}
+          <ListItem
+            disablePadding
+            sx={{ display: "block" }}
+            onClick={() => handleTabClick("overview")}
+          >
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
                 sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
                 }}
               >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
+                <DashboardIcon />
+              </ListItemIcon>
+              <ListItemText primary="Overview" sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </ListItem>
+
+          {/* PR Details */}
+          <ListItem
+            disablePadding
+            sx={{ display: "block" }}
+            onClick={() => handleTabClick("prDetails")}
+          >
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <ChecklistIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary="PR Details"
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+            </ListItemButton>
+          </ListItem>
+
+          {/* Milestones */}
+          <ListItem
+            disablePadding
+            sx={{ display: "block" }}
+            onClick={() => handleTabClick("Milestones")}
+          >
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <SummarizeIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary="Milestones"
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+            </ListItemButton>
+          </ListItem>
         </List>
+
         <Divider />
-        <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: "block" }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}></Box>
     </Box>
