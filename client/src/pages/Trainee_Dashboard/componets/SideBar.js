@@ -1,70 +1,152 @@
-import React, { useState } from 'react';
-import {
-  Paper,
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
-  Divider,
-  Box,
-  Button,
-} from "@mui/material";
+import * as React from "react";
+import { styled, useTheme } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import MuiDrawer from "@mui/material/Drawer";
+import Toolbar from "@mui/material/Toolbar";
+import List from "@mui/material/List";
+import CssBaseline from "@mui/material/CssBaseline";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import MailIcon from "@mui/icons-material/Mail";
+import Divider from "@mui/material/Divider";
 
-import {useAuth} from "../../../hooks/useAuth"
+const drawerWidth = 240;
 
-const Sidebar = ({ selectedTab, onTabClick }) => {
+const openedMixin = (theme) => ({
+  width: drawerWidth,
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+  overflowX: "hidden",
+});
 
-  const handleTabClick = (tab) => {
-    onTabClick(tab);
+const closedMixin = (theme) => ({
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  overflowX: "hidden",
+  width: `calc(${theme.spacing(7)} + 1px)`,
+  [theme.breakpoints.up("sm")]: {
+    width: `calc(${theme.spacing(8)} + 1px)`,
+  },
+});
+
+const DrawerHeader = styled("div")(({ theme }) => ({
+  display: "flex",
+
+  alignItems: "center",
+  justifyContent: "flex-end",
+  padding: theme.spacing(0, 1),
+  ...theme.mixins.toolbar,
+}));
+
+const Drawer = styled(MuiDrawer, {
+  shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
+  width: drawerWidth,
+  flexShrink: 0,
+  whiteSpace: "nowrap",
+  boxSizing: "border-box",
+  zIndex: theme.zIndex.drawer,
+  ...(open && {
+    ...openedMixin(theme),
+    "& .MuiDrawer-paper": openedMixin(theme),
+  }),
+  ...(!open && {
+    ...closedMixin(theme),
+    "& .MuiDrawer-paper": closedMixin(theme),
+  }),
+}));
+
+export default function SideBar() {
+  const theme = useTheme();
+  const [open, setOpen] = React.useState(false);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
   };
 
   return (
-    <Paper className='test' elevation={3} sx={{ position: "fixed", top: "auto", left: 0, height: "90%", overflowY: "auto", "width": "10%" }}>
-
-      <List sx={{ pl: 3, pb: 3, paddingLeft: 0, listStyle: "none" }}>
-        <ListItem
-          component="div"
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            padding: ".7rem 1.75rem",
-            cursor: "pointer",
-            backgroundColor: selectedTab === 'overview' ? '#f0f0f0' : 'inherit',
-          }}
-          onClick={() => handleTabClick('overview')}
-        >
-          <i className="uil-estate fa-fw"></i>
-          <ListItemText sx={{ fontSize: "18px", fontFamily: "Montserrat", marginRight: "0.7rem", color: "black" }} primary="Overview" />
-        </ListItem>
-
-        <ListItem
-          component="div"
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            padding: ".7rem 1.75rem",
-            cursor: "pointer",
-            backgroundColor: selectedTab === 'prDetails' ? '#f0f0f0' : 'inherit',
-          }}
-          onClick={() => handleTabClick('prDetails')}
-        >
-          <i className="uil-estate fa-fw"></i>
-          <ListItemText sx={{ fontSize: "18px", fontFamily: "Montserrat", marginRight: "0.7rem", color: "black" }} primary="PR Detail" />
-        </ListItem>
-
+    <Box sx={{ position: "relative", zIndex: 900 }}>
+      <CssBaseline />
+      <Drawer variant="permanent" open={open}>
+        <DrawerHeader>
+          <IconButton onClick={open ? handleDrawerClose : handleDrawerOpen}>
+            {open ? (
+              theme.direction === "rtl" ? (
+                <ChevronRightIcon />
+              ) : (
+                <ChevronLeftIcon />
+              )
+            ) : (
+              <MenuIcon />
+            )}
+          </IconButton>
+        </DrawerHeader>
+        <List>
+          {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+            <ListItem key={text} disablePadding sx={{ display: "block" }}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                </ListItemIcon>
+                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
         <Divider />
-      </List>
-
-      <Box sx={{ position: "absolute", bottom: 0, left: 0, right: 0, p: 3, display: "flex", justifyContent: "center", alignItems: "flex-end", flexDirection: "column" }}>
-        <Box sx={{ mb: 2, borderBottom: "1px solid #2a2b3c", margin: "2px" }}>
-          <Typography variant="subtitle1" >
-          {/* {userInfo.name} */}
-          </Typography>
-          <Button variant="body2">logout</Button>
-        </Box>
-      </Box>
-    </Paper>
+        <List>
+          {["All mail", "Trash", "Spam"].map((text, index) => (
+            <ListItem key={text} disablePadding sx={{ display: "block" }}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                </ListItemIcon>
+                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </Drawer>
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}></Box>
+    </Box>
   );
-};
-
-export default Sidebar;
+}

@@ -1,4 +1,3 @@
-// NavBar.js
 import React from "react";
 import { AppBar, Box, Toolbar, Typography, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +9,7 @@ const NavBar = () => {
   const { user, loading } = useAuth();
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ position: "relative", zIndex: 1000 }}>
       <AppBar
         position="static"
         sx={{
