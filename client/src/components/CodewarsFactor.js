@@ -46,13 +46,14 @@ const CodewarsFactor = () => {
       {isLoading ? (
         <CircularProgress />
       ) : (
-        <Paper style={{ textAlign: "center", padding: "16px" }}>
-          <Typography variant="h6">Rank: {codewarsFactor?.rank}</Typography>
+        <Paper style={{ textAlign: "left", padding: "16px" }}>
+          <Typography variant="h6">{codewarsFactor?.factorName}</Typography>
           <Typography variant="body1">
-            Factor Name: {codewarsFactor?.factorName}
+            Current Rank: {codewarsFactor?.rank}
           </Typography>
+
           <Typography variant="body1">
-            Factor Expectation Value: {codewarsFactor?.factorExpectationValue}
+            Expected Rank: {codewarsFactor?.factorExpectationValue}
             <FontAwesomeIcon
               icon="fa-solid fa-code-pull-request"
               style={{ color: "#1c1e21" }}
