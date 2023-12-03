@@ -7,6 +7,8 @@ import {
 } from "@mui/material";
 import axios from "../config/configAxios";
 import { useAuth } from "../hooks/useAuth";
+import { Doughnut } from "react-chartjs-2";
+import { Chart, ArcElement, Legend, Tooltip } from "chart.js/auto";
 
 const CodewarsFactor = () => {
   const [codewarsFactor, setCodewarsFactor] = useState(null);
@@ -20,7 +22,6 @@ const CodewarsFactor = () => {
       setIsLoading(true);
 
       try {
-        // Use user.traineeCodwarsUsername in the API request
         const response = await axios
           .configAxios()
           .get(`/codewars/${userInfo.traineeCodwarsUsername}`);
@@ -40,24 +41,39 @@ const CodewarsFactor = () => {
     }
   }, [user, loading]);
 
+  // Convert factorExpectationValue to a number
+  const factorValue = parseFloat(codewarsFactor?.factorExpectationValue) || 0;
+
+  const doughnutData = {
+    labels: ["Achieved", "Remaining"],
+    datasets: [
+      {
+        data: [factorValue, 100 - factorValue],
+        backgroundColor: ["#36A2EB", "#FFCE56"],
+      },
+    ],
+  };
+
   return (
     <>
       {isLoading ? (
         <CircularProgress />
       ) : (
         <Paper style={{ textAlign: "left", padding: "16px" }}>
-          <Typography variant="h6"> {codewarsFactor?.factorName}</Typography>
+          <Typography variant="h6">{codewarsFactor?.factorName}</Typography>
           <Typography variant="body1">
             Current Rank: {codewarsFactor?.rank}
           </Typography>
-
           <Typography variant="body1">
             Expected Rank: {codewarsFactor?.factorExpectationValue}
           </Typography>
 
+          <Doughnut data={doughnutData} />
+
+          {/* Ensure the value prop is a number */}
           <LinearProgress
             variant="determinate"
-            value={codewarsFactor?.factorExpectationValue}
+            value={factorValue}
             sx={{ marginTop: 2 }}
           />
         </Paper>
