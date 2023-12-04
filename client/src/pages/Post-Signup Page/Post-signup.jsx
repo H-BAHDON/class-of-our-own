@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -9,14 +9,44 @@ import {
   Paper,
 } from "@mui/material";
 import NavBar from "../../components/NavBar";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 export default function PostSignup() {
   const [activeTab, setActiveTab] = React.useState(0);
   const [codeWarsUsername, setCodeWarsUsername] = useState("");
   const [codilityUsername, setCodilityUsername] = useState("");
+  const [cohorts, setCohorts] = useState([]);
+  // const [selectedCohort, setSelectedCohort] = useState("");
+
+  useEffect(() => {
+    // Fetch cohorts when the component mounts
+    const fetchCohorts = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/cohorts");
+        if (!response.ok) {
+          console.error("Error fetching cohorts:", response.statusText);
+          return;
+        }
+        const responseData = await response.json();
+        console.log(responseData);
+        setCohorts(responseData.getCohorts);
+      } catch (error) {
+        console.error("Error fetching cohorts:", error);
+      }
+    };
+
+    fetchCohorts();
+  },);
 
   const handleChangeTab = (event, newValue) => {
     setActiveTab(newValue);
+  };
+  ///////////
+  const handleCohorts = (event) => {
+    setCohorts(event.target.value);
   };
 
   const handleSubmitForTrainee = async (event) => {
@@ -25,6 +55,7 @@ export default function PostSignup() {
     //   console.error("CodeWars username and Codility username are required.");
     //   return;
     // }
+
     try {
       const response = await fetch("http://localhost:3001/signpost", {
         method: "POST",
@@ -66,7 +97,7 @@ export default function PostSignup() {
             value={activeTab}
             onChange={handleChangeTab}
             centered
-            textColor="black"
+            // textColor="black"
             TabIndicatorProps={{ style: { background: "red", color: "red" } }}
           >
             <Tab label="Trainee" />
@@ -79,7 +110,29 @@ export default function PostSignup() {
                 <Typography variant="h5" align="center" mb={2}>
                   Welcome to CYF Rookie, we need some data
                 </Typography>
-
+                {/* ////////////////////////////////////////////////////// */}
+                <FormControl sx={{ m: "auto", mt: 2, minWidth: 200 }}>
+                  <InputLabel id="demo-simple-select-helper-label">
+                    Cohorts
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-helper-label"
+                    id="demo-simple-select-helper"
+                    value={cohorts}
+                    label="Age"
+                    onChange={handleCohorts}
+                  >
+                    <MenuItem value="" disabled>
+                      Select a Cohort
+                    </MenuItem>
+                    {cohorts.map((cohort) => (
+                      <MenuItem key={cohort.id} value={cohort.name}>
+                        {cohort.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                {/* ---------------------------------------------------- */}
                 <TextField
                   label="Codewars UserName"
                   variant="outlined"
