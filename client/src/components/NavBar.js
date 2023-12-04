@@ -1,6 +1,13 @@
 // NavBar.js
 import React from "react";
-import { AppBar, Box, Toolbar, Typography, IconButton } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  Typography,
+  IconButton,
+  Avatar,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import Logo from "./Logo";
@@ -39,9 +46,23 @@ const NavBar = () => {
             <Typography
               variant="h6"
               component="div"
-              sx={{ color: "black", fontSize: "1rem" }}
+              sx={{
+                color: "black",
+                fontSize: "1rem",
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
             >
               Welcome, {user.userInfo.name}!
+              <div style={{ marginLeft: "0.75rem" }}>
+                <Avatar
+                  alt="Trainne github pic"
+                  src={user.userInfo.avatar_url}
+                  sx={{ width: 56, height: 56 }}
+                />
+              </div>
             </Typography>
           )}
         </Toolbar>
