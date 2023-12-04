@@ -72,7 +72,6 @@ export default function PostSignup() {
           codeWarsUsername,
           codilityUsername,
           cohortId: selectedCohort.id,
-          role: "trainee",
         }),
         credentials: "include",
       });
@@ -105,7 +104,7 @@ export default function PostSignup() {
             value={activeTab}
             onChange={handleChangeTab}
             centered
-            // textColor="black"
+            textColor="black"
             TabIndicatorProps={{ style: { background: "red", color: "red" } }}
           >
             <Tab label="Trainee" />
@@ -118,6 +117,7 @@ export default function PostSignup() {
                 <Typography variant="h5" align="center" mb={2}>
                   Welcome to CYF Rookie, we need some data
                 </Typography>
+
                 <FormControl sx={{ m: "auto", mt: 2, minWidth: 200 }}>
                   <InputLabel id="demo-simple-select-helper-label">
                     Cohorts
