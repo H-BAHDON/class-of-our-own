@@ -15,8 +15,8 @@ const MainContent = ({ selectedTab, open }) => {
         className="content"
         sx={{
           padding: "1.5rem",
-          backgroundColor: "#fffdfd",
-          width: "100%",
+          backgroundColor: "#faf8f6",
+
           maxWidth: "100%",
         }}
       >

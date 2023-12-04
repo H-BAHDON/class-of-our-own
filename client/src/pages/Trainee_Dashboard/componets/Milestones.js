@@ -48,7 +48,7 @@ export default function Milestones() {
             <TableCell>Attendance</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
+        <TableBody sx={{ backgroundColor: "#fafafa" }}>
           {rows.map((row) => (
             <TableRow
               key={row.no}

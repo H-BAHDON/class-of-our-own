@@ -10,6 +10,7 @@ font-family: 'Montserrat', sans-serif;
 body{
 font-family: 'Montserrat', sans-serif;
 background-color: #faf8f6;
+background-color: #fafafa;
 }
 
 /* dashboard */
@@ -22,7 +23,7 @@ background-color: #faf8f6;
 
 .table-container {
   width: 100%;
-  background-color: #f8f5f2;
+  background-color: #f1eeeb;
   border-collapse: collapse;
   margin-bottom: 2rem;
 

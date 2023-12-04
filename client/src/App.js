@@ -32,7 +32,8 @@ function MainContent() {
         style={{
           paddingTop: 75,
           minHeight: "100vh",
-          backgroundColor: "#fffdfd",
+          backgroundColor: "#faf8f6",
+          width: "100vw",
         }}
       >
         <Routes>
