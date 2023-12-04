@@ -7,6 +7,7 @@ import Home from "./pages/Home.js";
 import Footer from "./components/Footer.js";
 import { AuthProvider, useAuth } from "./hooks/useAuth.js";
 import PostSignup from "./pages/Post-Signup Page/Post-signup.jsx";
+
 function App() {
   return (
     <Router>
@@ -21,8 +22,7 @@ function MainContent() {
   const { user } = useAuth();
 
   const shouldRenderNavBar = () => {
-    const excludedRoutes = ["/PostSignup"];
-    return !excludedRoutes.includes(window.location.pathname);
+    return true;
   };
 
   return (

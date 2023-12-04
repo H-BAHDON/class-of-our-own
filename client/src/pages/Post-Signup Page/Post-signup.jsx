@@ -8,7 +8,6 @@ import {
   Tab,
   Paper,
 } from "@mui/material";
-import NavBar from "../../components/NavBar";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -90,10 +89,11 @@ export default function PostSignup() {
 
   return (
     <>
-      <NavBar />
+  
       <Box
         sx={{
           display: "flex",
+          paddingTop: "5rem",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
