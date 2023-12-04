@@ -46,7 +46,6 @@ const closedMixin = (theme) => ({
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
-
   alignItems: "center",
   justifyContent: "flex-end",
   padding: theme.spacing(0, 1),
@@ -83,9 +82,11 @@ export default function SideBar({ selectedTab, onTabClick }) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
   const handleTabClick = (tab) => {
     onTabClick(tab);
   };
+
   return (
     <Box sx={{ position: "relative", zIndex: 900 }}>
       <CssBaseline />
@@ -93,7 +94,7 @@ export default function SideBar({ selectedTab, onTabClick }) {
         PaperProps={{
           sx: {
             height: "calc(100% - 75px)",
-            backgroundColor: "#f8f5f2",
+            backgroundColor: "#f7f6f5",
             top: 75,
           },
         }}
@@ -122,9 +123,12 @@ export default function SideBar({ selectedTab, onTabClick }) {
           >
             <ListItemButton
               sx={{
-                minHeight: 48,
+                minHeight: 40, // Adjusted height
                 justifyContent: open ? "initial" : "center",
                 px: 2.5,
+                borderRadius: "5px",
+                backgroundColor:
+                  selectedTab === "overview" ? "#a00000" : "transparent", // Slightly lighter color
               }}
             >
               <ListItemIcon
@@ -132,11 +136,18 @@ export default function SideBar({ selectedTab, onTabClick }) {
                   minWidth: 0,
                   mr: open ? 3 : "auto",
                   justifyContent: "center",
+                  color: selectedTab === "overview" ? "white" : "",
                 }}
               >
                 <DashboardIcon />
               </ListItemIcon>
-              <ListItemText primary="Overview" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText
+                primary="Overview"
+                sx={{
+                  opacity: open ? 1 : 0,
+                  color: selectedTab === "overview" ? "white" : "",
+                }}
+              />
             </ListItemButton>
           </ListItem>
 
@@ -148,9 +159,12 @@ export default function SideBar({ selectedTab, onTabClick }) {
           >
             <ListItemButton
               sx={{
-                minHeight: 48,
+                minHeight: 40, // Adjusted height
                 justifyContent: open ? "initial" : "center",
                 px: 2.5,
+                borderRadius: "5px",
+                backgroundColor:
+                  selectedTab === "prDetails" ? "#a00000" : "transparent", // Slightly lighter color
               }}
             >
               <ListItemIcon
@@ -158,12 +172,13 @@ export default function SideBar({ selectedTab, onTabClick }) {
                   minWidth: 0,
                   mr: open ? 3 : "auto",
                   justifyContent: "center",
+                  color: selectedTab === "prDetails" ? "white" : "",
                 }}
               >
                 <FontAwesomeIcon
                   icon={faCodePullRequest}
                   style={{
-                    color: "rgba(0, 0, 0, 0.54)",
+                    color: selectedTab === "prDetails" ? "white" : "",
                     paddingLeft: "2px",
                     paddingRight: "5px",
                   }}
@@ -171,7 +186,10 @@ export default function SideBar({ selectedTab, onTabClick }) {
               </ListItemIcon>
               <ListItemText
                 primary="PR Details"
-                sx={{ opacity: open ? 1 : 0 }}
+                sx={{
+                  opacity: open ? 1 : 0,
+                  color: selectedTab === "prDetails" ? "white" : "",
+                }}
               />
             </ListItemButton>
           </ListItem>
@@ -184,9 +202,12 @@ export default function SideBar({ selectedTab, onTabClick }) {
           >
             <ListItemButton
               sx={{
-                minHeight: 48,
+                minHeight: 40, // Adjusted height
                 justifyContent: open ? "initial" : "center",
                 px: 2.5,
+                borderRadius: "5px",
+                backgroundColor:
+                  selectedTab === "Milestones" ? "#a00000" : "transparent", // Slightly lighter color
               }}
             >
               <ListItemIcon
@@ -194,12 +215,13 @@ export default function SideBar({ selectedTab, onTabClick }) {
                   minWidth: 0,
                   mr: open ? 3 : "auto",
                   justifyContent: "center",
+                  color: selectedTab === "Milestones" ? "white" : "",
                 }}
               >
                 <FontAwesomeIcon
                   icon={faListCheck}
                   style={{
-                    color: "rgba(0, 0, 0, 0.54)",
+                    color: selectedTab === "Milestones" ? "white" : "",
                     paddingLeft: "2px",
                     paddingRight: "5px",
                   }}
@@ -207,7 +229,10 @@ export default function SideBar({ selectedTab, onTabClick }) {
               </ListItemIcon>
               <ListItemText
                 primary="Milestones"
-                sx={{ opacity: open ? 1 : 0 }}
+                sx={{
+                  opacity: open ? 1 : 0,
+                  color: selectedTab === "Milestones" ? "white" : "",
+                }}
               />
             </ListItemButton>
           </ListItem>

@@ -3,6 +3,8 @@ import { Box, Typography, Container, SvgIcon } from "@mui/material";
 import CurrentMilestone from "../../../components/CurrentMilestone";
 import CodewarsFactor from "../../../components/CodewarsFactor";
 import PullRequestFactor from "../../../components/PullRequestFactor";
+import Milestones from "./Milestones";
+import PullRequests from "./PullRequests";
 
 const MainContent = ({ selectedTab, open }) => {
   console.log("Selected Tab in MainContent:", selectedTab);
@@ -24,68 +26,71 @@ const MainContent = ({ selectedTab, open }) => {
               <CurrentMilestone />
             </Box>
           )}
-          <h3 className="dashboard-titles">Current Progress</h3>
+
           {selectedTab === "overview" && (
-            <Box
-              className="factors"
-              sx={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}
-            >
-              {/* First Box with Codewars data */}
+            <Box>
+              <h3 className="dashboard-titles">Current Progress</h3>
               <Box
-                sx={{
-                  flex: "1 1 calc(50% - 0.5rem)",
-                  padding: "1.5rem",
-                  backgroundColor: "#f1e9e3",
-                  marginBottom: "1rem",
-                  maxWidth: open ? "25rem" : "25",
-                }}
+                className="factors"
+                sx={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}
               >
-                <CodewarsFactor open={open} />
+                {/* First Box with Codewars data */}
+                <Box
+                  sx={{
+                    flex: "1 1 calc(50% - 0.5rem)",
+                    padding: "1.5rem",
+                    backgroundColor: "#d5d4d4",
+                    marginBottom: "1rem",
+                    maxWidth: open ? "25rem" : "25",
+                  }}
+                >
+                  <CodewarsFactor open={open} />
+                </Box>
+
+                {/* Second Box (blank) */}
+                <Box
+                  sx={{
+                    flex: "1 1 calc(50% - 0.5rem)",
+                    padding: "1.5rem",
+                    backgroundColor: "#d5d4d4",
+                    marginBottom: "1rem",
+                    maxWidth: open ? "25rem" : "25",
+                  }}
+                >
+                  <PullRequestFactor open={open} />
+                </Box>
+
+                {/* Third Box (blank) */}
+                <Box
+                  sx={{
+                    flex: "1 1 calc(50% - 0.5rem)",
+                    padding: "1.5rem",
+                    backgroundColor: "#d5d4d4",
+                    marginBottom: "1rem",
+                  }}
+                ></Box>
+
+                {/* Fourth Box (blank) */}
+                <Box
+                  sx={{
+                    flex: "1 1 calc(50% - 0.5rem)",
+                    padding: "1.5rem",
+                    backgroundColor: "#d5d4d4",
+                    marginBottom: "1rem",
+                  }}
+                ></Box>
               </Box>
-
-              {/* Second Box (blank) */}
-              <Box
-                sx={{
-                  flex: "1 1 calc(50% - 0.5rem)",
-                  padding: "1.5rem",
-                  backgroundColor: "#f1e9e3",
-                  marginBottom: "1rem",
-                  maxWidth: open ? "25rem" : "25",
-                }}
-              >
-                <PullRequestFactor open={open} />
-              </Box>
-
-              {/* Third Box (blank) */}
-              <Box
-                sx={{
-                  flex: "1 1 calc(50% - 0.5rem)",
-                  padding: "1.5rem",
-                  backgroundColor: "#f1e9e3",
-                  marginBottom: "1rem",
-                }}
-              ></Box>
-
-              {/* Fourth Box (blank) */}
-              <Box
-                sx={{
-                  flex: "1 1 calc(50% - 0.5rem)",
-                  padding: "1.5rem",
-                  backgroundColor: "#f1e9e3",
-                  marginBottom: "1rem",
-                }}
-              ></Box>
             </Box>
           )}
 
           {selectedTab === "prDetails" && (
             <Box>
-              <Typography variant="h4" sx={{ marginBottom: "1.5rem" }}>
-                PR Details Section
-              </Typography>
-              <Typography variant="body1">
-                Content specific to PR Details goes here.
-              </Typography>
+              <PullRequests />
+            </Box>
+          )}
+          {selectedTab === "Milestones" && (
+            <Box>
+              <Milestones />
             </Box>
           )}
         </Box>
