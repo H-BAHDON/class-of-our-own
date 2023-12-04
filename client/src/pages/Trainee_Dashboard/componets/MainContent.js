@@ -4,6 +4,7 @@ import CurrentMilestone from "../../../components/CurrentMilestone";
 import CodewarsFactor from "../../../components/CodewarsFactor";
 import PullRequestFactor from "../../../components/PullRequestFactor";
 import Milestones from "./Milestones";
+import PullRequests from "./PullRequests";
 
 const MainContent = ({ selectedTab, open }) => {
   console.log("Selected Tab in MainContent:", selectedTab);
@@ -84,12 +85,7 @@ const MainContent = ({ selectedTab, open }) => {
 
           {selectedTab === "prDetails" && (
             <Box>
-              <Typography variant="h4" sx={{ marginBottom: "1.5rem" }}>
-                PR Details Section
-              </Typography>
-              <Typography variant="body1">
-                Content specific to PR Details goes here.
-              </Typography>
+              <PullRequests />
             </Box>
           )}
           {selectedTab === "Milestones" && (
