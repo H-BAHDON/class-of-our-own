@@ -49,7 +49,10 @@ export default function PostSignup() {
   };
   
   const handleCohorts = (event) => {
-    setSelectedCohort(event.target.value);
+    const selectedCohortObject = cohorts.find(
+      (cohort) => cohort.name === event.target.value
+    );
+    setSelectedCohort(selectedCohortObject);
   };
 
   const handleSubmitForTrainee = async (event) => {
@@ -68,6 +71,8 @@ export default function PostSignup() {
         body: JSON.stringify({
           codeWarsUsername,
           codilityUsername,
+          cohortId: selectedCohort.id,
+          role: "trainee",
         }),
         credentials: "include",
       });
@@ -120,7 +125,7 @@ export default function PostSignup() {
                   <Select
                     labelId="demo-simple-select-helper-label"
                     id="demo-simple-select-helper"
-                    value={selectedCohort}
+                    value={selectedCohort.name}
                     label="Age"
                     onChange={handleCohorts}
                   >
