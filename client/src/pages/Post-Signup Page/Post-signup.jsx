@@ -43,7 +43,7 @@ export default function PostSignup() {
       }
       const responseData = await response.json();
       console.log(responseData);
-      window.location.href = "http://localhost:3000/trainee";
+      window.location.href = "http://localhost:3000";
     } catch (error) {
       console.error("Error sending data to the backend:", error);
     }
