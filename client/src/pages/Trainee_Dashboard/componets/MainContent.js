@@ -1,13 +1,19 @@
 import React from "react";
-import { Box, Typography, Container, SvgIcon } from "@mui/material";
+import { Box, Typography, Container, SvgIcon, Button } from "@mui/material";
 import CurrentMilestone from "../../../components/CurrentMilestone";
 import CodewarsFactor from "../../../components/CodewarsFactor";
 import PullRequestFactor from "../../../components/PullRequestFactor";
 import Milestones from "./Milestones";
 import PullRequests from "./PullRequests";
+import { useAuth } from '../../../hooks/useAuth'; 
 
 const MainContent = ({ selectedTab, open }) => {
   console.log("Selected Tab in MainContent:", selectedTab);
+  const { logout } = useAuth(); 
+  const handleLogout = () => {
+    // Call the logout function from the useAuth hook
+    logout();
+  };
 
   return (
     <Container>
@@ -69,7 +75,6 @@ const MainContent = ({ selectedTab, open }) => {
                     marginBottom: "1rem",
                   }}
                 ></Box>
-
                 {/* Fourth Box (blank) */}
                 <Box
                   sx={{
@@ -95,6 +100,8 @@ const MainContent = ({ selectedTab, open }) => {
           )}
         </Box>
       </Box>
+      <Button onClick={handleLogout}>Logout</Button>
+
     </Container>
   );
 };
