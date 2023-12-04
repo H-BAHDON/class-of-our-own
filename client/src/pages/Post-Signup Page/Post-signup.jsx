@@ -31,7 +31,7 @@ export default function PostSignup() {
       try {
         const response = await axios
           .configAxios()
-          .get("http://localhost:3001/cohorts");
+          .get("/cohorts");
         setCohorts(response.data.getCohorts);
       } catch (error) {
         console.error(
@@ -43,6 +43,7 @@ export default function PostSignup() {
 
     fetchCohorts();
   }, []);
+
 
   const handleChangeTab = (event, newValue) => {
     setActiveTab(newValue);
