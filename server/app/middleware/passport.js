@@ -34,7 +34,7 @@ module.exports = function () {
             const newUser = await User.create({
               name: profile.displayName,
               email: profile.emails[0].value,
-              role: "",
+              role: "trainee",
               traineeGithubAccount: login,
               accessToken,
               refreshToken,
