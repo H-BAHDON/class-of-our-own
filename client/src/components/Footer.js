@@ -4,6 +4,7 @@ const Footer = () => {
   return (
     <footer
       style={{
+        zIndex: 1000,
         position: "fixed",
         bottom: 0,
         left: 0,
@@ -17,6 +18,7 @@ const Footer = () => {
         lineHeight: "2.5rem",
         fontWeight: "bold",
         fontSize: "0.8rem",
+
       }}
     >
       © 2023 <span style={{ color: "#ED4343" }}>Code</span>YourFuture 'A Class

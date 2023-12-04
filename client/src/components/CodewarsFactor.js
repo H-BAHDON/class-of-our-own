@@ -1,28 +1,37 @@
 import React, { useState, useEffect } from "react";
-import { CircularProgress, Typography, Paper, LinearProgress } from "@mui/material";
+import {
+  CircularProgress,
+  Typography,
+  Paper,
+  LinearProgress,
+} from "@mui/material";
 import axios from "../config/configAxios";
 import { useAuth } from "../hooks/useAuth";
+import { Doughnut } from "react-chartjs-2";
+import { Chart, ArcElement, Legend, Tooltip } from "chart.js/auto";
 
-const CodewarsFactor = () => {
+const CodewarsFactor = ({ open }) => {
   const [codewarsFactor, setCodewarsFactor] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const { user, loading } = useAuth();
 
   const userInfo = user?.userInfo;
 
-
-
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
 
       try {
-        // Use user.traineeCodwarsUsername in the API request
-        const response = await axios.configAxios().get(`/codewars/${userInfo.traineeCodwarsUsername}`);
+        const response = await axios
+          .configAxios()
+          .get(`/codewars/${userInfo.traineeCodwarsUsername}`);
         setCodewarsFactor(response.data);
         setIsLoading(false);
       } catch (error) {
-        console.error("Error fetching data:", error.response?.data || error.message);
+        console.error(
+          "Error fetching data:",
+          error.response?.data || error.message
+        );
         setIsLoading(false);
       }
     };
@@ -32,23 +41,47 @@ const CodewarsFactor = () => {
     }
   }, [user, loading]);
 
+  Chart.register(ArcElement, Legend, Tooltip);
+
+  const achievedValue = parseFloat(codewarsFactor?.rank) || 0;
+  const targetValue = parseFloat(codewarsFactor?.factorExpectationValue) || 0;
+  const remainingValue = Math.max(targetValue - achievedValue, 0);
+
+  const doughnutData = {
+    labels: ["Achieved", "Remaining"],
+    datasets: [
+      {
+        data: [achievedValue, remainingValue],
+        backgroundColor: ["#36A2EB", "#FFCE56"],
+      },
+    ],
+  };
+
   return (
     <>
       {isLoading ? (
         <CircularProgress />
       ) : (
-        <Paper style={{ textAlign: "center", padding: "16px" }}>
-          <Typography variant="h6">Rank: {codewarsFactor?.rank}</Typography>
-          <Typography variant="body1">Factor Name: {codewarsFactor?.factorName}</Typography>
+        <Paper
+          style={{
+            textAlign: "left",
+            padding: "16px",
+            maxWidth: open ? "25rem" : "25rem",
+            margin: "auto",
+          }}
+        >
+          <Typography variant="h6">{codewarsFactor?.factorName}</Typography>
           <Typography variant="body1">
-            Factor Expectation Value: {codewarsFactor?.factorExpectationValue}
+            Current Rank: {codewarsFactor?.rank}
+          </Typography>
+          <Typography variant="body1">
+            Expected Rank: {codewarsFactor?.factorExpectationValue}
           </Typography>
 
-          <LinearProgress
-            variant="determinate"
-            value={codewarsFactor?.factorExpectationValue}
-            sx={{ marginTop: 2 }}
-          />
+          {/* Doughnut chart with modified data */}
+          <Doughnut data={doughnutData} />
+
+          {/* LinearProgress representing the achieved progress */}
         </Paper>
       )}
     </>

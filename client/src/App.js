@@ -1,36 +1,48 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Container } from "@mui/material";
 import NavBar from "./components/NavBar";
 import TraineeDashboard from "./pages/Trainee_Dashboard/TraineeDashboard.js";
 import Home from "./pages/Home.js";
 import Footer from "./components/Footer.js";
-import { AuthProvider } from './hooks/useAuth.js';
+import { AuthProvider, useAuth } from './hooks/useAuth.js'; 
 import PostSignup from "./pages/Post-Signup Page/Post-signup.jsx";
-
 function App() {
+  return (
+    <Router>
+      <AuthProvider> 
+        <MainContent />
+      </AuthProvider>
+    </Router>
+  );
+}
 
-  // Function to determine whether to render NavBar based on the current route
+function MainContent() {
+  const { user } = useAuth();
+
   const shouldRenderNavBar = () => {
-    const excludedRoutes = ["/PostSignup"]; // Add routes where NavBar should be excluded
+    const excludedRoutes = ["/PostSignup"];
     return !excludedRoutes.includes(window.location.pathname);
   };
 
   return (
-    <Router>
-      <AuthProvider>
-        {shouldRenderNavBar() && <NavBar />}
-        <Container>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/PostSignup" element={<PostSignup />} />
-            <Route path="/trainee/" element={<TraineeDashboard />} />
-          </Routes>
-        </Container>
-        <Footer />
-
-      </AuthProvider>
-    </Router>
+    <>
+      {shouldRenderNavBar() && <NavBar />}
+      <Container>
+        <Routes>
+          <Route
+            path="/"
+            element={user ? <TraineeDashboard /> : <Home />}
+          />
+          <Route
+            path="/PostSignup"
+            element={<PostSignup />}
+          />
+          
+        </Routes>
+      </Container>
+      <Footer />
+    </>
   );
 }
 

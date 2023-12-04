@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const passwordSetup = require("./middleware/passport");
 const CodewarsService = require("./helpers/CodewarsService");
+
 dotenv.config();
 const { Op } = require("sequelize");
 
@@ -55,16 +56,15 @@ const authRoutes = require("./routes/authRoutes");
 const signpostRoute = require("./routes/signpostRoute");
 const userRoutes = require("./routes/userRoute");
 const milestoneRoute = require("./routes/milestone");
-const CodewarsRoutes = require("./routes/codewarsRoutes")
-const CohortsRoutes = require("./routes/cohortsRoutes")
+const CodewarsRoutes = require("./routes/codewarsRoutes");
+const ReposRoutes = require("./routes/ReposRoutes");
 
 app.use("/auth", authRoutes);
 app.use("/signpost", signpostRoute);
 app.use("/user", userRoutes);
 app.use("/current-milestone", milestoneRoute);
-app.use("/codewars", CodewarsRoutes)
-app.use("/cohorts", CohortsRoutes)
-
+app.use("/codewars", CodewarsRoutes);
+app.use("/getAllRepos", ReposRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
