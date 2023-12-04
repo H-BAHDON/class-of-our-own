@@ -3,7 +3,7 @@ import { Box, Typography, Container, SvgIcon } from "@mui/material";
 import CurrentMilestone from "../../../components/CurrentMilestone";
 import CodewarsFactor from "../../../components/CodewarsFactor";
 
-const MainContent = ({ selectedTab }) => {
+const MainContent = ({ selectedTab, open }) => {
   console.log("Selected Tab in MainContent:", selectedTab);
 
   return (
@@ -36,9 +36,10 @@ const MainContent = ({ selectedTab }) => {
                   padding: "1.5rem",
                   backgroundColor: "#f8f2ed",
                   marginBottom: "1rem",
+                  maxWidth: open ? "25rem" : "25",
                 }}
               >
-                <CodewarsFactor />
+                <CodewarsFactor open={open} />
               </Box>
 
               {/* Second Box (blank) */}

@@ -10,7 +10,7 @@ import { useAuth } from "../hooks/useAuth";
 import { Doughnut } from "react-chartjs-2";
 import { Chart, ArcElement, Legend, Tooltip } from "chart.js/auto";
 
-const CodewarsFactor = () => {
+const CodewarsFactor = ({ open }) => {
   const [codewarsFactor, setCodewarsFactor] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const { user, loading } = useAuth();
@@ -62,7 +62,14 @@ const CodewarsFactor = () => {
       {isLoading ? (
         <CircularProgress />
       ) : (
-        <Paper style={{ textAlign: "left", padding: "16px" }}>
+        <Paper
+          style={{
+            textAlign: "left",
+            padding: "16px",
+            maxWidth: open ? "25rem" : "25rem",
+            margin: "auto",
+          }}
+        >
           <Typography variant="h6">{codewarsFactor?.factorName}</Typography>
           <Typography variant="body1">
             Current Rank: {codewarsFactor?.rank}

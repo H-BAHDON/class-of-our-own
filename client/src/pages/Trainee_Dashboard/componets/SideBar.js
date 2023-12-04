@@ -226,7 +226,7 @@ export default function SideBar({ selectedTab, onTabClick }) {
           marginLeft: (theme) => (open ? theme.spacing(20) : 1),
         }}
       >
-        <MainContent selectedTab={selectedTab} />
+        <MainContent selectedTab={selectedTab} open={open} />
       </Box>
     </Box>
   );
