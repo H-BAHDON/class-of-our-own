@@ -1,4 +1,3 @@
-// NavBar.js
 import React from "react";
 import {
   AppBar,
@@ -17,11 +16,19 @@ const NavBar = () => {
   const { user, loading } = useAuth();
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box
+      sx={{
+        position: "fixed",
+        zIndex: 1000,
+        top: 0,
+        width: "100vw",
+        maxHeight: "65px",
+      }}
+    >
       <AppBar
         position="static"
         sx={{
-          backgroundColor: "#f8f2ed",
+          backgroundColor: "#ecebea",
           padding: "2px",
         }}
       >
