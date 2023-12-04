@@ -1,33 +1,28 @@
-import * as React from "react";
-import GitHubIcon from "@mui/icons-material/GitHub";
+// NavBar.js
+import React from "react";
 import {
   AppBar,
   Box,
   Toolbar,
   Typography,
-  Button,
   IconButton,
+  Avatar,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import Logo from "./Logo";
-import GitHubLoginButton from "./GitHubLoginButton";
 
 const NavBar = () => {
   const navigate = useNavigate();
-  const { user, login, loading } = useAuth();
-  const handleLoginClick = () => {
-    login();
-  };
+  const { user, loading } = useAuth();
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
         position="static"
         sx={{
-          backgroundColor: "#f0f0f0",
+          backgroundColor: "#f8f2ed",
           padding: "2px",
-          backgroundImage: "linear-gradient(to bottom, #f6f4f4, #e3e2e0)",
         }}
       >
         <Toolbar>
@@ -47,25 +42,28 @@ const NavBar = () => {
             component="div"
             sx={{ flexGrow: 1 }}
           ></Typography>
-          {!loading && (
-            <Button
-              color="inherit"
+          {!loading && user && user.userInfo && (
+            <Typography
+              variant="h6"
+              component="div"
               sx={{
-                color: "#333",
-                textDecoration: "none",
-                margin: "0 10px",
-                "&:hover": {
-                  color: "#555",
-                },
+                color: "black",
+                fontSize: "1rem",
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
               }}
-              onClick={user ? undefined : handleLoginClick}
             >
-              {user && user.userInfo ? (
-                `Welcome, ${user.userInfo.name}!`
-              ) : (
-                <GitHubLoginButton />
-              )}
-            </Button>
+              Welcome, {user.userInfo.name}!
+              <div style={{ marginLeft: "0.75rem" }}>
+                <Avatar
+                  alt="Trainne github pic"
+                  src={user.userInfo.avatar_url}
+                  sx={{ width: 56, height: 56 }}
+                />
+              </div>
+            </Typography>
           )}
         </Toolbar>
       </AppBar>

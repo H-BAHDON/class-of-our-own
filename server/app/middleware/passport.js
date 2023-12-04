@@ -1,7 +1,7 @@
-const passport = require('passport');
-const GitHubStrategy = require('passport-github2').Strategy;
-const { User } = require('../../models');
-require('dotenv').config();
+const passport = require("passport");
+const GitHubStrategy = require("passport-github2").Strategy;
+const { User } = require("../../models");
+require("dotenv").config();
 
 module.exports = function () {
   passport.use(
@@ -9,16 +9,21 @@ module.exports = function () {
       {
         clientID: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
-        callbackURL: 'http://localhost:3001/auth/github/callback',
-        scope: ['user:email'],
+        callbackURL: "http://localhost:3001/auth/github/callback",
+        scope: ["user:email"],
       },
       async function (accessToken, refreshToken, profile, done) {
         try {
-          const login = profile.login || profile.id.toString(); 
+          const login = profile._json.login;
+
+          console.log("jshdfsjfj", login);
 
           if (!login) {
-            console.error('GitHub profile does not contain a login:', profile);
-            return done(new Error('GitHub profile does not contain a login'), null);
+            console.error("GitHub profile does not contain a login:", profile);
+            return done(
+              new Error("GitHub profile does not contain a login"),
+              null
+            );
           }
 
           const user = await User.findOne({
@@ -29,17 +34,22 @@ module.exports = function () {
             const newUser = await User.create({
               name: profile.displayName,
               email: profile.emails[0].value,
-              role: '',
+              role: "",
               traineeGithubAccount: login,
               accessToken,
               refreshToken,
             });
-            return done(null, newUser);
+            const avatar_url = profile.photos[0].value;
+            return done(null, newUser, { avatar_url });
           }
 
-          return done(null, user);
+          
+          const avatar_url = profile._json.avatar_url;
+          const githubData = { avatar_url};
+
+          return done(null, user, { githubData });
         } catch (error) {
-          console.error('GitHub Authentication Error:', error);
+          console.error("GitHub Authentication Error:", error);
           return done(error, null);
         }
       }
@@ -47,7 +57,7 @@ module.exports = function () {
   );
 
   passport.serializeUser(function (user, done) {
-    done(null, user.id); 
+    done(null, user.id);
   });
 
   passport.deserializeUser(function (id, done) {
