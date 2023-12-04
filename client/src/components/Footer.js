@@ -11,7 +11,7 @@ const Footer = () => {
         right: 0,
         padding: 0,
         margin: 0,
-        backgroundColor: "#f8f2ed",
+        backgroundColor: "#ecebea",
         color: "#1c1e21",
         textAlign: "center",
         height: "3rem",

@@ -21,7 +21,7 @@ const NavBar = () => {
       <AppBar
         position="static"
         sx={{
-          backgroundColor: "#f8f2ed",
+          backgroundColor: "#ecebea",
           padding: "2px",
         }}
       >

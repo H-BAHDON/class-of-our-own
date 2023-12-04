@@ -7,16 +7,30 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
+function createData(
+  no,
+  milestones,
+  startDate,
+  codewars,
+  codility,
+  pullReqs,
+  attendance
+) {
+  return {
+    no,
+    milestones,
+    startDate,
+    codewars,
+    codility,
+    pullReqs,
+    attendance,
+  };
 }
 
 const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
+  createData(1, "HTML", "2023-01-01", 7, 8, 2, "100%"),
+  createData(2, "JAVASCRIPT 1", "2023-02-15", 5, 6, 3, "100%"),
+  // Add more rows as needed
 ];
 
 export default function Milestones() {
@@ -24,27 +38,31 @@ export default function Milestones() {
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
-          <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+          <TableRow sx={{ backgroundColor: "#f2f2f2" }}>
+            <TableCell>No</TableCell>
+            <TableCell>Milestones</TableCell>
+            <TableCell>Start Date</TableCell>
+            <TableCell>Codewars</TableCell>
+            <TableCell>Codility</TableCell>
+            <TableCell>Pull Reqs</TableCell>
+            <TableCell>Attendance</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
             <TableRow
-              key={row.name}
+              key={row.no}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.name}
+                {row.no}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <TableCell>{row.milestones}</TableCell>
+              <TableCell>{row.startDate}</TableCell>
+              <TableCell>{row.codewars}</TableCell>
+              <TableCell>{row.codility}</TableCell>
+              <TableCell>{row.pullReqs}</TableCell>
+              <TableCell>{row.attendance}</TableCell>
             </TableRow>
           ))}
         </TableBody>
