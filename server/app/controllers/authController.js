@@ -15,8 +15,9 @@ async function handleGitHubCallback(req, res) {
   try {
     const { id, name, email, traineeGithubAccount } = req.user.dataValues;
 
-    const avatar_url = req.authInfo.avatar_url;
-    const user = { id, name, email, traineeGithubAccount, avatar_url };
+    const { githubData } = req.authInfo;
+    
+    const user = { id, name, email, traineeGithubAccount, ...githubData };
 
     const findUser = await User.findOne({ where: { email } });
 
