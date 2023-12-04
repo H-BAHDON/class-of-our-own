@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -9,14 +9,50 @@ import {
   Paper,
 } from "@mui/material";
 import NavBar from "../../components/NavBar";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import axios from "../../config/configAxios";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function PostSignup() {
   const [activeTab, setActiveTab] = React.useState(0);
   const [codeWarsUsername, setCodeWarsUsername] = useState("");
   const [codilityUsername, setCodilityUsername] = useState("");
+  const [cohorts, setCohorts] = useState([]);
+  const [selectedCohort, setSelectedCohort] = useState("");
+  const { user } = useAuth();
+
+  const userInfo = user?.userInfo;
+
+  useEffect(() => {
+    const fetchCohorts = async () => {
+      try {
+        const response = await axios
+          .configAxios()
+          .get("http://localhost:3001/cohorts");
+        setCohorts(response.data.getCohorts);
+      } catch (error) {
+        console.error(
+          "Error fetching data:",
+          error.response?.data || error.message
+        );
+      }
+    };
+
+    fetchCohorts();
+  }, []);
 
   const handleChangeTab = (event, newValue) => {
     setActiveTab(newValue);
+  };
+  
+  const handleCohorts = (event) => {
+    const selectedCohortObject = cohorts.find(
+      (cohort) => cohort.name === event.target.value
+    );
+    setSelectedCohort(selectedCohortObject);
   };
 
   const handleSubmitForTrainee = async (event) => {
@@ -25,6 +61,7 @@ export default function PostSignup() {
     //   console.error("CodeWars username and Codility username are required.");
     //   return;
     // }
+
     try {
       const response = await fetch("http://localhost:3001/signpost", {
         method: "POST",
@@ -34,6 +71,7 @@ export default function PostSignup() {
         body: JSON.stringify({
           codeWarsUsername,
           codilityUsername,
+          cohortId: selectedCohort.id,
         }),
         credentials: "include",
       });
@@ -79,6 +117,28 @@ export default function PostSignup() {
                 <Typography variant="h5" align="center" mb={2}>
                   Welcome to CYF Rookie, we need some data
                 </Typography>
+
+                <FormControl sx={{ m: "auto", mt: 2, minWidth: 200 }}>
+                  <InputLabel id="demo-simple-select-helper-label">
+                    Cohorts
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-helper-label"
+                    id="demo-simple-select-helper"
+                    value={selectedCohort.name}
+                    label="Age"
+                    onChange={handleCohorts}
+                  >
+                    <MenuItem value="" disabled>
+                      Select a Cohort
+                    </MenuItem>
+                    {cohorts.map((cohort) => (
+                      <MenuItem key={cohort.id} value={cohort.name}>
+                        {cohort.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
 
                 <TextField
                   label="Codewars UserName"
