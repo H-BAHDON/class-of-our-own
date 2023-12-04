@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Typography, Container, SvgIcon } from "@mui/material";
 import CurrentMilestone from "../../../components/CurrentMilestone";
 import CodewarsFactor from "../../../components/CodewarsFactor";
+import PullRequestFactor from "../../../components/PullRequestFactor";
 
 const MainContent = ({ selectedTab, open }) => {
   console.log("Selected Tab in MainContent:", selectedTab);
@@ -49,8 +50,11 @@ const MainContent = ({ selectedTab, open }) => {
                   padding: "1.5rem",
                   backgroundColor: "#f8f2ed",
                   marginBottom: "1rem",
+                  maxWidth: open ? "25rem" : "25",
                 }}
-              ></Box>
+              >
+                <PullRequestFactor open={open} />
+              </Box>
 
               {/* Third Box (blank) */}
               <Box

@@ -69,3 +69,19 @@ td {
     margin: 0 auto;
   }
 }
+    .table-container {
+      overflow-x: auto;
+    
+    }
+  
+    table {
+      width: 100%;
+    
+    }
+  
+    th,
+    td {
+      padding: 0.5rem;
+   
+    }
+    
