@@ -37,17 +37,23 @@ export const AuthProvider = ({ children }) => {
     window.location.href = `${apiUrl}/auth/github`;
   };
 
-  const logout = () => {
-    axiosInstance
-      .get("/logout")
-      .then(() => {
-        setUser(null);
-      })
-      .catch((error) => {
-        console.error("Error logging out:", error);
-        throw error;
-      });
-  };
+ const logout = async () => {
+  try {
+    const response = await axiosInstance.get("/user/logout");
+    if (response.status === 200) {
+      setUser(null);
+      console.log("Logout successful");
+    } else {
+      console.error("Unexpected response:", response);
+      throw new Error("Logout failed");
+    }
+  } catch (error) {
+    console.error("Error logging out:", error);
+    throw error;
+  }
+};
+
+  
 
 
   return (
