@@ -34,4 +34,10 @@ async function getUserInfo(req, res) {
   }
 }
 
-module.exports = { getUserInfo };
+async function logout(req, res) {
+  console.log("Logout route called");
+  res.clearCookie('token');
+  res.status(200).json({ success: true });
+}
+
+module.exports = { getUserInfo, logout };
