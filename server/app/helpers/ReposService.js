@@ -1,8 +1,13 @@
 class ReposService {
-  static async getAllRepos(githubAccount) {
+  static async getAllRepos(githubAccount, accessToken) {
     try {
       const apiUrl = `https://api.github.com/users/${githubAccount}/repos`;
-      const response = await fetch(apiUrl);
+      const headers = {
+        Authorization: `Bearer ${accessToken}`,
+      };
+
+      const response = await fetch(apiUrl, { headers });
+
       if (response.ok) {
         const data = await response.json();
         return data;
@@ -16,10 +21,12 @@ class ReposService {
 
   static async getAllReposWithClone(getAllRepos) {
     try {
+      if (!getAllRepos || !Array.isArray(getAllRepos)) {
+        throw new Error("Invalid input for getAllRepos");
+      }
+
       const filteredData = getAllRepos
-        //Check fork = true for repos
         .filter((repo) => repo.fork)
-        // Get necessary properties
         .map(({ id, name, full_name, fork, created_at }) => ({
           id,
           name,
