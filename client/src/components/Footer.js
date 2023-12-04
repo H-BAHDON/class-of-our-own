@@ -11,12 +11,14 @@ const Footer = () => {
         right: 0,
         padding: 0,
         margin: 0,
-        backgroundColor: "#ecebea",
-        color: "#1c1e21",
+        backgroundColor: "#f8f2ed",
+        color: "#6c6f75",
         textAlign: "center",
-        height: "3rem",
+        height: "2.5rem",
         lineHeight: "2.5rem",
         fontWeight: "bold",
+        fontSize: "0.8rem",
+
       }}
     >
       © 2023 <span style={{ color: "#ED4343" }}>Code</span>YourFuture 'A Class

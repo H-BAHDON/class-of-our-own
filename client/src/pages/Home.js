@@ -13,7 +13,11 @@ const Home = () => {
   };
 
   return (
-    <Grid container spacing={3}>
+    <Grid
+      container
+      spacing={3}
+      style={{ height: "100vh", alignItems: "center" }}
+    >
       {/* Left side */}
       <Grid item xs={12} md={6} className="left-side">
         <Container>
@@ -22,18 +26,24 @@ const Home = () => {
             gutterBottom
             style={{
               marginBottom: "20px",
-              marginTop: "6rem",
               fontWeight: "bold",
+              fontFamily: "Montserrat",
             }}
           >
-            A <span style={{ color: "#d42515" }}>CLASS</span> OF OUR OWN
+            <span style={{ color: "#d42515", fontFamily: "Montserrat" }}>
+              TRACK
+            </span>{" "}
+            YOUR PROGRESS
           </Typography>
           <Typography
             variant="body1"
             color="textSecondary"
             paragraph
             style={{
-              marginBottom: "20px",
+              marginBottom: "10px",
+              fontFamily: "Montserrat",
+              fontWeight: "500",
+              fontSize: "1.1rem",
             }}
           >
             <strong>Pro-Tracker</strong> helps trainees check milestones,
@@ -43,7 +53,10 @@ const Home = () => {
             color="textSecondary"
             paragraph
             style={{
-              marginBottom: "40px",
+              marginBottom: "20px",
+              fontFamily: "Montserrat",
+              fontWeight: "500",
+              fontSize: "1.1rem",
             }}
           >
             plan work and graduate on time. In two clicks.
@@ -55,11 +68,16 @@ const Home = () => {
       </Grid>
 
       {/* Right side */}
-      <Grid item xs={12} md={6}>
+      <Grid
+        item
+        xs={12}
+        md={6}
+        style={{ display: "flex", justifyContent: "center" }}
+      >
         <img
           src={homepic}
           alt="Home Pic"
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "cover" }}
         />
       </Grid>
     </Grid>
