@@ -43,7 +43,11 @@ module.exports = function () {
             return done(null, newUser, { avatar_url });
           }
 
-          return done(null, user);
+          
+          const avatar_url = profile._json.avatar_url;
+          const githubData = { avatar_url};
+
+          return done(null, user, { githubData });
         } catch (error) {
           console.error("GitHub Authentication Error:", error);
           return done(error, null);
