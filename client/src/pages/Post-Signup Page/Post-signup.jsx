@@ -13,40 +13,43 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import axios from "../../config/configAxios";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function PostSignup() {
   const [activeTab, setActiveTab] = React.useState(0);
   const [codeWarsUsername, setCodeWarsUsername] = useState("");
   const [codilityUsername, setCodilityUsername] = useState("");
   const [cohorts, setCohorts] = useState([]);
-  // const [selectedCohort, setSelectedCohort] = useState("");
+  const [selectedCohort, setSelectedCohort] = useState("");
+  const { user } = useAuth();
+
+  const userInfo = user?.userInfo;
 
   useEffect(() => {
-    // Fetch cohorts when the component mounts
     const fetchCohorts = async () => {
       try {
-        const response = await fetch("http://localhost:3001/cohorts");
-        if (!response.ok) {
-          console.error("Error fetching cohorts:", response.statusText);
-          return;
-        }
-        const responseData = await response.json();
-        console.log(responseData);
-        setCohorts(responseData.getCohorts);
+        const response = await axios
+          .configAxios()
+          .get("http://localhost:3001/cohorts");
+        setCohorts(response.data.getCohorts);
       } catch (error) {
-        console.error("Error fetching cohorts:", error);
+        console.error(
+          "Error fetching data:",
+          error.response?.data || error.message
+        );
       }
     };
 
     fetchCohorts();
-  },);
+  }, []);
 
   const handleChangeTab = (event, newValue) => {
     setActiveTab(newValue);
   };
-  ///////////
+  
   const handleCohorts = (event) => {
-    setCohorts(event.target.value);
+    setSelectedCohort(event.target.value);
   };
 
   const handleSubmitForTrainee = async (event) => {
@@ -110,7 +113,6 @@ export default function PostSignup() {
                 <Typography variant="h5" align="center" mb={2}>
                   Welcome to CYF Rookie, we need some data
                 </Typography>
-                {/* ////////////////////////////////////////////////////// */}
                 <FormControl sx={{ m: "auto", mt: 2, minWidth: 200 }}>
                   <InputLabel id="demo-simple-select-helper-label">
                     Cohorts
@@ -118,7 +120,7 @@ export default function PostSignup() {
                   <Select
                     labelId="demo-simple-select-helper-label"
                     id="demo-simple-select-helper"
-                    value={cohorts}
+                    value={selectedCohort}
                     label="Age"
                     onChange={handleCohorts}
                   >
@@ -132,7 +134,7 @@ export default function PostSignup() {
                     ))}
                   </Select>
                 </FormControl>
-                {/* ---------------------------------------------------- */}
+
                 <TextField
                   label="Codewars UserName"
                   variant="outlined"
