@@ -1,11 +1,4 @@
-const {
-  sequelize,
-  User,
-  Milestone,
-  FactorExpectation,
-  Factor,
-  Cohort,
-} = require("../../models");
+const { sequelize, User, Milestone, FactorExpectation, Factor, Cohort } = require("../../models");
 
 async function getAllMilestones(req, res) {
   try {
@@ -28,30 +21,27 @@ async function getAllMilestones(req, res) {
     });
 
     // Fetch factor expectations for each milestone
-    const milestoneData = await Promise.all(
-      milestones.map(async (milestone) => {
-        const factorExpectations = await FactorExpectation.findAll({
-          where: { milestoneId: milestone.id },
-        });
+    const milestoneData = await Promise.all(milestones.map(async (milestone) => {
+      const factorExpectations = await FactorExpectation.findAll({
+        where: { milestoneId: milestone.id },
+      });
 
-        // Fetch factors for the factor expectations
-        const factors = await Promise.all(
-          factorExpectations.map(async (expectation) => {
-            const factor = await Factor.findByPk(expectation.factorId);
-            return { name: factor.name, value: expectation.value };
-          })
-        );
+      // Fetch factors for the factor expectations
+      const factors = await Promise.all(factorExpectations.map(async (expectation) => {
+        const factor = await Factor.findByPk(expectation.factorId);
+        return { name: factor.name, value: expectation.value };
+      }));
 
-        return {
-          id: milestone.id,
-          milestone: milestone.name,
-          startDate: milestone.startDate,
-          factors: factors,
-        };
-      })
-    );
+      return {
+        id: milestone.id,
+        milestone: milestone.name,
+        startDate: milestone.startDate,
+        factors: factors,
+      };
+    }));
 
     res.status(200).json(milestoneData);
+
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ error: "Failed to fetch All milestones" });
