@@ -120,7 +120,7 @@ export default function PostSignup() {
                   Welcome to CYF Rookie, we need some data
                 </Typography>
 
-                <FormControl sx={{ m: "auto", mt: 2, minWidth: 200}}>
+                <FormControl sx={{ m: "auto", mt: 2, minWidth: "100%" }}>
                   <InputLabel id="demo-simple-select-helper-label">
                     Cohorts
                   </InputLabel>
