@@ -38,7 +38,7 @@ export default function Milestones() {
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
-          <TableRow sx={{ backgroundColor: "#f2f2f2" }}>
+          <TableRow sx={{ backgroundColor: "#d5d4d4" }}>
             <TableCell>No</TableCell>
             <TableCell>Milestones</TableCell>
             <TableCell>Start Date</TableCell>
