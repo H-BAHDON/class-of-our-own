@@ -20,6 +20,8 @@ import {
   faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import MainContent from "./MainContent";
+import Divider from "@mui/material/Divider";
+import { useAuth } from "../../../hooks/useAuth";
 
 const drawerWidth = 240;
 
@@ -71,15 +73,10 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-const Divider = styled("div")(({ theme }) => ({
-  borderBottom: `1px solid ${theme.palette.divider}`,
-  marginTop: theme.spacing(1),
-  marginBottom: theme.spacing(1),
-}));
-
 export default function SideBar({ selectedTab, onTabClick }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
+  const { logout } = useAuth();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -91,6 +88,11 @@ export default function SideBar({ selectedTab, onTabClick }) {
 
   const handleTabClick = (tab) => {
     onTabClick(tab);
+  };
+
+  const handleLogout = () => {
+    logout();
+    handleTabClick("logout");
   };
 
   return (
@@ -249,8 +251,11 @@ export default function SideBar({ selectedTab, onTabClick }) {
           {/* Logout */}
           <ListItem
             disablePadding
-            sx={{ display: "block" }}
-            onClick={() => handleTabClick("logout")}
+            sx={{
+              display: "block",
+              marginBottom: "3rem",
+            }}
+            onClick={handleLogout}
           >
             <ListItemButton
               sx={{
