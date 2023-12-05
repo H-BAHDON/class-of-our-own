@@ -12,6 +12,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 export default function Milestones() {
   const [milestonesData, setMilestonesData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentMilestoneData, setCurrentMilestoneData] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,6 +29,20 @@ export default function Milestones() {
     };
 
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    setIsLoading(true);
+    const instant = axios.configAxios();
+    instant
+      .get("/current-milestone")
+      .then((data) => {
+        setIsLoading(false);
+        setCurrentMilestoneData(data);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+      });
   }, []);
 
   return (
@@ -48,10 +63,19 @@ export default function Milestones() {
             </TableRow>
           </TableHead>
           <TableBody sx={{ backgroundColor: "#fafafa" }}>
-            {milestonesData.map((row) => (
+            {milestonesData.map((row, index) => (
               <TableRow
                 key={row.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                sx={{
+                  "&:last-child td, &:last-child th": { border: 0 },
+                  "&:hover": {
+                    backgroundColor: index % 2 === 0 ? "#f0f0f0" : "#e0e0e0",
+                  },
+                  ...(currentMilestoneData &&
+                    currentMilestoneData.data.name === row.milestone && {
+                      backgroundColor: "#ffcccc",
+                    }),
+                }}
               >
                 <TableCell component="th" scope="row">
                   {row.id}
