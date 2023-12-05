@@ -266,6 +266,7 @@ export default function SideBar({ selectedTab, onTabClick }) {
                 backgroundColor:
                   selectedTab === "logout" ? "#a00000" : "transparent",
               }}
+              style={{ marginTop: "10px" }}
             >
               <ListItemIcon
                 sx={{
