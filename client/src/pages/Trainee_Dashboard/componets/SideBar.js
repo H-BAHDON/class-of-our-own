@@ -13,13 +13,13 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import SummarizeIcon from "@mui/icons-material/Summarize";
-import MainContent from "./MainContent";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCodePullRequest,
   faListCheck,
+  faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
+import MainContent from "./MainContent";
 
 const drawerWidth = 240;
 
@@ -69,6 +69,12 @@ const Drawer = styled(MuiDrawer, {
     ...closedMixin(theme),
     "& .MuiDrawer-paper": closedMixin(theme),
   }),
+}));
+
+const Divider = styled("div")(({ theme }) => ({
+  borderBottom: `1px solid ${theme.palette.divider}`,
+  marginTop: theme.spacing(1),
+  marginBottom: theme.spacing(1),
 }));
 
 export default function SideBar({ selectedTab, onTabClick }) {
@@ -123,12 +129,12 @@ export default function SideBar({ selectedTab, onTabClick }) {
           >
             <ListItemButton
               sx={{
-                minHeight: 40, // Adjusted height
+                minHeight: 40,
                 justifyContent: open ? "initial" : "center",
                 px: 2.5,
                 borderRadius: "5px",
                 backgroundColor:
-                  selectedTab === "overview" ? "#a00000" : "transparent", // Slightly lighter color
+                  selectedTab === "overview" ? "#a00000" : "transparent",
               }}
             >
               <ListItemIcon
@@ -159,12 +165,12 @@ export default function SideBar({ selectedTab, onTabClick }) {
           >
             <ListItemButton
               sx={{
-                minHeight: 40, // Adjusted height
+                minHeight: 40,
                 justifyContent: open ? "initial" : "center",
                 px: 2.5,
                 borderRadius: "5px",
                 backgroundColor:
-                  selectedTab === "prDetails" ? "#a00000" : "transparent", // Slightly lighter color
+                  selectedTab === "prDetails" ? "#a00000" : "transparent",
               }}
             >
               <ListItemIcon
@@ -202,12 +208,12 @@ export default function SideBar({ selectedTab, onTabClick }) {
           >
             <ListItemButton
               sx={{
-                minHeight: 40, // Adjusted height
+                minHeight: 40,
                 justifyContent: open ? "initial" : "center",
                 px: 2.5,
                 borderRadius: "5px",
                 backgroundColor:
-                  selectedTab === "Milestones" ? "#a00000" : "transparent", // Slightly lighter color
+                  selectedTab === "Milestones" ? "#a00000" : "transparent",
               }}
             >
               <ListItemIcon
@@ -232,6 +238,45 @@ export default function SideBar({ selectedTab, onTabClick }) {
                 sx={{
                   opacity: open ? 1 : 0,
                   color: selectedTab === "Milestones" ? "white" : "",
+                }}
+              />
+            </ListItemButton>
+          </ListItem>
+
+          {/* Divider */}
+          <Divider />
+
+          {/* Logout */}
+          <ListItem
+            disablePadding
+            sx={{ display: "block" }}
+            onClick={() => handleTabClick("logout")}
+          >
+            <ListItemButton
+              sx={{
+                minHeight: 40,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+                borderRadius: "5px",
+                backgroundColor:
+                  selectedTab === "logout" ? "#a00000" : "transparent",
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                  color: selectedTab === "logout" ? "white" : "",
+                }}
+              >
+                <FontAwesomeIcon icon={faSignOutAlt} />
+              </ListItemIcon>
+              <ListItemText
+                primary="Logout"
+                sx={{
+                  opacity: open ? 1 : 0,
+                  color: selectedTab === "logout" ? "white" : "",
                 }}
               />
             </ListItemButton>
