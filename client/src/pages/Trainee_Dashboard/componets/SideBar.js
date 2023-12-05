@@ -275,7 +275,10 @@ export default function SideBar({ selectedTab, onTabClick }) {
                   color: selectedTab === "logout" ? "white" : "",
                 }}
               >
-                <FontAwesomeIcon icon={faSignOutAlt} />
+                <FontAwesomeIcon
+                  icon={faSignOutAlt}
+                  style={{ paddingLeft: "2px", paddingRight: "5px" }}
+                />
               </ListItemIcon>
               <ListItemText
                 primary="Logout"
