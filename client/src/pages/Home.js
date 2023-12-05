@@ -3,7 +3,7 @@ import React from "react";
 import GitHubLoginButton from "../components/GitHubLoginButton";
 import { useAuth } from "../hooks/useAuth";
 import { Typography, Button, Grid, Container } from "@mui/material";
-import homepic from "../homepic.png";
+import homepic1 from "../homepic1.png";
 
 const Home = () => {
   const { login } = useAuth();
@@ -22,28 +22,23 @@ const Home = () => {
       <Grid item xs={12} md={6} className="left-side">
         <Container>
           <Typography
-            variant="h3"
+            variant="h2"
             gutterBottom
             style={{
-              marginBottom: "20px",
+              marginBottom: "25px",
               fontWeight: "bold",
-              fontFamily: "Montserrat",
             }}
           >
-            <span style={{ color: "#d42515", fontFamily: "Montserrat" }}>
-              TRACK
-            </span>{" "}
-            YOUR PROGRESS
+            <span style={{ color: "#d42515" }}>TRACK</span> YOUR PROGRESS
           </Typography>
           <Typography
             variant="body1"
             color="textSecondary"
             paragraph
             style={{
-              marginBottom: "10px",
-              fontFamily: "Montserrat",
+              marginBottom: "0px",
               fontWeight: "500",
-              fontSize: "1.1rem",
+              fontSize: "1.3rem",
             }}
           >
             <strong>Pro-Tracker</strong> helps trainees check milestones,
@@ -53,10 +48,9 @@ const Home = () => {
             color="textSecondary"
             paragraph
             style={{
-              marginBottom: "20px",
-              fontFamily: "Montserrat",
+              marginBottom: "25px",
               fontWeight: "500",
-              fontSize: "1.1rem",
+              fontSize: "1.3rem",
             }}
           >
             plan work and graduate on time. In two clicks.
@@ -75,9 +69,13 @@ const Home = () => {
         style={{ display: "flex", justifyContent: "center" }}
       >
         <img
-          src={homepic}
+          src={homepic1}
           alt="Home Pic"
-          style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "cover" }}
+          style={{
+            maxWidth: "100%",
+            maxHeight: "100%",
+            objectFit: "cover",
+          }}
         />
       </Grid>
     </Grid>
