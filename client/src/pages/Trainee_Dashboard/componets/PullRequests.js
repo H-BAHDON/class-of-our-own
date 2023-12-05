@@ -30,10 +30,15 @@ export default function PullRequests() {
           </TableRow>
         </TableHead>
         <TableBody sx={{ backgroundColor: "#fafafa" }}>
-          {rows.map((row) => (
+          {rows.map((row, index) => (
             <TableRow
               key={row.no}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              sx={{
+                "&:last-child td, &:last-child th": { border: 0 },
+                "&:hover": {
+                  backgroundColor: index % 2 === 0 ? "#f0f0f0" : "#e0e0e0",
+                },
+              }}
             >
               <TableCell component="th" scope="row">
                 {row.no}
