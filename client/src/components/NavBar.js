@@ -29,7 +29,6 @@ const NavBar = () => {
         position="static"
         sx={{
           backgroundColor: "#ecebea",
-          padding: "2px",
         }}
       >
         <Toolbar>
@@ -40,9 +39,9 @@ const NavBar = () => {
             aria-label="menu"
             sx={{ mr: 2 }}
           >
-            <div style={{ height: "3.5rem" }}>
+            <Box style={{ height: "4rem", padding: "0px" }}>
               <Logo />
-            </div>
+            </Box>
           </IconButton>
           <Typography
             variant="h6"
