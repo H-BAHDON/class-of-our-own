@@ -69,7 +69,7 @@ app.use("/current-milestone", milestoneRoute);
 app.use("/codewars", CodewarsRoutes);
 app.use("/getAllRepos", ReposRoutes);
 app.use("/cohorts", cohortsRoutes);
-app.use("milestones", milestonesRouter)
+app.use("/milestones", milestonesRouter)
 
 // Error handling middleware
 app.use((err, req, res, next) => {
