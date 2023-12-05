@@ -60,6 +60,7 @@ const milestoneRoute = require("./routes/milestone");
 const CodewarsRoutes = require("./routes/codewarsRoutes");
 const ReposRoutes = require("./routes/ReposRoutes");
 const cohortsRoutes = require("./routes/cohortsRoutes");
+const milestonesRouter = require("./routes/milestonesRouter");
 
 app.use("/auth", authRoutes);
 app.use("/signpost", signpostRoute);
@@ -68,6 +69,7 @@ app.use("/current-milestone", milestoneRoute);
 app.use("/codewars", CodewarsRoutes);
 app.use("/getAllRepos", ReposRoutes);
 app.use("/cohorts", cohortsRoutes);
+app.use("/milestones", milestonesRouter)
 
 // Error handling middleware
 app.use((err, req, res, next) => {
