@@ -8,7 +8,7 @@ import {
   Tab,
   Paper,
 } from "@mui/material";
-import NavBar from "../../components/NavBar";
+
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -90,10 +90,11 @@ export default function PostSignup() {
 
   return (
     <>
-      <NavBar />
+  
       <Box
         sx={{
           display: "flex",
+          paddingTop: "5rem",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
@@ -119,7 +120,7 @@ export default function PostSignup() {
                   Welcome to CYF Rookie, we need some data
                 </Typography>
 
-                <FormControl sx={{ m: "auto", mt: 2, minWidth: 200 }}>
+                <FormControl sx={{ m: "auto", mt: 2, minWidth: "100%" }}>
                   <InputLabel id="demo-simple-select-helper-label">
                     Cohorts
                   </InputLabel>
@@ -127,7 +128,7 @@ export default function PostSignup() {
                     labelId="demo-simple-select-helper-label"
                     id="demo-simple-select-helper"
                     value={selectedCohort.name}
-                    label="Age"
+                    label="Cohorts"
                     onChange={handleCohorts}
                   >
                     <MenuItem value="" disabled>
