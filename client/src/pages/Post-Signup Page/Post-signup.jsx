@@ -122,7 +122,7 @@ export default function PostSignup() {
 
                 <FormControl sx={{ m: "auto", mt: 2, minWidth: "100%" }}>
                   <InputLabel id="demo-simple-select-helper-label">
-                    Cohorts
+                    Select your cohort
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-helper-label"

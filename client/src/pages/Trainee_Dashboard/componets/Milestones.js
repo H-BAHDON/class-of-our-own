@@ -49,11 +49,10 @@ export default function Milestones() {
   return (
     <div>
       <Typography variant="h4" gutterBottom style={{textAlign: "center" , color: "#D82929", fontWeight: "bold"}}>
-        Milestones
+      Milestone Table 
       </Typography>
-      <Typography variant="body1" paragraph>
-        CYF's software development course uses milestones for clear expectations,
-        self-assessment, and guiding participants in meeting course requirements.
+      <Typography variant="body1" paragraph style={{textAlign: "center"}}>
+      Check your milestones and performance expectations with dates.
       </Typography>
     <TableContainer component={Paper}>
       {isLoading ? (
