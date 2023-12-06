@@ -90,16 +90,12 @@ const MainContent = ({ selectedTab, open }) => {
                     maxWidth: open ? "25rem" : "25",
                   }}
                 >
-                  {/* <PullRequestFactor
+                  <PullRequestFactor
                     open={open}
-                    currentMilestoneName={currentMilestoneData.name}
-                    currentMilestoneStartDare={formatDate(
-                      currentMilestoneData.startDate
-                    )}
                     currentMilestoneEndDAte={formatDate(
                       currentMilestoneData.endDate
                     )}
-                  /> */}
+                  />
                 </Box>
 
                 {/* Third Box (blank) */}
