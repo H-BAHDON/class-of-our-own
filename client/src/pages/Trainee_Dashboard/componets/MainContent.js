@@ -72,16 +72,12 @@ const MainContent = ({ selectedTab, open }) => {
                     maxWidth: open ? "25rem" : "25",
                   }}
                 >
-                  {/* <CodewarsFactor
+                  <CodewarsFactor
                     open={open}
-                    currentMilestoneName={currentMilestoneData.name}
-                    currentMilestoneStartDare={formatDate(
-                      currentMilestoneData.startDate
-                    )}
                     currentMilestoneEndDAte={formatDate(
                       currentMilestoneData.endDate
                     )}
-                  /> */}
+                  />
                 </Box>
 
                 {/* Second Box (blank) */}
