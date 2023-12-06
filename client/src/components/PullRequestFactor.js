@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import { CircularProgress, Typography, Paper } from "@mui/material";
 import { Doughnut } from "react-chartjs-2";
 import { Chart, ArcElement, Legend, Tooltip } from "chart.js/auto";
+import axios from "../config/configAxios";
 
-const PullRequestFactor = ({ open }) => {
+const PullRequestFactor = ({ open, currentMilestoneEndDAte }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [currentMilestoneData, setCurrentMilestoneData] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -16,6 +18,26 @@ const PullRequestFactor = ({ open }) => {
     };
 
     fetchData();
+  }, []);
+
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "numeric", day: "numeric" };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
+  useEffect(() => {
+    setIsLoading(true);
+    const instant = axios.configAxios();
+    instant
+      .get("/current-milestone")
+      .then((data) => {
+        setIsLoading(false);
+        console.log(data);
+        setCurrentMilestoneData(data);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+      });
   }, []);
 
   const achievedValue = 20;
@@ -47,10 +69,10 @@ const PullRequestFactor = ({ open }) => {
         >
           <Typography variant="h6">Pull Requests</Typography>
           <Typography variant="body1">
-            Current Number: {achievedValue}
+            Achieved Number: {achievedValue}
           </Typography>
           <Typography variant="body1">
-            Expected Number: {targetValue}
+            Expected Number: {targetValue} by {currentMilestoneEndDAte}
           </Typography>
 
           {/* Doughnut chart with modified data */}

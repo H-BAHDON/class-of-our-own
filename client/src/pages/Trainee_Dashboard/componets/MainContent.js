@@ -1,13 +1,33 @@
 import React from "react";
 import { Box, Typography, Container, SvgIcon, Button } from "@mui/material";
 import CurrentMilestone from "../../../components/CurrentMilestone";
+import axios from "../../../config/configAxios";
 import CodewarsFactor from "../../../components/CodewarsFactor";
 import PullRequestFactor from "../../../components/PullRequestFactor";
+import { useState, useEffect } from "react";
 import Milestones from "./Milestones";
 import PullRequests from "./PullRequests";
 
 const MainContent = ({ selectedTab, open }) => {
+  const [currentMilestoneData, setCurrentMilestoneData] = useState({});
   console.log("Selected Tab in MainContent:", selectedTab);
+
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "numeric", day: "numeric" };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
+  useEffect(() => {
+    const instant = axios.configAxios();
+    instant
+      .get("/current-milestone")
+      .then((data) => {
+        setCurrentMilestoneData(data.data);
+      })
+      .catch((error) => {});
+  }, []);
+
+  console.log(currentMilestoneData);
 
   return (
     <Container>
@@ -23,7 +43,15 @@ const MainContent = ({ selectedTab, open }) => {
         <Box>
           {selectedTab === "overview" && (
             <Box>
-              <CurrentMilestone />
+              <CurrentMilestone
+                currentMilestoneName={currentMilestoneData.name}
+                currentMilestoneStartDare={formatDate(
+                  currentMilestoneData.startDate
+                )}
+                currentMilestoneEndDAte={formatDate(
+                  currentMilestoneData.endDate
+                )}
+              />
             </Box>
           )}
 
@@ -44,7 +72,12 @@ const MainContent = ({ selectedTab, open }) => {
                     maxWidth: open ? "25rem" : "25",
                   }}
                 >
-                  <CodewarsFactor open={open} />
+                  <CodewarsFactor
+                    open={open}
+                    currentMilestoneEndDAte={formatDate(
+                      currentMilestoneData.endDate
+                    )}
+                  />
                 </Box>
 
                 {/* Second Box (blank) */}
@@ -57,7 +90,12 @@ const MainContent = ({ selectedTab, open }) => {
                     maxWidth: open ? "25rem" : "25",
                   }}
                 >
-                  <PullRequestFactor open={open} />
+                  <PullRequestFactor
+                    open={open}
+                    currentMilestoneEndDAte={formatDate(
+                      currentMilestoneData.endDate
+                    )}
+                  />
                 </Box>
 
                 {/* Third Box (blank) */}

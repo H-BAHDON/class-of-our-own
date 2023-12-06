@@ -8,6 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import CircularProgress from "@mui/material/CircularProgress";
+import { Typography } from "@mui/material";
 
 export default function Milestones() {
   const [milestonesData, setMilestonesData] = useState([]);
@@ -46,6 +47,13 @@ export default function Milestones() {
   }, []);
 
   return (
+    <div>
+      <Typography variant="h4" gutterBottom style={{textAlign: "center" , color: "#D82929", fontWeight: "bold"}}>
+      Milestone Table 
+      </Typography>
+      <Typography variant="body1" paragraph style={{textAlign: "center"}}>
+      Check your milestones and performance expectations with dates.
+      </Typography>
     <TableContainer component={Paper}>
       {isLoading ? (
         <CircularProgress />
@@ -106,5 +114,6 @@ export default function Milestones() {
         </Table>
       )}
     </TableContainer>
+    </div>
   );
 }

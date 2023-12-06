@@ -10,7 +10,7 @@ import { useAuth } from "../hooks/useAuth";
 import { Doughnut } from "react-chartjs-2";
 import { Chart, ArcElement, Legend, Tooltip } from "chart.js/auto";
 
-const CodewarsFactor = ({ open }) => {
+const CodewarsFactor = ({ open, currentMilestoneEndDAte }) => {
   const [codewarsFactor, setCodewarsFactor] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const { user, loading } = useAuth();
@@ -40,6 +40,8 @@ const CodewarsFactor = ({ open }) => {
       fetchData();
     }
   }, [user, loading]);
+
+
 
   Chart.register(ArcElement, Legend, Tooltip);
 
@@ -72,10 +74,10 @@ const CodewarsFactor = ({ open }) => {
         >
           <Typography variant="h6">{codewarsFactor?.factorName}</Typography>
           <Typography variant="body1">
-            Current Rank: {codewarsFactor?.rank}
+            Achieved Rank: {codewarsFactor?.rank}
           </Typography>
           <Typography variant="body1">
-            Expected Rank: {codewarsFactor?.factorExpectationValue}
+            Expected Rank: {codewarsFactor?.factorExpectationValue} by {currentMilestoneEndDAte}
           </Typography>
 
           {/* Doughnut chart with modified data */}
