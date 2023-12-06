@@ -117,7 +117,7 @@ export default function PostSignup() {
             {activeTab === 0 && (
               <form action="/" method="post" onSubmit={handleSubmitForTrainee}>
                 <Typography variant="h5" align="center" mb={2}>
-                  Welcome to CYF Rookie, we need some data
+                  Welcome, CYF Rookie. We need some data...
                 </Typography>
 
                 <FormControl sx={{ m: "auto", mt: 2, minWidth: "100%" }}>
@@ -130,6 +130,7 @@ export default function PostSignup() {
                     value={selectedCohort.name}
                     label="Cohorts"
                     onChange={handleCohorts}
+                    required
                   >
                     <MenuItem value="" disabled>
                       Select a Cohort
@@ -156,7 +157,6 @@ export default function PostSignup() {
                   variant="outlined"
                   fullWidth
                   margin="normal"
-                  required
                   onChange={(e) => setCodilityUsername(e.target.value)}
                 />
 
