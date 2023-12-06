@@ -1,5 +1,7 @@
 const { User } = require("../../models");
 const ReposService = require("../helpers/ReposService");
+const { Milestone, FactorExpectation, Factor } = require("../../models");
+const { Op } = require("sequelize");
 
 async function pullRequest(req, res) {
   try {
@@ -14,7 +16,9 @@ async function pullRequest(req, res) {
     const accessToken = user.accessToken;
 
     const allRepos = await ReposService.getAllRepos(githubAccount, accessToken);
-    const clonedReposWithOwner = await ReposService.getAllReposWithOwner(allRepos);
+    const clonedReposWithOwner = await ReposService.getAllReposWithOwner(
+      allRepos
+    );
 
     const repoDetailsPromises = clonedReposWithOwner.map((repo) =>
       ReposService.fetchRepositoryDetails(repo, accessToken)
@@ -23,7 +27,11 @@ async function pullRequest(req, res) {
     const repoDetails = await Promise.all(repoDetailsPromises);
 
     const allCyfRepos = repoDetails.filter(
-      (repo) => repo && repo.parent && repo.parent.owner && repo.parent.owner.login === 'CodeYourFuture'
+      (repo) =>
+        repo &&
+        repo.parent &&
+        repo.parent.owner &&
+        repo.parent.owner.login === "CodeYourFuture"
     );
 
     const mappedRepos = allCyfRepos.map((repo) => ({
@@ -44,23 +52,62 @@ async function pullRequest(req, res) {
     const pullRequestsData = await Promise.all(pullRequestsPromises);
 
     const pullRequestsInfo = pullRequestsData
-    .map((pullRequests) => ({
-      total_count: pullRequests ? pullRequests.total_count : 0,
-      items: pullRequests ? pullRequests.items.map((item) => ({
-        number: item.number,
-        html_url: item.html_url,
-        title: item.title,
-        updated_at: item.updated_at,
-      })) : [],
-    }))
-    .filter((info) => info.total_count > 0);
+      .map((pullRequests) => ({
+        total_count: pullRequests ? pullRequests.total_count : 0,
+        items: pullRequests
+          ? pullRequests.items.map((item) => ({
+              number: item.number,
+              html_url: item.html_url,
+              title: item.title,
+              updated_at: item.updated_at,
+            }))
+          : [],
+      }))
+      .filter((info) => info.total_count > 0);
 
-    return res.status(200).json({ allPullRequest: pullRequestsInfo });
+    const fetchCurrentMilestone = async () => {
+      try {
+        const currentDate = new Date();
+        const currentMilestone = await Milestone.findOne({
+          where: {
+            startDate: { [Op.lte]: currentDate },
+            endDate: { [Op.gte]: currentDate },
+          },
+        });
+        return currentMilestone;
+      } catch (error) {
+        throw new Error("Error fetching current milestone: " + error.message);
+      }
+    };
 
+    const currentMilestone = await fetchCurrentMilestone();
+
+    const PRsFactorExpectation = await FactorExpectation.findOne({
+      where: {
+        milestoneId: currentMilestone.id,
+      },
+      include: [
+        {
+          model: Factor,
+          where: { name: "Pulls" },
+          attributes: ["name"],
+        },
+      ],
+    });
+console.log(pullRequestsInfo);
+console.log(PRsFactorExpectation.dataValues.value);
+    return res
+      .status(200)
+      .json({
+        factorName : "Pull Requests",
+        factorExpectationValue: PRsFactorExpectation.dataValues.value,
+        allPullRequest: pullRequestsInfo
+      });
   } catch (error) {
     console.error(error.message);
     return res.status(500).json({
-      error: "Failed to fetch information on the number of cloned CYF repositories for trainees",
+      error:
+        "Failed to fetch information on the number of cloned CYF repositories for trainees",
     });
   }
 }
@@ -78,7 +125,9 @@ async function getAllRepos(req, res) {
     const accessToken = user.accessToken;
 
     const allRepos = await ReposService.getAllRepos(githubAccount, accessToken);
-    const clonedReposWithOwner = await ReposService.getAllReposWithOwner(allRepos);
+    const clonedReposWithOwner = await ReposService.getAllReposWithOwner(
+      allRepos
+    );
 
     const repoDetailsPromises = clonedReposWithOwner.map((repo) =>
       ReposService.fetchRepositoryDetails(repo, accessToken)
@@ -87,7 +136,11 @@ async function getAllRepos(req, res) {
     const repoDetails = await Promise.all(repoDetailsPromises);
 
     const allCyfRepos = repoDetails.filter(
-      (repo) => repo && repo.parent && repo.parent.owner && repo.parent.owner.login === 'CodeYourFuture'
+      (repo) =>
+        repo &&
+        repo.parent &&
+        repo.parent.owner &&
+        repo.parent.owner.login === "CodeYourFuture"
     );
 
     const mappedRepos = allCyfRepos.map((repo) => ({
@@ -101,14 +154,12 @@ async function getAllRepos(req, res) {
       },
     }));
 
-    
-
     return res.status(200).json({ allPullRequest: mappedRepos });
-
   } catch (error) {
     console.error(error.message);
     return res.status(500).json({
-      error: "Failed to fetch information on the number of cloned CYF repositories for trainees",
+      error:
+        "Failed to fetch information on the number of cloned CYF repositories for trainees",
     });
   }
 }
