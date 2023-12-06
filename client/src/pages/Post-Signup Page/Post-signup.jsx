@@ -164,7 +164,7 @@ export default function PostSignup() {
                   type="submit"
                   variant="contained"
                   fullWidth
-                  style={{ backgroundColor: "#ED4343", color: "white" }}
+                  style={{ backgroundColor: "#D82929", color: "white" }}
                   sx={{ mt: 2 }}
                 >
                   Get Started

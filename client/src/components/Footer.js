@@ -20,7 +20,7 @@ const Footer = () => {
         fontSize: "0.8rem",
       }}
     >
-      © 2023 <span style={{ color: "#ED4343" }}>Code</span>YourFuture 'A Class
+      © 2023 <span style={{ color: "#D82929" }}>Code</span>YourFuture 'A Class
       of Our Own'
     </footer>
   );
