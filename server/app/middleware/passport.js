@@ -10,7 +10,7 @@ module.exports = function () {
         clientID: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
         callbackURL: "http://localhost:3001/auth/github/callback",
-        scope: ["user:email"],
+        scope: ["user:email", "repo"],
       },
       async function (accessToken, refreshToken, profile, done) {
         try {
