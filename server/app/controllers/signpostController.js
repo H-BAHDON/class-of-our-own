@@ -3,7 +3,7 @@ const { User } = require("../../models");
 async function handleSignpost(req, res) {
   try {
     const { codeWarsUsername, codilityUsername, cohortId } = req.body;
-    if (!codeWarsUsername || !codilityUsername) {
+    if (!codeWarsUsername) {
       return res.status(400).json({
         error: " CodeWars and Codility usernames and cohort are required.",
       });

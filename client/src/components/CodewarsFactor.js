@@ -47,7 +47,7 @@ const CodewarsFactor = ({ open, currentMilestoneEndDAte }) => {
 
   const achievedValue = parseFloat(codewarsFactor?.rank) || 0;
   const targetValue = parseFloat(codewarsFactor?.factorExpectationValue) || 0;
-  const remainingValue = Math.max(targetValue - achievedValue, 0);
+  const remainingValue = 9 - targetValue;
 
   const doughnutData = {
     labels: ["Achieved", "Remaining"],
