@@ -7,12 +7,11 @@ import usePullRequestsData from "../hooks/UsePullRequestData";
 const PullRequestFactor = ({ open, currentMilestoneEndDate }) => {
   const { isLoading: isLoadingData, pullsData } = usePullRequestsData();
   const [isLoading, setIsLoading] = useState(false);
-  const [currentMilestoneData, setCurrentMilestoneData] = useState();
 
   const achievedValue = pullsData ? pullsData.pulls : 0;
   const targetValue = pullsData ? pullsData.factorExpectationValue : 0;
   const remainingValue = Math.max(targetValue - achievedValue, 0);
-
+  
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -21,23 +20,6 @@ const PullRequestFactor = ({ open, currentMilestoneEndDate }) => {
     };
 
     fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchMilestoneData = async () => {
-      setIsLoading(true);
-      try {
-        const instant = axios.configAxios();
-        const response = await instant.get("/current-milestone");
-        setCurrentMilestoneData(response.data);
-      } catch (error) {
-        console.error("Error fetching milestone data:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchMilestoneData();
   }, []);
 
   const doughnutData = {
