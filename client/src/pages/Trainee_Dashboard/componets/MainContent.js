@@ -7,15 +7,13 @@ import PullRequestFactor from "../../../components/PullRequestFactor";
 import { useState, useEffect } from "react";
 import Milestones from "./Milestones";
 import PullRequests from "./PullRequests";
+import formatDate from "../../../Helper/formatDate"
 
 const MainContent = ({ selectedTab, open }) => {
   const [currentMilestoneData, setCurrentMilestoneData] = useState({});
   console.log("Selected Tab in MainContent:", selectedTab);
 
-  const formatDate = (dateString) => {
-    const options = { year: "numeric", month: "numeric", day: "numeric" };
-    return new Date(dateString).toLocaleDateString(undefined, options);
-  };
+ 
 
   useEffect(() => {
     const instant = axios.configAxios();
@@ -45,9 +43,9 @@ const MainContent = ({ selectedTab, open }) => {
             <Box>
               <CurrentMilestone
                 currentMilestoneName={currentMilestoneData.name}
-                currentMilestoneStartDare={formatDate(
-                  currentMilestoneData.startDate
-                )}
+                currentMilestoneStartDare={
+                  formatDate(currentMilestoneData.startDate)
+                }
                 currentMilestoneEndDAte={formatDate(
                   currentMilestoneData.endDate
                 )}
