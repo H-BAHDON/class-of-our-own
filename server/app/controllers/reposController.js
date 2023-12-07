@@ -3,6 +3,7 @@ const ReposService = require("../helpers/ReposService");
 const { Milestone, FactorExpectation, Factor } = require("../../models");
 const { Op } = require("sequelize");
 
+
 async function pullRequest(req, res) {
   try {
     const email = req.user.dataValues.email;
@@ -65,53 +66,51 @@ async function pullRequest(req, res) {
       }))
       .filter((info) => info.total_count > 0);
 
-    const fetchCurrentMilestone = async () => {
-      try {
-        const currentDate = new Date();
-        const currentMilestone = await Milestone.findOne({
-          where: {
-            startDate: { [Op.lte]: currentDate },
-            endDate: { [Op.gte]: currentDate },
-          },
-        });
-        return currentMilestone;
-      } catch (error) {
-        throw new Error("Error fetching current milestone: " + error.message);
-      }
-    };
-
-    const currentMilestone = await fetchCurrentMilestone();
-
-    const PRsFactorExpectation = await FactorExpectation.findOne({
-      where: {
-        milestoneId: currentMilestone.id,
-      },
-      include: [
-        {
-          model: Factor,
-          where: { name: "Pulls" },
-          attributes: ["name"],
+      const fetchCurrentMilestone = async () => {
+        try {
+          const currentDate = new Date();
+          const currentMilestone = await Milestone.findOne({
+            where: {
+              startDate: { [Op.lte]: currentDate },
+              endDate: { [Op.gte]: currentDate },
+            },
+          });
+          return currentMilestone;
+        } catch (error) {
+          throw new Error("Error fetching current milestone: " + error.message);
+        }
+      };
+  
+      const currentMilestone = await fetchCurrentMilestone();
+  
+      const PRsFactorExpectation = await FactorExpectation.findOne({
+        where: {
+          milestoneId: currentMilestone.id,
         },
-      ],
-    });
-console.log(pullRequestsInfo);
-console.log(PRsFactorExpectation.dataValues.value);
-    return res
-      .status(200)
-      .json({
-        factorName : "Pull Requests",
-        factorExpectationValue: PRsFactorExpectation.dataValues.value,
-        allPullRequest: pullRequestsInfo
+        include: [
+          {
+            model: Factor,
+            where: { name: "Pulls" },
+            attributes: ["name"],
+          },
+        ],
       });
-  } catch (error) {
-    console.error(error.message);
-    return res.status(500).json({
-      error:
-        "Failed to fetch information on the number of cloned CYF repositories for trainees",
-    });
+  
+      // Extract the total count of pull requests
+      const totalPulls = pullRequestsInfo.reduce((acc, info) => acc + info.total_count, 0);
+  
+      return res.status(200).json({
+        pulls: totalPulls,
+        factorName: "Pulls",
+        factorExpectationValue: PRsFactorExpectation.dataValues.value,
+      });
+    } catch (error) {
+      console.error(error.message);
+      return res.status(500).json({
+        error: "Failed to fetch information on the number of pull requests",
+      });
+    }
   }
-}
-
 async function getAllRepos(req, res) {
   try {
     const email = req.user.dataValues.email;
