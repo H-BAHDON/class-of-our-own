@@ -11,9 +11,7 @@ import formatDate from "../../../Helper/formatDate"
 
 const MainContent = ({ selectedTab, open }) => {
   const [currentMilestoneData, setCurrentMilestoneData] = useState({});
-  console.log("Selected Tab in MainContent:", selectedTab);
 
- 
 
   useEffect(() => {
     const instant = axios.configAxios();
@@ -25,7 +23,6 @@ const MainContent = ({ selectedTab, open }) => {
       .catch((error) => {});
   }, []);
 
-  console.log(currentMilestoneData);
 
   return (
     <Container>

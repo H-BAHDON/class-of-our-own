@@ -4,7 +4,7 @@ import { Doughnut } from "react-chartjs-2";
 import axios from "../config/configAxios";
 import usePullRequestsData from "../hooks/UsePullRequestData";
 
-const PullRequestFactor = ({ open, currentMilestoneEndDate }) => {
+const PullRequestFactor = ({ open, currentMilestoneEndDAte }) => {
   const { isLoading: isLoadingData, pullsData } = usePullRequestsData();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -50,7 +50,7 @@ const PullRequestFactor = ({ open, currentMilestoneEndDate }) => {
             Achieved Number: {achievedValue}
           </Typography>
           <Typography variant="body1">
-            Expected Number: {targetValue} by {currentMilestoneEndDate}
+            Expected Number: {targetValue} by {currentMilestoneEndDAte}
           </Typography>
 
           {/* Doughnut chart with modified data */}
