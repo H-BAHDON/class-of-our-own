@@ -1,48 +1,44 @@
 import React, { useState, useEffect } from "react";
 import { CircularProgress, Typography, Paper } from "@mui/material";
 import { Doughnut } from "react-chartjs-2";
-import { Chart, ArcElement, Legend, Tooltip } from "chart.js/auto";
 import axios from "../config/configAxios";
+import usePullRequestsData from "../hooks/UsePullRequestData";
 
-const PullRequestFactor = ({ open, currentMilestoneEndDAte }) => {
+const PullRequestFactor = ({ open, currentMilestoneEndDate }) => {
+  const { isLoading: isLoadingData, pullsData } = usePullRequestsData();
   const [isLoading, setIsLoading] = useState(false);
   const [currentMilestoneData, setCurrentMilestoneData] = useState();
+
+  const achievedValue = pullsData ? pullsData.pulls : 0;
+  const targetValue = pullsData ? pullsData.factorExpectationValue : 0;
+  const remainingValue = Math.max(targetValue - achievedValue, 0);
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-
       await new Promise((resolve) => setTimeout(resolve, 1000));
-
       setIsLoading(false);
     };
 
     fetchData();
   }, []);
 
-  const formatDate = (dateString) => {
-    const options = { year: "numeric", month: "numeric", day: "numeric" };
-    return new Date(dateString).toLocaleDateString(undefined, options);
-  };
-
   useEffect(() => {
-    setIsLoading(true);
-    const instant = axios.configAxios();
-    instant
-      .get("/current-milestone")
-      .then((data) => {
+    const fetchMilestoneData = async () => {
+      setIsLoading(true);
+      try {
+        const instant = axios.configAxios();
+        const response = await instant.get("/current-milestone");
+        setCurrentMilestoneData(response.data);
+      } catch (error) {
+        console.error("Error fetching milestone data:", error);
+      } finally {
         setIsLoading(false);
-        console.log(data);
-        setCurrentMilestoneData(data);
-      })
-      .catch((error) => {
-        setIsLoading(false);
-      });
-  }, []);
+      }
+    };
 
-  const achievedValue = 20;
-  const targetValue = 27;
-  const remainingValue = Math.max(targetValue - achievedValue, 0);
+    fetchMilestoneData();
+  }, []);
 
   const doughnutData = {
     labels: ["Achieved", "Remaining"],
@@ -56,7 +52,7 @@ const PullRequestFactor = ({ open, currentMilestoneEndDAte }) => {
 
   return (
     <>
-      {isLoading ? (
+      {isLoading || isLoadingData ? (
         <CircularProgress />
       ) : (
         <Paper
@@ -72,7 +68,7 @@ const PullRequestFactor = ({ open, currentMilestoneEndDAte }) => {
             Achieved Number: {achievedValue}
           </Typography>
           <Typography variant="body1">
-            Expected Number: {targetValue} by {currentMilestoneEndDAte}
+            Expected Number: {targetValue} by {currentMilestoneEndDate}
           </Typography>
 
           {/* Doughnut chart with modified data */}
