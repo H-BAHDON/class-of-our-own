@@ -193,7 +193,7 @@ export default function SideBar({ selectedTab, onTabClick }) {
                 />
               </ListItemIcon>
               <ListItemText
-                primary="PR Details"
+                primary="Pull Requests"
                 sx={{
                   opacity: open ? 1 : 0,
                   color: selectedTab === "prDetails" ? "white" : "",
