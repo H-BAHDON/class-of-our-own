@@ -12,7 +12,7 @@ import { Typography, Button } from "@mui/material";
 
 const PullRequests = () => {
   const { pullRequestsData, loading, error } = useFetchPullRequests();
-  const [visibleRows, setVisibleRows] = useState(5);
+  const [visibleRows, setVisibleRows] = useState(10);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -22,10 +22,10 @@ const PullRequests = () => {
     return <p>Error: {error.message}</p>;
   }
 
-  const rows = (pullRequestsData?.withPR || []).sort((a, b) => new Date(a.items[0]?.createdAt) - new Date(b.items[0]?.createdAt));
+  const rows = (pullRequestsData?.withPR || []).sort((a, b) => new Date(b.items[0]?.createdAt) - new Date(a.items[0]?.createdAt));
 
   const handleShowMore = () => {
-    setVisibleRows(visibleRows + 5);
+    setVisibleRows(visibleRows + 10);
   };
 
   return (
@@ -41,8 +41,8 @@ const PullRequests = () => {
           <TableHead>
             <TableRow sx={{ backgroundColor: "#d5d4d4" }}>
               <TableCell>No</TableCell>
-              <TableCell>Pull Request Name</TableCell>
-              <TableCell>Created At</TableCell>
+              <TableCell>Pull Request</TableCell>
+              <TableCell>Created On</TableCell>
             </TableRow>
           </TableHead>
           <TableBody sx={{ backgroundColor: "#fafafa" }}>
@@ -77,7 +77,7 @@ const PullRequests = () => {
       )}
     </>
   );
-  
 };
+
 
 export default PullRequests;
