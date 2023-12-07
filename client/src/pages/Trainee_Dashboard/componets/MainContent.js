@@ -14,6 +14,7 @@ const MainContent = ({ selectedTab, open }) => {
   const [startRank, setStartRank] = useState(null);
   const [milestonesData, setMilestonesData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [startPullNumber, setStartPullNumber] = useState(null);
 
   useEffect(() => {
     const instant = axios.configAxios();
@@ -32,6 +33,7 @@ const MainContent = ({ selectedTab, open }) => {
         const response = await instant.get("/milestones");
         setMilestonesData(response.data);
         setStartRank(response.data[0].factors[0].value);
+        setStartPullNumber(response.data[0].factors[3].value);
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching milestones:", error);
@@ -105,6 +107,7 @@ const MainContent = ({ selectedTab, open }) => {
                   }}
                 >
                   <PullRequestFactor
+                    startPullNumber={startPullNumber}
                     open={open}
                     currentMilestoneEndDAte={formatDate(
                       currentMilestoneData.endDate
