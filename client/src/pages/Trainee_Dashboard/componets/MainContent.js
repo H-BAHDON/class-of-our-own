@@ -111,25 +111,6 @@ const MainContent = ({ selectedTab, open }) => {
                     )}
                   />
                 </Box>
-
-                {/* Third Box (blank) */}
-                <Box
-                  sx={{
-                    flex: "1 1 calc(50% - 0.5rem)",
-                    padding: "1.5rem",
-                    backgroundColor: "#d5d4d4",
-                    marginBottom: "1rem",
-                  }}
-                ></Box>
-                {/* Fourth Box (blank) */}
-                <Box
-                  sx={{
-                    flex: "1 1 calc(50% - 0.5rem)",
-                    padding: "1.5rem",
-                    backgroundColor: "#d5d4d4",
-                    marginBottom: "1rem",
-                  }}
-                ></Box>
               </Box>
             </Box>
           )}
