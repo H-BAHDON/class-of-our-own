@@ -10,7 +10,7 @@ import { useAuth } from "../hooks/useAuth";
 import { Doughnut } from "react-chartjs-2";
 import { Chart, ArcElement, Legend, Tooltip } from "chart.js/auto";
 
-const CodewarsFactor = ({ open, currentMilestoneEndDAte }) => {
+const CodewarsFactor = ({ open, currentMilestoneEndDAte, startRank }) => {
   const [codewarsFactor, setCodewarsFactor] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const { user, loading } = useAuth();
@@ -43,17 +43,12 @@ const CodewarsFactor = ({ open, currentMilestoneEndDAte }) => {
 
   Chart.register(ArcElement, Legend, Tooltip);
 
-  // Parse rank as a number
   const parsedRank = parseFloat(codewarsFactor?.rank) || 0;
 
-  // Parse target as an integer (remove 'kyu' and convert to number)
   const parsedTarget =
     parseInt(codewarsFactor?.factorExpectationValue, 10) || 0;
 
-  console.log("Parsed Rank:", parsedRank);
-  console.log("Parsed Target:", parsedTarget);
-
-  const startValue = 9;
+  const startValue = startRank;
   const achievedValue = parsedRank;
   const targetValue = parsedTarget;
   const remainingValue = Math.max(achievedValue - targetValue, 0);
@@ -89,7 +84,7 @@ const CodewarsFactor = ({ open, currentMilestoneEndDAte }) => {
         >
           <Typography variant="h6">{codewarsFactor?.factorName}</Typography>
           <Typography variant="body1">
-            Rank at the start of the course: {startValue}
+            Rank at the start of the course: {startValue} kyu
           </Typography>
           <Typography variant="body1">
             Achieved Rank: {codewarsFactor?.rank}

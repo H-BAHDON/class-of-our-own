@@ -7,11 +7,13 @@ import PullRequestFactor from "../../../components/PullRequestFactor";
 import { useState, useEffect } from "react";
 import Milestones from "./Milestones";
 import PullRequests from "./PullRequests";
-import formatDate from "../../../Helper/formatDate"
+import formatDate from "../../../Helper/formatDate";
 
 const MainContent = ({ selectedTab, open }) => {
   const [currentMilestoneData, setCurrentMilestoneData] = useState({});
-
+  const [startRank, setStartRank] = useState(null);
+  const [milestonesData, setMilestonesData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const instant = axios.configAxios();
@@ -22,7 +24,23 @@ const MainContent = ({ selectedTab, open }) => {
       })
       .catch((error) => {});
   }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        const instant = axios.configAxios();
+        const response = await instant.get("/milestones");
+        setMilestonesData(response.data);
+        setStartRank(response.data[0].factors[0].value);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching milestones:", error);
+        setIsLoading(false);
+      }
+    };
 
+    fetchData();
+  }, []);
 
   return (
     <Container>
@@ -40,9 +58,9 @@ const MainContent = ({ selectedTab, open }) => {
             <Box>
               <CurrentMilestone
                 currentMilestoneName={currentMilestoneData.name}
-                currentMilestoneStartDare={
-                  formatDate(currentMilestoneData.startDate)
-                }
+                currentMilestoneStartDare={formatDate(
+                  currentMilestoneData.startDate
+                )}
                 currentMilestoneEndDAte={formatDate(
                   currentMilestoneData.endDate
                 )}
@@ -68,6 +86,7 @@ const MainContent = ({ selectedTab, open }) => {
                   }}
                 >
                   <CodewarsFactor
+                    startRank={startRank}
                     open={open}
                     currentMilestoneEndDAte={formatDate(
                       currentMilestoneData.endDate
@@ -122,7 +141,10 @@ const MainContent = ({ selectedTab, open }) => {
           )}
           {selectedTab === "Milestones" && (
             <Box>
-              <Milestones />
+              <Milestones
+                milestonesData={milestonesData}
+                isLoading={isLoading}
+              />
             </Box>
           )}
         </Box>
