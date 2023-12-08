@@ -3,8 +3,58 @@ const ReposService = require("../helpers/ReposService");
 const { Milestone, FactorExpectation, Factor } = require("../../models");
 const { Op } = require("sequelize");
 
+async function getAllRepos(req, res) {
+  try {
+    const email = req.user.dataValues.email;
+    const user = await User.findOne({ where: { email } });
 
-async function pullRequest(req, res) {
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const githubAccount = user.traineeGithubAccount;
+    const accessToken = user.accessToken;
+
+    const allRepos = await ReposService.getAllRepos(githubAccount, accessToken);
+    const clonedReposWithOwner = await ReposService.getAllReposWithOwner(
+      allRepos
+    );
+
+    const repoDetailsPromises = clonedReposWithOwner.map((repo) =>
+      ReposService.fetchRepositoryDetails(repo, accessToken)
+    );
+
+    const repoDetails = await Promise.all(repoDetailsPromises);
+
+    const allCyfRepos = repoDetails.filter(
+      (repo) =>
+        repo &&
+        repo.parent &&
+        repo.parent.owner &&
+        repo.parent.owner.login === "CodeYourFuture"
+    );
+
+    const mappedRepos = allCyfRepos.map((repo) => ({
+      id: repo.id,
+      name: repo.name,
+      full_name: repo.full_name,
+      fork: repo.fork,
+      created_at: repo.created_at,
+      owner: {
+        login: repo.owner.login,
+      },
+    }));
+
+    return res.status(200).json({ allPullRequest: mappedRepos });
+  } catch (error) {
+    console.error(error.message);
+    return res.status(500).json({
+      error:
+        "Failed to fetch information on the number of cloned CYF repositories for trainees",
+    });
+  }
+}
+async function getTotalPullRequest(req, res) {
   try {
     const email = req.user.dataValues.email;
     const user = await User.findOne({ where: { email } });
@@ -110,134 +160,150 @@ async function pullRequest(req, res) {
       });
     }
   }
-async function getAllRepos(req, res) {
-  try {
-    const email = req.user.dataValues.email;
-    const user = await User.findOne({ where: { email } });
 
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
-
-    const githubAccount = user.traineeGithubAccount;
-    const accessToken = user.accessToken;
-
-    const allRepos = await ReposService.getAllRepos(githubAccount, accessToken);
-    const clonedReposWithOwner = await ReposService.getAllReposWithOwner(
-      allRepos
-    );
-
-    const repoDetailsPromises = clonedReposWithOwner.map((repo) =>
-      ReposService.fetchRepositoryDetails(repo, accessToken)
-    );
-
-    const repoDetails = await Promise.all(repoDetailsPromises);
-
-    const allCyfRepos = repoDetails.filter(
-      (repo) =>
-        repo &&
-        repo.parent &&
-        repo.parent.owner &&
-        repo.parent.owner.login === "CodeYourFuture"
-    );
-
-    const mappedRepos = allCyfRepos.map((repo) => ({
-      id: repo.id,
-      name: repo.name,
-      full_name: repo.full_name,
-      fork: repo.fork,
-      created_at: repo.created_at,
-      owner: {
-        login: repo.owner.login,
-      },
-    }));
-
-    return res.status(200).json({ allPullRequest: mappedRepos });
-  } catch (error) {
-    console.error(error.message);
-    return res.status(500).json({
-      error:
-        "Failed to fetch information on the number of cloned CYF repositories for trainees",
-    });
-  }
-}
-
-async function WithPrWithoutPr(req, res) {
-  try {
-    const email = req.user.dataValues.email;
-    const user = await User.findOne({ where: { email } });
-
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
-
-    const githubAccount = user.traineeGithubAccount;
-    const accessToken = user.accessToken;
-
-    const allRepos = await ReposService.getAllRepos(githubAccount, accessToken);
-    const clonedReposWithOwner = await ReposService.getAllReposWithOwner(allRepos);
-
-    const repoDetailsPromises = clonedReposWithOwner.map((repo) =>
-      ReposService.fetchRepositoryDetails(repo, accessToken)
-    );
-
-    const repoDetails = await Promise.all(repoDetailsPromises);
-
-    const allCyfRepos = repoDetails.filter(
-      (repo) => repo && repo.parent && repo.parent.owner && repo.parent.owner.login === 'CodeYourFuture'
-    );
-
-    const mappedRepos = allCyfRepos.map((repo) => ({
-      id: repo.id,
-      name: repo.name,
-      full_name: repo.full_name,
-      fork: repo.fork,
-      created_at: repo.created_at,
-      owner: {
-        login: repo.owner.login,
-      },
-    }));
-
-    const pullRequestsPromises = mappedRepos.map((repo) =>
-      ReposService.fetchPullRequests(repo.name, repo.owner.login, accessToken)
-    );
-
-    const pullRequestsData = await Promise.all(pullRequestsPromises);
-
-    const pullRequestsInfoAll = pullRequestsData.map((pullRequests, index) => ({
-      repoName: mappedRepos[index].name,
-      total_count: pullRequests ? pullRequests.total_count : 0,
-      items: pullRequests
-        ? pullRequests.items.map((item) => ({
-            number: item.number,
-            html_url: item.html_url,
-            title: item.title,
-            created_at: item.created_at,
-          }))
-        : [],
-    }));
-
-    const pullRequestsInfoWithPR = pullRequestsInfoAll.filter(
-      (info) => info.total_count > 0
-    );
-
-    const pullRequestsInfoWithoutPR = pullRequestsInfoAll.filter(
-      (info) => info.total_count === 0
-    );
-
-    return res.status(200).json({
-      allPullRequest: {
+  async function getWithPullRequest(req, res) {
+    try {
+      const email = req.user.dataValues.email;
+      const user = await User.findOne({ where: { email } });
+  
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+  
+      const githubAccount = user.traineeGithubAccount;
+      const accessToken = user.accessToken;
+  
+      const allRepos = await ReposService.getAllRepos(githubAccount, accessToken);
+      const clonedReposWithOwner = await ReposService.getAllReposWithOwner(allRepos);
+  
+      const repoDetailsPromises = clonedReposWithOwner.map((repo) =>
+        ReposService.fetchRepositoryDetails(repo, accessToken)
+      );
+  
+      const repoDetails = await Promise.all(repoDetailsPromises);
+  
+      const allCyfRepos = repoDetails.filter(
+        (repo) => repo && repo.parent && repo.parent.owner && repo.parent.owner.login === 'CodeYourFuture'
+      );
+  
+      const mappedRepos = allCyfRepos.map((repo) => ({
+        id: repo.id,
+        name: repo.name,
+        full_name: repo.full_name,
+        fork: repo.fork,
+        created_at: repo.created_at,
+        owner: {
+          login: repo.owner.login,
+        },
+      }));
+  
+      const pullRequestsPromises = mappedRepos.map((repo) =>
+        ReposService.fetchPullRequests(repo.name, repo.owner.login, accessToken)
+      );
+  
+      const pullRequestsData = await Promise.all(pullRequestsPromises);
+  
+      const pullRequestsInfoAll = pullRequestsData.map((pullRequests, index) => ({
+        repoName: mappedRepos[index].name,
+        total_count: pullRequests ? pullRequests.total_count : 0,
+        items: pullRequests
+          ? pullRequests.items.map((item) => ({
+              number: item.number,
+              html_url: item.html_url,
+              title: item.title,
+              created_at: item.created_at,
+            }))
+          : [],
+      }));
+  
+      const pullRequestsInfoWithPR = pullRequestsInfoAll.filter(
+        (info) => info.total_count > 0
+      );
+  
+      return res.status(200).json({
         withPR: pullRequestsInfoWithPR,
-        withoutPR: pullRequestsInfoWithoutPR,
-      },
-    });
-
-  } catch (error) {
-    console.error(error.message);
-    return res.status(500).json({
-      error: "Failed to fetch information on the number of cloned CYF repositories for trainees",
-    });
+      });
+  
+    } catch (error) {
+      console.error(error.message);
+      return res.status(500).json({
+        error: "Failed to fetch information on pull requests for cloned CYF repositories",
+      });
+    }
   }
-}
 
-module.exports = { pullRequest, getAllRepos, WithPrWithoutPr };
+  async function getWithOutPullRequest(req, res) {
+    try {
+      const email = req.user.dataValues.email;
+      const user = await User.findOne({ where: { email } });
+  
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+  
+      const githubAccount = user.traineeGithubAccount;
+      const accessToken = user.accessToken;
+  
+      const allRepos = await ReposService.getAllRepos(githubAccount, accessToken);
+      const clonedReposWithOwner = await ReposService.getAllReposWithOwner(allRepos);
+  
+      const repoDetailsPromises = clonedReposWithOwner.map((repo) =>
+        ReposService.fetchRepositoryDetails(repo, accessToken)
+      );
+  
+      const repoDetails = await Promise.all(repoDetailsPromises);
+  
+      const allCyfRepos = repoDetails.filter(
+        (repo) => repo && repo.parent && repo.parent.owner && repo.parent.owner.login === 'CodeYourFuture'
+      );
+  
+      const mappedRepos = allCyfRepos.map((repo) => ({
+        id: repo.id,
+        name: repo.name,
+        full_name: repo.full_name,
+        fork: repo.fork,
+        created_at: repo.created_at,
+        owner: {
+          login: repo.owner.login,
+        },
+      }));
+  
+      const pullRequestsPromises = mappedRepos.map((repo) =>
+        ReposService.fetchPullRequests(repo.name, repo.owner.login, accessToken)
+      );
+  
+      const pullRequestsData = await Promise.all(pullRequestsPromises);
+  
+      const pullRequestsInfoAll = pullRequestsData.map((pullRequests, index) => ({
+        repoName: mappedRepos[index].name,
+        total_count: pullRequests ? pullRequests.total_count : 0,
+        items: pullRequests
+          ? pullRequests.items.map((item) => ({
+              number: item.number,
+              html_url: item.html_url,
+              title: item.title,
+              created_at: item.created_at,
+            }))
+          : [],
+      }));
+  
+      const pullRequestsInfoWithoutPR = pullRequestsInfoAll.filter(
+        (info) => info.total_count === 0
+      );
+  
+      return res.status(200).json({
+        withoutPR: pullRequestsInfoWithoutPR,
+      });
+  
+    } catch (error) {
+      console.error(error.message);
+      return res.status(500).json({
+        error: "Failed to fetch information on repositories without pull requests for cloned CYF repositories",
+      });
+    }
+  }
+  
+
+
+
+module.exports = { getTotalPullRequest, getAllRepos, getWithPullRequest, getWithOutPullRequest};
