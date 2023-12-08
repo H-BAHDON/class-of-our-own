@@ -59,7 +59,7 @@ td {
 }
 
 
-@media (max-width: 599px) {
+@media (min-width: 600px) and (max-width: 959px) {
   .table-container {
     overflow-x: auto;
   }
@@ -72,31 +72,25 @@ td {
 
   th,
   td {
-    padding: 0.8rem;
-    font-size: 1rem;
-    /* Adjust the font size for smaller screens */
+    padding: 0.5rem;
+    font-size: 0.9rem;
     text-align: center;
-    /* Center align text on smaller screens */
   }
 
   th:first-child,
   td:first-child {
-    padding-left: 0.5rem;
-    /* Adjust the padding for the first column on smaller screens */
+    padding-left: 0.3rem;
     text-align: left;
-    /* Left align text in the first column on smaller screens */
   }
 
-  /* Add some styling for better readability on smaller screens */
+
   th {
     background-color: #f1eeeb;
-    /* Light background color for headers on smaller screens */
     position: sticky;
     top: 0;
   }
 
   tr:nth-child(even) {
     background-color: #f9f9f9;
-    /* Alternate row background color on smaller screens */
   }
 }
