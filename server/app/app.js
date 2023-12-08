@@ -25,13 +25,13 @@ const app = express();
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: ["https://class-of-our-own-client.onrender.com"],
     methods: ["GET", "POST"],
     credentials: true,
   })
 );
 app.use(express.json());
-app.set('trust proxy', 1);
+app.set("trust proxy", 1);
 
 app.use(
   session({
@@ -69,7 +69,7 @@ app.use("/current-milestone", milestoneRoute);
 app.use("/codewars", CodewarsRoutes);
 app.use("/getAllRepos", ReposRoutes);
 app.use("/cohorts", cohortsRoutes);
-app.use("/milestones", milestonesRouter)
+app.use("/milestones", milestonesRouter);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

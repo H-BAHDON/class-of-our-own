@@ -9,7 +9,8 @@ module.exports = function () {
       {
         clientID: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
-        callbackURL: "http://localhost:3001/auth/github/callback",
+        callbackURL:
+          "https://class-of-our-own-server.onrender.com/auth/github/callback",
         scope: ["user:email", "repo"],
       },
       async function (accessToken, refreshToken, profile, done) {
@@ -43,9 +44,8 @@ module.exports = function () {
             return done(null, newUser, { avatar_url });
           }
 
-          
           const avatar_url = profile._json.avatar_url;
-          const githubData = { avatar_url};
+          const githubData = { avatar_url };
 
           return done(null, user, { githubData });
         } catch (error) {
