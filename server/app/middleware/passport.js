@@ -9,8 +9,7 @@ module.exports = function () {
       {
         clientID: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
-        callbackURL:
-          "https://class-of-our-own-server.onrender.com/auth/github/callback",
+        callbackURL: `${process.env.SERVER_URL}/auth/github/callback`,
         scope: ["user:email", "repo"],
       },
       async function (accessToken, refreshToken, profile, done) {

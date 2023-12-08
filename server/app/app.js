@@ -25,7 +25,7 @@ const app = express();
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ["https://class-of-our-own-client.onrender.com"],
+    origin: [`${process.env.CLIENT_URL}`],
     methods: ["GET", "POST"],
     credentials: true,
   })
