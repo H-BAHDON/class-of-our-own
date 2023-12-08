@@ -36,7 +36,7 @@ async function handleGitHubCallback(req, res) {
       ) {
         res.redirect(`${process.env.CLIENT_URL}`);
       } else {
-        res.redirect(`${process.env.CLIENT_URL}/signpost`);
+        res.redirect(`${process.env.CLIENT_URL}/PostSignup`);
       }
     }, 1000);
   } catch (err) {
