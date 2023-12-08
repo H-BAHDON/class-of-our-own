@@ -34,7 +34,7 @@ const PullRequests = () => {
         Pull Requests
       </Typography>
       <Typography variant="body1" paragraph style={{ textAlign: "center" }}>
-        Check all your Pull Requests & dates in CodeYourFuture.
+      Quick links to your CYF PRs. Review, edit, and check for CYF comments
       </Typography>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
