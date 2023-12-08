@@ -27,6 +27,9 @@ const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
+  [theme.breakpoints.down("sm")]: {
+    width: "100vw",
+  },
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
@@ -193,7 +196,7 @@ export default function SideBar({ selectedTab, onTabClick }) {
                 />
               </ListItemIcon>
               <ListItemText
-                primary="PR Details"
+                primary="Pull Requests"
                 sx={{
                   opacity: open ? 1 : 0,
                   color: selectedTab === "prDetails" ? "white" : "",

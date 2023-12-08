@@ -1,47 +1,51 @@
-const { sequelize, User, Milestone, FactorExpectation, Factor, Cohort } = require("../../models");
+const {
+  sequelize,
+  User,
+  Milestone,
+  FactorExpectation,
+  Factor,
+  Cohort,
+} = require("../../models");
 
 async function getAllMilestones(req, res) {
   try {
     const email = req.user.dataValues.email;
 
+    // Using findOne with include to fetch user along with cohort information
     const user = await User.findOne({
       where: { email: email },
+      include: {
+        model: Cohort,
+      },
     });
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
 
-    // Assuming user has a cohortId, change this according to your data model
-    const cohortId = user.cohortId;
+    const cohortId = user.Cohort.id;
 
-    // Get all milestones for the user's cohort
+    // Using findAll with include to fetch milestones along with their factor expectations and factors
     const milestones = await Milestone.findAll({
       where: { cohortId: cohortId },
+      include: {
+        model: FactorExpectation,
+        include: Factor,
+      },
     });
 
-    // Fetch factor expectations for each milestone
-    const milestoneData = await Promise.all(milestones.map(async (milestone) => {
-      const factorExpectations = await FactorExpectation.findAll({
-        where: { milestoneId: milestone.id },
-      });
-
-      // Fetch factors for the factor expectations
-      const factors = await Promise.all(factorExpectations.map(async (expectation) => {
-        const factor = await Factor.findByPk(expectation.factorId);
-        return { name: factor.name, value: expectation.value };
-      }));
-
-      return {
-        id: milestone.id,
-        milestone: milestone.name,
-        startDate: milestone.startDate,
-        factors: factors,
-      };
+    // Mapping milestones to the desired format
+    const milestoneData = milestones.map((milestone) => ({
+      id: milestone.id,
+      milestone: milestone.name,
+      startDate: milestone.startDate,
+      factors: milestone.FactorExpectations.map((expectation) => ({
+        name: expectation.Factor.name,
+        value: expectation.value,
+      })),
     }));
 
     res.status(200).json(milestoneData);
-
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ error: "Failed to fetch All milestones" });

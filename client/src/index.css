@@ -58,30 +58,39 @@ td {
   border: none;
 }
 
-@media (max-width: 599px) {
-  .left-side {
-    text-align: center;
-    margin-left: 0;
+
+@media (min-width: 600px) and (max-width: 959px) {
+  .table-container {
+    overflow-x: auto;
   }
 
-  .centered {
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+  }
+
+  th,
+  td {
+    padding: 0.5rem;
+    font-size: 0.9rem;
     text-align: center;
-    margin: 0 auto;
+  }
+
+  th:first-child,
+  td:first-child {
+    padding-left: 0.3rem;
+    text-align: left;
+  }
+
+
+  th {
+    background-color: #f1eeeb;
+    position: sticky;
+    top: 0;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
   }
 }
-    .table-container {
-      overflow-x: auto;
-    
-    }
-  
-    table {
-      width: 100%;
-    
-    }
-  
-    th,
-    td {
-      padding: 0.5rem;
-   
-    }
-    

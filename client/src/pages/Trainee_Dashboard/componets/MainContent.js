@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, Container, SvgIcon, Button } from "@mui/material";
+import { Box, Paper, Container } from "@mui/material";
 import CurrentMilestone from "../../../components/CurrentMilestone";
 import axios from "../../../config/configAxios";
 import CodewarsFactor from "../../../components/CodewarsFactor";
@@ -7,15 +7,14 @@ import PullRequestFactor from "../../../components/PullRequestFactor";
 import { useState, useEffect } from "react";
 import Milestones from "./Milestones";
 import PullRequests from "./PullRequests";
+import formatDate from "../../../Helper/formatDate";
 
 const MainContent = ({ selectedTab, open }) => {
   const [currentMilestoneData, setCurrentMilestoneData] = useState({});
-  console.log("Selected Tab in MainContent:", selectedTab);
-
-  const formatDate = (dateString) => {
-    const options = { year: "numeric", month: "numeric", day: "numeric" };
-    return new Date(dateString).toLocaleDateString(undefined, options);
-  };
+  const [startRank, setStartRank] = useState(null);
+  const [milestonesData, setMilestonesData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [startPullNumber, setStartPullNumber] = useState(null);
 
   useEffect(() => {
     const instant = axios.configAxios();
@@ -27,7 +26,24 @@ const MainContent = ({ selectedTab, open }) => {
       .catch((error) => {});
   }, []);
 
-  console.log(currentMilestoneData);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        const instant = axios.configAxios();
+        const response = await instant.get("/milestones");
+        setMilestonesData(response.data);
+        setStartRank(response.data[0].factors[0].value);
+        setStartPullNumber(response.data[0].factors[3].value);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching milestones:", error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <Container>
@@ -36,7 +52,6 @@ const MainContent = ({ selectedTab, open }) => {
         sx={{
           padding: "1.5rem",
           backgroundColor: "#faf8f6",
-
           maxWidth: "100%",
         }}
       >
@@ -60,62 +75,46 @@ const MainContent = ({ selectedTab, open }) => {
               <h3 className="dashboard-titles">Current Progress</h3>
               <Box
                 className="factors"
-                sx={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}
+                sx={{
+                  display: "flex",
+                  gap: "1rem",
+                  flexWrap: "wrap",
+                  justifyContent: "center",
+                  "& > div": {
+                    flex: "1 1 calc(50% - 0.5rem)",
+                    padding: "1.5rem",
+                    backgroundColor: "#d5d4d4",
+                    marginBottom: "1rem",
+                    maxWidth: {
+                      xs: open ? "100%" : "25rem",
+                      sm: open ? "100%" : "25rem",
+                      md: "calc(50% - 0.5rem)",
+                      lg: "calc(50% - 0.5rem)",
+                    },
+                  },
+                }}
               >
                 {/* First Box with Codewars data */}
-                <Box
-                  sx={{
-                    flex: "1 1 calc(50% - 0.5rem)",
-                    padding: "1.5rem",
-                    backgroundColor: "#d5d4d4",
-                    marginBottom: "1rem",
-                    maxWidth: open ? "25rem" : "25",
-                  }}
-                >
+                <Paper elevation={2} sx={{ width: "100%" }}>
                   <CodewarsFactor
+                    startRank={startRank}
                     open={open}
                     currentMilestoneEndDAte={formatDate(
                       currentMilestoneData.endDate
                     )}
                   />
-                </Box>
+                </Paper>
 
                 {/* Second Box (blank) */}
-                <Box
-                  sx={{
-                    flex: "1 1 calc(50% - 0.5rem)",
-                    padding: "1.5rem",
-                    backgroundColor: "#d5d4d4",
-                    marginBottom: "1rem",
-                    maxWidth: open ? "25rem" : "25",
-                  }}
-                >
+                <Paper elevation={2} sx={{ width: "100%" }}>
                   <PullRequestFactor
+                    startPullNumber={startPullNumber}
                     open={open}
                     currentMilestoneEndDAte={formatDate(
                       currentMilestoneData.endDate
                     )}
                   />
-                </Box>
-
-                {/* Third Box (blank) */}
-                <Box
-                  sx={{
-                    flex: "1 1 calc(50% - 0.5rem)",
-                    padding: "1.5rem",
-                    backgroundColor: "#d5d4d4",
-                    marginBottom: "1rem",
-                  }}
-                ></Box>
-                {/* Fourth Box (blank) */}
-                <Box
-                  sx={{
-                    flex: "1 1 calc(50% - 0.5rem)",
-                    padding: "1.5rem",
-                    backgroundColor: "#d5d4d4",
-                    marginBottom: "1rem",
-                  }}
-                ></Box>
+                </Paper>
               </Box>
             </Box>
           )}
@@ -127,7 +126,10 @@ const MainContent = ({ selectedTab, open }) => {
           )}
           {selectedTab === "Milestones" && (
             <Box>
-              <Milestones />
+              <Milestones
+                milestonesData={milestonesData}
+                isLoading={isLoading}
+              />
             </Box>
           )}
         </Box>

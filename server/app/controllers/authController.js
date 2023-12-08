@@ -16,7 +16,7 @@ async function handleGitHubCallback(req, res) {
   try {
     const { id, name, email, traineeGithubAccount } = req.user.dataValues;
     const { githubData } = req.authInfo;
-    
+
     const user = { id, name, email, traineeGithubAccount, ...githubData };
     const token = jwt.sign({ user }, secretKey, { expiresIn: "1hr" });
     res.cookie("token", token, {
@@ -34,11 +34,11 @@ async function handleGitHubCallback(req, res) {
         (updatedUser.traineeCodwarsUsername !== null ||
           updatedUser.traineeCodilityUsername !== null)
       ) {
-        res.redirect(`http://localhost:3000`);
+        res.redirect(`${process.env.CLIENT_URL}`);
       } else {
-        res.redirect(`http://localhost:3000/PostSignup`);
+        res.redirect(`${process.env.CLIENT_URL}/PostSignup`);
       }
-    }, 1000); 
+    }, 1000);
   } catch (err) {
     console.error("Error handling GitHub callback:", err);
     res.redirect("/");

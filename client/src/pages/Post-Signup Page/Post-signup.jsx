@@ -16,6 +16,10 @@ import Select from "@mui/material/Select";
 import axios from "../../config/configAxios";
 import { useAuth } from "../../hooks/useAuth";
 
+import axiosConfig from "../../config/configAxios";
+const { apiUrl } = axiosConfig;
+
+
 export default function PostSignup() {
   const [activeTab, setActiveTab] = React.useState(0);
   const [codeWarsUsername, setCodeWarsUsername] = useState("");
@@ -64,7 +68,7 @@ export default function PostSignup() {
     // }
 
     try {
-      const response = await fetch("http://localhost:3001/signpost", {
+      const response = await fetch(`${apiUrl}/signpost`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -82,7 +86,7 @@ export default function PostSignup() {
       }
       const responseData = await response.json();
       console.log(responseData);
-      window.location.href = "http://localhost:3000";
+      window.location.href = "/";
     } catch (error) {
       console.error("Error sending data to the backend:", error);
     }
@@ -128,7 +132,7 @@ export default function PostSignup() {
                     labelId="demo-simple-select-helper-label"
                     id="demo-simple-select-helper"
                     value={selectedCohort.name}
-                    label="Cohorts"
+                    label="Select your cohort"
                     onChange={handleCohorts}
                     required
                   >
