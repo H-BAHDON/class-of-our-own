@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, Container, SvgIcon, Button } from "@mui/material";
+import { Box, Paper, Container } from "@mui/material";
 import CurrentMilestone from "../../../components/CurrentMilestone";
 import axios from "../../../config/configAxios";
 import CodewarsFactor from "../../../components/CodewarsFactor";
@@ -25,6 +25,7 @@ const MainContent = ({ selectedTab, open }) => {
       })
       .catch((error) => {});
   }, []);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -51,7 +52,6 @@ const MainContent = ({ selectedTab, open }) => {
         sx={{
           padding: "1.5rem",
           backgroundColor: "#faf8f6",
-
           maxWidth: "100%",
         }}
       >
@@ -75,18 +75,27 @@ const MainContent = ({ selectedTab, open }) => {
               <h3 className="dashboard-titles">Current Progress</h3>
               <Box
                 className="factors"
-                sx={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}
-              >
-                {/* First Box with Codewars data */}
-                <Box
-                  sx={{
+                sx={{
+                  display: "flex",
+                  gap: "1rem",
+                  flexWrap: "wrap",
+                  justifyContent: "center",
+                  "& > div": {
                     flex: "1 1 calc(50% - 0.5rem)",
                     padding: "1.5rem",
                     backgroundColor: "#d5d4d4",
                     marginBottom: "1rem",
-                    maxWidth: open ? "25rem" : "25",
-                  }}
-                >
+                    maxWidth: {
+                      xs: open ? "100%" : "25rem",
+                      sm: open ? "100%" : "25rem",
+                      md: "calc(50% - 0.5rem)",
+                      lg: "calc(50% - 0.5rem)",
+                    },
+                  },
+                }}
+              >
+                {/* First Box with Codewars data */}
+                <Paper elevation={2} sx={{ width: "100%" }}>
                   <CodewarsFactor
                     startRank={startRank}
                     open={open}
@@ -94,18 +103,10 @@ const MainContent = ({ selectedTab, open }) => {
                       currentMilestoneData.endDate
                     )}
                   />
-                </Box>
+                </Paper>
 
                 {/* Second Box (blank) */}
-                <Box
-                  sx={{
-                    flex: "1 1 calc(50% - 0.5rem)",
-                    padding: "1.5rem",
-                    backgroundColor: "#d5d4d4",
-                    marginBottom: "1rem",
-                    maxWidth: open ? "25rem" : "25",
-                  }}
-                >
+                <Paper elevation={2} sx={{ width: "100%" }}>
                   <PullRequestFactor
                     startPullNumber={startPullNumber}
                     open={open}
@@ -113,7 +114,7 @@ const MainContent = ({ selectedTab, open }) => {
                       currentMilestoneData.endDate
                     )}
                   />
-                </Box>
+                </Paper>
               </Box>
             </Box>
           )}
