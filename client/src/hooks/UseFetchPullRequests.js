@@ -24,13 +24,13 @@ const useFetchPullRequests = () => {
               console.error('Error parsing cached data:', parseError);
               localStorage.removeItem('pullRequestsData');
               localStorage.removeItem('lastFetchTime');
-              makeApiRequest();
+              await makeApiRequest();
             }
           } else {
-            makeApiRequest();
+            await makeApiRequest();
           }
         } else {
-          makeApiRequest();
+          await makeApiRequest();
         }
       } catch (fetchError) {
         setError(fetchError);
@@ -41,11 +41,11 @@ const useFetchPullRequests = () => {
 
     const makeApiRequest = async () => {
       try {
-        const response = await axiosConfig.configAxios().get('/getAllRepos/with-without-prs');
-        const data = response.data.allPullRequest;
+        const response = await axiosConfig.configAxios().get('/getAllRepos/with-Pull-Reuqest');
+        const data = response.data;
 
         const formattedData = {
-          withPR: data.withPR.map(item => ({
+          withPR: Array.isArray(data.withPR) ? data.withPR.map(item => ({
             repoName: item.repoName,
             items: item.items.map(pr => ({
               number: pr.number,
@@ -53,12 +53,7 @@ const useFetchPullRequests = () => {
               title: pr.title,
               createdAt: pr.created_at,
             })),
-          })),
-          withoutPR: data.withoutPR.map(item => ({
-            repoName: item.repoName,
-            totalCount: item.total_count,
-            items: [],
-          })),
+          })) : [],
         };
 
         setPullRequestsData(formattedData);
