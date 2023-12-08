@@ -128,7 +128,7 @@ export default function PostSignup() {
                     labelId="demo-simple-select-helper-label"
                     id="demo-simple-select-helper"
                     value={selectedCohort.name}
-                    label="Cohorts"
+                    label="Select your cohort"
                     onChange={handleCohorts}
                     required
                   >
