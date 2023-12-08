@@ -10,8 +10,23 @@ import Paper from "@mui/material/Paper";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Typography } from "@mui/material";
 
-export default function Milestones({ milestonesData, isLoading }) {
-  const [currentMilestoneData] = useState(null);
+export default function Milestones({ milestonesData }) {
+  const [currentMilestoneData, setCurrentMilestoneData] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setIsLoading(true);
+    const instant = axios.configAxios();
+    instant
+      .get("/current-milestone")
+      .then((data) => {
+        setIsLoading(false);
+        setCurrentMilestoneData(data);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+      });
+  }, []);
 
   return (
     <div>
