@@ -86,7 +86,7 @@ export default function PostSignup() {
       }
       const responseData = await response.json();
       console.log(responseData);
-      window.location.href = `${apiUrl}`;
+      window.location.href = "/";
     } catch (error) {
       console.error("Error sending data to the backend:", error);
     }
