@@ -6,7 +6,8 @@ const router = express.Router();
 
 // Define routes
 router.get("/", authenticateUser, ReposController.getAllRepos);
-router.get("/pull-request", authenticateUser, ReposController.pullRequest);
-router.get("/with-without-prs", authenticateUser, ReposController.WithPrWithoutPr);
+router.get("/pull-request", authenticateUser, ReposController.getTotalPullRequest);
+router.get("/with-Pull-Reuqest", authenticateUser, ReposController.getWithPullRequest);
+router.get("/with-out-Pull-Reuqest", authenticateUser, ReposController.getWithOutPullRequest);
 
 module.exports = router;
